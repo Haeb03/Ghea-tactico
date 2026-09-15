@@ -1,17 +1,16 @@
-# Ghea Táctico 0.2
+# Ghea Táctico 0.2.1
 
-Segunda versión funcional del prototipo PWA.
+Versión de pulido del prototipo móvil.
 
-## 0.2
-- Hasta 3 Aventureros, progreso independiente y eliminación con confirmación.
-- Migración básica desde guardado 0.1.
-- Arca ampliada y mapa separado Afueras de Arca.
-- Movimiento por toque con búsqueda automática de camino.
-- Maestro con indicadores de misión `!` y `?`.
-- Grupo enemigo con confirmación explícita antes del combate.
-- Combate táctico 10×10 con PA/PM, iniciativa, habilidades del Guerrero, IA enemiga, escudo, Herida, Veneno, obstáculos y victoria/derrota.
-- Inventario visual con figura central, slots alrededor y mochila.
-- Árbol de Desarrollo por ramas, asignación provisional, Deshacer y Confirmar.
-- Descanso: +1 Vida cada 5 segundos.
+Cambios principales:
+- Movimiento de exploración animado con pathfinding y límites seguros.
+- Seguimiento de misión y misión inicial repetible para pruebas.
+- Curva de EXP +60% redondeada: 10, 16, 26, 42, 67, 107…
+- Subir de nivel no cura Vida; otorga 2 puntos de Desarrollo por nivel.
+- Barra de combate móvil de dos filas con ficha informativa de cada acción.
+- Escudo no persiste fuera del combate.
+- Inventario con figura central y slots alrededor.
+- Requisitos visibles del árbol; Daño base 3/3 abre la siguiente etapa ofensiva y Vitalidad 3/3 la defensiva.
+- Ajustes de marcadores, colores y altura visual.
 
-Los datos se guardan localmente en el dispositivo/navegador.
+El guardado local de 0.2 se conserva.
