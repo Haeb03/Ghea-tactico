@@ -52,3 +52,9 @@ El guardado local de 0.2 se conserva.
 - Comercios permiten vender objetos; por ahora no tienen catálogo de compra.
 - Collar de Jabalí: +1 Escudo al inicio de cada turno, venta 15.
 - Armadura de cuero de jabalí: +3 Vida máxima, venta 10.
+
+
+## 0.2.7.1 — Corrección
+- Corrige el bloqueo al finalizar combates de jabalíes con cadáveres persistentes.
+- El combate ahora muestra la Vida máxima real del personaje (base + Desarrollo + equipo) sin curarlo al entrar.
+- Conserva nivel, EXP, Desarrollo, inventario y equipo guardados.
