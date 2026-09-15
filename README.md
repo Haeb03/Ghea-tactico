@@ -35,3 +35,11 @@ El guardado local de 0.2 se conserva.
 - Mochila: opción Descartar con confirmación; no entrega oro.
 - Versión visible corregida a 0.2.5.
 - Se conserva la IA enemiga de 0.2.4, ya confirmada en playtest usando habilidades.
+
+## 0.2.6
+- Despliegue inicial más limitado y estratégico: combina posiciones separadas con pequeños grupos contiguos.
+- Los combatientes derrotados dejan cadáver y continúan bloqueando su casilla.
+- Acción universal **Mover cuerpo**: 1 PA, mueve un cadáver adyacente una casilla ortogonal libre, sin gastar PM.
+- Feedback visual básico de combate: impacto cuerpo a cuerpo, daño flotante, proyectiles de ballesta, efecto de Granada Tóxica y Escudo de Bloqueo.
+- El Bandido con Ballesta aumenta a alcance 3 en Ataque Normal, Tiro Certero y Tiro Ralentizador.
+- La IA enemiga conserva su lógica de 0.2.5; solo se adapta el alcance del Ballestero.
