@@ -1,4 +1,4 @@
-# Ghea Táctico 0.2.1
+# Ghea Táctico 0.2.2
 
 Versión de pulido del prototipo móvil.
 
