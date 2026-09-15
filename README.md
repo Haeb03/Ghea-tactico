@@ -1,4 +1,4 @@
-# Ghea Táctico 0.2.3
+# Ghea Táctico 0.2.4
 
 Versión de pulido del prototipo móvil.
 
@@ -16,10 +16,15 @@ Cambios principales:
 El guardado local de 0.2 se conserva.
 
 
-## 0.2.3
+## 0.2.4
 - Movimiento animado casilla por casilla para Aventurero y enemigos.
 - Barras compactas de Vida sobre las unidades.
 - Indicador direccional de misión.
 - Interacción con equipo: ficha, desequipar y selección directa de slot compatible.
 - Espada básica y Daga oxidada pueden ir en mano principal o secundaria.
 - Furia visible en combate y aplicada al cálculo de daño.
+
+## 0.2.4
+- Indicadores sobre las fichas: Herida, Veneno y Furia activa.
+- IA enemiga usa y anuncia habilidades especiales durante su turno.
+- Árbol de Defensa ramificado: Vitalidad abre nivel 2; Guardia queda debajo de Robustez y requiere Robustez 2/2 + 6 puntos totales en Defensa.
