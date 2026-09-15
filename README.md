@@ -28,3 +28,10 @@ El guardado local de 0.2 se conserva.
 - Indicadores sobre las fichas: Herida, Veneno y Furia activa.
 - IA enemiga usa y anuncia habilidades especiales durante su turno.
 - Árbol de Defensa ramificado: Vitalidad abre nivel 2; Guardia queda debajo de Robustez y requiere Robustez 2/2 + 6 puntos totales en Defensa.
+
+
+## 0.2.5
+- Fase de despliegue inicial: elegí una casilla aliada y confirmá antes de iniciar turnos/temporizador.
+- Mochila: opción Descartar con confirmación; no entrega oro.
+- Versión visible corregida a 0.2.5.
+- Se conserva la IA enemiga de 0.2.4, ya confirmada en playtest usando habilidades.
