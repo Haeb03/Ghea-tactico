@@ -1,17 +1,17 @@
-# Ghea Táctico — prototipo 0.1
+# Ghea Táctico 0.2
 
-Base inicial PWA para el prototipo de Ghea Táctico.
+Segunda versión funcional del prototipo PWA.
 
-Incluye:
-- Inicio, creación y selección básica de Aventurero.
-- Humano Guerrero.
-- Escenario conceptual de Arca y Maestro de la Academia.
-- Primera misión y grupo enemigo.
-- Tablero táctico 10×10 como base del motor de combate.
-- EXP, oro, botín, Nivel 2 y 2 Puntos de Desarrollo.
-- Ramas iniciales Ofensiva y Defensa.
-- Inventario básico de 12 espacios.
+## 0.2
+- Hasta 3 Aventureros, progreso independiente y eliminación con confirmación.
+- Migración básica desde guardado 0.1.
+- Arca ampliada y mapa separado Afueras de Arca.
+- Movimiento por toque con búsqueda automática de camino.
+- Maestro con indicadores de misión `!` y `?`.
+- Grupo enemigo con confirmación explícita antes del combate.
+- Combate táctico 10×10 con PA/PM, iniciativa, habilidades del Guerrero, IA enemiga, escudo, Herida, Veneno, obstáculos y victoria/derrota.
+- Inventario visual con figura central, slots alrededor y mochila.
+- Árbol de Desarrollo por ramas, asignación provisional, Deshacer y Confirmar.
 - Descanso: +1 Vida cada 5 segundos.
-- Guardado local.
 
-El botón de victoria del combate es temporal: permite probar el ciclo completo mientras se implementa el motor táctico real.
+Los datos se guardan localmente en el dispositivo/navegador.

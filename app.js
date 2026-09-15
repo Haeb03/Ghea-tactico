@@ -1,145 +1,50 @@
-
-const KEY="gheaTactico01";
-const fresh=()=>({characters:[],selected:null,quest:"none",location:"arca",gold:0});
-let state=JSON.parse(localStorage.getItem(KEY)||"null")||fresh();
-const save=()=>localStorage.setItem(KEY,JSON.stringify(state));
-const app=document.querySelector("#app");
-const $=(s)=>document.querySelector(s);
-
-function home(){
- app.innerHTML=`<section class="screen center"><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">Prototipo 0.1</p>
- <button id="play">Jugar</button><p class="small">Partida guardada localmente en este dispositivo.</p></section>`;
- $("#play").onclick=characters;
-}
-function characters(){
- app.innerHTML=`<section class="screen"><h2>Aventureros</h2>
- <div id="chars"></div><button id="new">Crear Aventurero</button><button class="secondary" id="back">Volver</button></section>`;
- const box=$("#chars");
- if(!state.characters.length) box.innerHTML=`<div class="card">Todavía no creaste ningún Aventurero.</div>`;
- state.characters.forEach((c,i)=>{
-   box.innerHTML+=`<div class="card"><b>${c.name}</b> · Humano Guerrero · Nivel ${c.level}<br>
-   <span class="small">❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)} · PA 4 · PM 3</span><br><br>
-   <button onclick="enter(${i})">Seleccionar</button></div>`;
- });
- $("#new").onclick=createChar; $("#back").onclick=home;
-}
-function createChar(){
- app.innerHTML=`<section class="screen"><h2>Crear Aventurero</h2><div class="card grid2">
- <label>Nombre<input id="name" maxlength="16" value="Aventurero"></label>
- <label>Sexo<select id="sex"><option>Hombre</option><option>Mujer</option></select></label>
- <label>Raza<select><option>Humano</option><option disabled>Enano — próximamente</option><option disabled>Elfo — próximamente</option></select></label>
- <label>Clase<select><option>Guerrero</option><option disabled>Más clases — próximamente</option></select></label>
- <label>Altura<select id="height"><option>Baja</option><option selected>Media</option><option>Alta</option></select></label>
- <label>Peinado<select id="hair"><option>Peinado 1</option><option>Peinado 2</option></select></label>
- <label>Color de pelo<input id="hairColor" type="color" value="#4b2e1e"></label>
- <label>Color de ojos<input id="eyeColor" type="color" value="#4c8a55"></label>
- <label>Color de ropa<input id="clothColor" type="color" value="#355b86"></label>
- </div><button id="make">Crear</button><button class="secondary" id="cancel">Cancelar</button></section>`;
- $("#make").onclick=()=>{
-   const c={name:$("#name").value.trim()||"Aventurero",sex:$("#sex").value,height:$("#height").value,
-   hair:$("#hair").value,hairColor:$("#hairColor").value,eyeColor:$("#eyeColor").value,clothColor:$("#clothColor").value,
-   level:1,xp:0,hp:14,gold:0,dev:0,offDamage:0,offLife:0,offIni:0,fury:0,defLife:0,opp:0,guard:0,defIni:0,robust:0,
-   inventory:[],equipment:{weapon:"Espada básica",offhand:null,helmet:null,armor:null,boots:null,gloves:null,ring1:null,ring2:null,amulet:null}};
-   state.characters.push(c); save(); characters();
- }; $("#cancel").onclick=characters;
-}
-function maxHp(c){return 14+c.offLife*2+c.defLife*2+c.robust*5+(c.equipment.boots==="Botas de tela"?2:0)}
-function initiative(c){return 4+c.offIni+c.defIni}
-window.enter=(i)=>{state.selected=i;save();world()};
-function hero(){return state.characters[state.selected]}
-function world(){
- const c=hero(); if(!c)return home();
- app.innerHTML=`<section class="screen"><div class="topbar"><b>${c.name} · Nv.${c.level}</b><span>❤️ ${c.hp}/${maxHp(c)} · ✨ ${c.xp}/10 · 🪙 ${c.gold}</span></div>
- <div class="world"><div class="building academy"></div><div class="path"></div>
- <div class="npc" id="mage">🧙</div><div class="hero">⚔️</div>${state.quest==="accepted"?'<div class="enemy" id="enemy">🗡️</div>':""}</div>
- <div class="actions"><button id="inv">Inventario</button><button id="tree">Desarrollo</button><button id="rest">Descansar</button><button class="secondary" id="menu">Personajes</button></div>
- <p class="small">${state.location==="arca"?"Arca y sus afueras — escenario conceptual del prototipo.":""}</p></section>`;
- $("#mage").onclick=questDialog; if($("#enemy"))$("#enemy").onclick=enemyGroup;
- $("#inv").onclick=inventory; $("#tree").onclick=tree; $("#menu").onclick=characters;
- $("#rest").onclick=()=>rest(c);
-}
-function questDialog(){
- let text,btn="";
- if(state.quest==="none"){text="Se ha detectado un grupo de bandidos en las afueras de Arca. Encárgate de ellos y regresa.";btn='<button id="accept">Aceptar misión</button>'}
- else if(state.quest==="accepted"){text="El grupo sigue en las afueras. Regresa cuando hayas acabado con ellos."}
- else if(state.quest==="done"){text="Buen trabajo. Has cumplido tu misión.";btn='<button id="turnin">Entregar misión (+4 EXP, +5 oro)</button>'}
- else{text="Continúa con tu entrenamiento, Aventurero."}
- modal(`<h3>Maestro de Arca</h3><p>${text}</p>${btn}`);
- if($("#accept"))$("#accept").onclick=()=>{state.quest="accepted";save();closeModal();world()};
- if($("#turnin"))$("#turnin").onclick=()=>{let c=hero();c.xp+=4;c.gold+=5;state.quest="turned";levelCheck(c);save();closeModal();world()};
-}
-function enemyGroup(){
- modal(`<h3>Grupo de Bandidos</h3><p>🐗 Jabalí<br>🗡️ Bandido con Daga<br>🏹 Bandido con Ballesta</p>
- <button id="fight">Combatir</button>`);
- $("#fight").onclick=()=>{closeModal();battle()};
-}
-function battle(){
- // Base visual jugable: el motor táctico completo se desarrolla sobre esta pantalla.
- const obstacles=new Set(["3,3","3,4","6,5","6,6","7,6"]);
- let tiles="";
- for(let y=0;y<10;y++)for(let x=0;x<10;x++){
-   let cls=obstacles.has(`${x},${y}`)?" obstacle":"";
-   let txt="";
-   if(x===1&&y===5)txt="⚔️";
-   if(x===4&&y===5)txt="🗡️";
-   if(x===7&&y===3)txt="🏹";
-   if(x===8&&y===8)txt="🐗";
-   tiles+=`<div class="tile${cls}${txt?" unit":""}">${txt}</div>`;
- }
- app.innerHTML=`<section class="screen"><div class="topbar"><b>Combate · Ronda 1</b><span>⏱️ 30s</span></div>
- <div class="card small">Orden: ⚔️ Guerrero (4) → 🐗/🗡️ (3) → 🏹 (2)</div>
- <div class="battle-grid">${tiles}</div>
- <div class="card"><b>Prototipo del campo 10×10</b><p class="small">Esta primera base deja preparado el tablero. El siguiente bloque implementará movimiento, PA/PM, habilidades, IA y resolución real del combate.</p>
- <button id="testWin">Simular victoria para probar el ciclo</button></div></section>`;
- $("#testWin").onclick=()=>{rewardAll();state.quest="done";save();world()};
-}
-function rewardAll(){
- const c=hero(); c.xp+=6;
- const gold=(1+Math.floor(Math.random()*2))+(2+Math.floor(Math.random()*3))+(2+Math.floor(Math.random()*3));
- c.gold+=gold;
- const drops=[];
- if(Math.random()<.40)drops.push("Piel de jabalí");
- if(Math.random()<.15)drops.push("Colmillo de jabalí");
- if(Math.random()<.10)drops.push("Daga oxidada");
- if(Math.random()<.15)drops.push("Botas de tela");
- if(Math.random()<.10)drops.push("Ballesta rota");
- if(Math.random()<.15)drops.push("Botas de tela");
- drops.forEach(x=>addItem(c,x)); levelCheck(c);
-}
-function addItem(c,item){if(c.inventory.length<12)c.inventory.push(item)}
-function levelCheck(c){if(c.level===1&&c.xp>=10){c.level=2;c.dev+=2;alert("¡Nivel 2! Obtienes 2 Puntos de Desarrollo.")}}
-function inventory(){
- const c=hero(); const slots=Object.entries(c.equipment).map(([k,v])=>`<div class="stat"><b>${k}</b><br>${v||"—"}</div>`).join("");
- app.innerHTML=`<section class="screen"><h2>Inventario</h2><div class="card"><div class="stats">${slots}</div></div>
- <div class="card"><b>Mochila básica · ${c.inventory.length}/12</b><p>${c.inventory.length?c.inventory.join("<br>"):"Vacía"}</p></div>
- <button class="secondary" id="back">Volver</button></section>`; $("#back").onclick=world;
-}
-function tree(){
- const c=hero();
- app.innerHTML=`<section class="screen"><h2>Desarrollo · ${c.dev} puntos</h2>
- <div class="card"><h3>⚔️ Ofensiva</h3>
- ${node("Daño base +1", "offDamage",3,c)}
- ${node("Vida +2","offLife",5,c,c.offDamage<1)}
- ${node("Iniciativa +1","offIni",1,c,c.offDamage<1)}
- ${node("Furia","fury",2,c,c.offDamage<1)}</div>
- <div class="card"><h3>🛡️ Defensa</h3>
- ${node("Vitalidad +2 Vida","defLife",3,c)}
- ${node("Ataque de oportunidad +1","opp",1,c,c.defLife<1)}
- ${node("Guardia +2 Escudo al inicio","guard",1,c,c.defLife<1)}
- ${node("Iniciativa +1","defIni",1,c,c.defLife<1)}
- ${node("Robustez +5 Vida","robust",2,c,c.defLife<3)}</div>
- <button class="secondary" id="back">Volver</button></section>`;
- document.querySelectorAll("[data-node]").forEach(b=>b.onclick=()=>spend(b.dataset.node));
- $("#back").onclick=world;
-}
-function node(label,key,max,c,locked=false){return `<p>${label}: ${c[key]}/${max} <button data-node="${key}" ${locked||c.dev<1||c[key]>=max?"disabled":""}>+</button></p>`}
-function spend(key){const c=hero();if(c.dev<1)return;c[key]++;c.dev--;c.hp=Math.min(c.hp,maxHp(c));save();tree()}
-function rest(c){
- if(c.hp>=maxHp(c)){alert("Ya tienes la Vida completa.");return}
- modal(`<h3>Descanso</h3><p id="restText">Recuperando Vida… ${c.hp}/${maxHp(c)}</p><button id="stop">Terminar descanso</button>`);
- const t=setInterval(()=>{if(c.hp<maxHp(c)){c.hp++;save();$("#restText").textContent=`Recuperando Vida… ${c.hp}/${maxHp(c)}`}else{clearInterval(t)}},5000);
- $("#stop").onclick=()=>{clearInterval(t);closeModal();world()};
-}
-function modal(html){document.body.insertAdjacentHTML("beforeend",`<div class="modal" id="modal"><div class="card">${html}<br><button class="secondary" onclick="closeModal()">Cerrar</button></div></div>`)}
-window.closeModal=()=>$("#modal")?.remove();
+const KEY='gheaTactico02', OLD='gheaTactico01';
+const app=document.querySelector('#app'), $=s=>document.querySelector(s), clamp=(v,a,b)=>Math.max(a,Math.min(b,v));
+const eqLabels={weapon:'Arma principal',offhand:'Mano secundaria',helmet:'Casco',armor:'Armadura',boots:'Botas',gloves:'Guantes',ring1:'Anillo 1',ring2:'Anillo 2',amulet:'Amuleto'};
+const baseChar=(o={})=>Object.assign({id:crypto.randomUUID?.()||Date.now()+''+Math.random(),name:'Aventurero',sex:'Hombre',height:'Media',hair:'Peinado 1',hairColor:'#4b2e1e',eyeColor:'#4c8a55',clothColor:'#355b86',level:1,xp:0,hp:14,gold:0,dev:0,quest:'none',location:'arca',worldPos:{arca:{x:355,y:270},outskirts:{x:55,y:270}},startingPoint:'arca',inventory:[],equipment:{weapon:'Espada básica',offhand:null,helmet:null,armor:null,boots:null,gloves:null,ring1:null,ring2:null,amulet:null},tree:{offDamage:0,offLife:0,offIni:0,fury:0,defLife:0,opp:0,guard:0,defIni:0,robust:0}},o);
+function fresh(){return {version:2,characters:[],selected:null}}
+function migrate(){let s=JSON.parse(localStorage.getItem(KEY)||'null');if(s)return s;let old=JSON.parse(localStorage.getItem(OLD)||'null');if(!old)return fresh();let n=fresh();n.characters=(old.characters||[]).slice(0,3).map(c=>baseChar({...c,quest:old.quest||'none',location:old.location||'arca',gold:c.gold??old.gold??0,tree:{offDamage:c.offDamage||0,offLife:c.offLife||0,offIni:c.offIni||0,fury:c.fury||0,defLife:c.defLife||0,opp:c.opp||0,guard:c.guard||0,defIni:c.defIni||0,robust:c.robust||0}}));n.selected=Math.min(old.selected??0,n.characters.length-1);return n}
+let state=migrate();save();function save(){localStorage.setItem(KEY,JSON.stringify(state))}function hero(){return state.characters[state.selected]}
+function t(c,k){return c.tree?.[k]||0}function maxHp(c){return 14+t(c,'offLife')*2+t(c,'defLife')*2+t(c,'robust')*5+(c.equipment.boots==='Botas de tela'?2:0)}function initiative(c){return 4+t(c,'offIni')+t(c,'defIni')}function baseDamage(c){return 1+t(c,'offDamage')+(c.equipment.weapon==='Espada básica'||c.equipment.weapon==='Daga oxidada'?1:0)}
+function toast(s){document.body.insertAdjacentHTML('beforeend',`<div class="toast">${s}</div>`);setTimeout(()=>$('.toast')?.remove(),1700)}
+function modal(html,closable=true){document.body.insertAdjacentHTML('beforeend',`<div class="modal" id="modal"><div class="card">${html}${closable?'<div class="actions"><button class="secondary" onclick="closeModal()">Cerrar</button></div>':''}</div></div>`)}window.closeModal=()=>$('#modal')?.remove();
+function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">Prototipo 0.2</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
+function characters(){app.innerHTML=`<section class="screen"><h2>Aventureros</h2><div id="chars"></div><div class="actions"><button id="new" ${state.characters.length>=3?'disabled':''}>${state.characters.length>=3?'Límite 3/3':'Crear Aventurero'}</button><button class="secondary" id="back">Volver</button></div></section>`;let box=$('#chars');if(!state.characters.length)box.innerHTML='<div class="card">Todavía no creaste ningún Aventurero.</div>';state.characters.forEach((c,i)=>box.insertAdjacentHTML('beforeend',`<div class="card char-card"><div><b>${esc(c.name)}</b> · Humano Guerrero · Nivel ${c.level}<br><span class="small">❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)} · PA 4 · PM 3 · 🪙 ${c.gold}</span></div><div class="char-buttons"><button onclick="enter(${i})">Seleccionar</button><button class="danger" onclick="askDelete(${i})">Eliminar</button></div></div>`));$('#new').onclick=createChar;$('#back').onclick=home}
+function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+window.enter=i=>{state.selected=i;save();world()};window.askDelete=i=>{let c=state.characters[i];modal(`<h3>¿Eliminar a ${esc(c.name)}?</h3><p>Se eliminará este personaje y todo su progreso. Esta acción no se puede deshacer.</p><div class="actions"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="danger" id="confirmDelete">Eliminar definitivamente</button></div>`,false);$('#confirmDelete').onclick=()=>{state.characters.splice(i,1);if(state.selected===i)state.selected=null;else if(state.selected>i)state.selected--;save();closeModal();characters()}}
+function createChar(){if(state.characters.length>=3)return;app.innerHTML=`<section class="screen"><h2>Crear Aventurero</h2><div class="card grid2"><label>Nombre<input id="name" maxlength="16" value="Aventurero"></label><label>Sexo<select id="sex"><option>Hombre</option><option>Mujer</option></select></label><label>Raza<select><option>Humano</option><option disabled>Enano — próximamente</option><option disabled>Elfo — próximamente</option></select></label><label>Clase<select><option>Guerrero</option><option disabled>Más clases — próximamente</option></select></label><label>Altura<select id="height"><option>Baja</option><option selected>Media</option><option>Alta</option></select></label><label>Peinado<select id="hair"><option>Peinado 1</option><option>Peinado 2</option></select></label><label>Color de pelo<input id="hairColor" type="color" value="#4b2e1e"></label><label>Color de ojos<input id="eyeColor" type="color" value="#4c8a55"></label><label>Color de ropa<input id="clothColor" type="color" value="#355b86"></label></div><div class="actions"><button id="make">Crear</button><button class="secondary" id="cancel">Cancelar</button></div></section>`;$('#make').onclick=()=>{let c=baseChar({name:$('#name').value.trim()||'Aventurero',sex:$('#sex').value,height:$('#height').value,hair:$('#hair').value,hairColor:$('#hairColor').value,eyeColor:$('#eyeColor').value,clothColor:$('#clothColor').value});state.characters.push(c);save();characters()};$('#cancel').onclick=characters}
+const mapData={arca:{w:720,h:540,obstacles:[{x:250,y:25,w:250,h:120},{x:20,y:55,w:90,h:80},{x:570,y:55,w:110,h:95},{x:80,y:420,w:120,h:80},{x:500,y:430,w:130,h:70}],mage:{x:350,y:195},exit:{x:685,y:376}},outskirts:{w:720,h:540,obstacles:[{x:180,y:70,w:90,h:70},{x:390,y:80,w:75,h:120},{x:260,y:350,w:120,h:70},{x:545,y:320,w:80,h:95}],enemy:{x:560,y:190},exit:{x:25,y:270}}};
+let moving=null;function world(){let c=hero();if(!c)return characters();let map=c.location||'arca',d=mapData[map],pos=c.worldPos[map]||{x:50,y:270};app.innerHTML=`<section class="screen"><div class="topbar"><b>${esc(c.name)} · Nv.${c.level}</b><span>❤️ ${c.hp}/${maxHp(c)} · ✨ ${c.xp}/10 · 🪙 ${c.gold}</span></div><h3>${map==='arca'?'Arca':'Afueras de Arca'}</h3><div class="world-wrap"><div class="world" id="worldMap">${map==='arca'?'<div class="academy"></div><div class="road main"></div><div class="road vert"></div>':'<div class="road main" style="top:235px"></div>'}${d.obstacles.map((o,i)=>`<div class="${i%2?'tree':'wall'}" style="left:${o.x}px;top:${o.y}px;width:${o.w}px;height:${o.h}px"></div>`).join('')}${map==='arca'?`<div class="actor npc-world" id="mage" style="left:${d.mage.x}px;top:${d.mage.y}px">🧙</div>${c.quest==='none'?`<div class="marker" style="left:${d.mage.x}px;top:${d.mage.y}px">!</div>`:''}${c.quest==='done'?`<div class="marker" style="left:${d.mage.x}px;top:${d.mage.y}px">?</div>`:''}<div class="exit">SALIDA →</div>`:`${c.quest==='accepted'||c.quest==='done'?`<div class="actor enemy-world" id="enemy" style="left:${d.enemy.x}px;top:${d.enemy.y}px">🗡️</div><div class="hint" style="left:${d.enemy.x}px;top:${d.enemy.y}px">Grupo de bandidos</div>`:''}<div class="exit" style="left:8px;right:auto">← ARCA</div>`}<div class="actor hero-world" id="worldHero" style="left:${pos.x}px;top:${pos.y}px">⚔️</div></div></div><p class="small">Tocá un lugar del escenario para moverte. El Aventurero buscará una ruta alrededor de los obstáculos.</p><div class="actions"><button id="inv">Inventario</button><button id="tree">Desarrollo</button><button id="rest">Descansar</button><button class="secondary" id="menu">Personajes</button></div></section>`;$('#worldMap').onclick=e=>worldTap(e,map);$('#mage')?.addEventListener('click',e=>{e.stopPropagation();if(dist(pos,d.mage)<80)questDialog();else moveWorld(map,d.mage,()=>questDialog())});$('#enemy')?.addEventListener('click',e=>{e.stopPropagation();if(c.quest==='accepted'){if(dist(pos,d.enemy)<85)enemyGroup();else moveWorld(map,d.enemy,()=>enemyGroup())}});$('#inv').onclick=inventory;$('#tree').onclick=treeMenu;$('#menu').onclick=characters;$('#rest').onclick=()=>rest(c)}
+function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}function blocked(map,x,y){let d=mapData[map],r=17;return x<r||y<r||x>d.w-r||y>d.h-r||d.obstacles.some(o=>x+r>o.x&&x-r<o.x+o.w&&y+r>o.y&&y-r<o.y+o.h)}
+function worldTap(e,map){let r=e.currentTarget.getBoundingClientRect(),x=(e.clientX-r.left)*720/r.width,y=(e.clientY-r.top)*540/r.height;moveWorld(map,{x,y})}
+function pathfind(map,start,goal){const step=24,cols=30,rows=23,s={x:clamp(Math.floor(start.x/step),0,cols-1),y:clamp(Math.floor(start.y/step),0,rows-1)},g={x:clamp(Math.floor(goal.x/step),0,cols-1),y:clamp(Math.floor(goal.y/step),0,rows-1)},key=p=>p.x+','+p.y,q=[s],prev=new Map([[key(s),null]]);while(q.length){let p=q.shift();if(key(p)===key(g))break;for(let [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){let n={x:p.x+dx,y:p.y+dy},k=key(n),px=n.x*step+step/2,py=n.y*step+step/2;if(n.x<0||n.y<0||n.x>=cols||n.y>=rows||prev.has(k)||blocked(map,px,py))continue;prev.set(k,p);q.push(n)}}if(!prev.has(key(g)))return [];let out=[],p=g;while(p){out.push({x:p.x*step+step/2,y:p.y*step+step/2});p=prev.get(key(p))}return out.reverse()}
+function moveWorld(map,target,done){let c=hero(),start=c.worldPos[map],path=pathfind(map,start,target);if(path.length<2){toast('No hay un camino válido.');return}clearInterval(moving);let i=1,h=$('#worldHero');moving=setInterval(()=>{if(i>=path.length){clearInterval(moving);moving=null;checkTransition(map);done?.();return}let p=path[i++];c.worldPos[map]=p;h.style.left=p.x+'px';h.style.top=p.y+'px';save()},90)}
+function checkTransition(map){let c=hero(),p=c.worldPos[map],d=mapData[map];if(dist(p,d.exit)<70){if(map==='arca'){c.location='outskirts';c.worldPos.outskirts={x:55,y:270}}else{c.location='arca';c.worldPos.arca={x:650,y:376}}save();world()}}
+function questDialog(){let c=hero(),text,btn='';if(c.quest==='none'){text='Se ha detectado un grupo de bandidos en las afueras de Arca. Encárgate de ellos y regresa.';btn='<button id="accept">Aceptar misión</button>'}else if(c.quest==='accepted'){text='Sal de Arca. El grupo se encuentra en las afueras.'}else if(c.quest==='done'){text='Buen trabajo. Has cumplido tu misión.';btn='<button id="turnin">Entregar misión (+4 EXP, +5 oro)</button>'}else text='Continúa con tu entrenamiento, Aventurero.';modal(`<h3>Maestro de Arca</h3><p>${text}</p>${btn}`);$('#accept')?.addEventListener('click',()=>{c.quest='accepted';save();closeModal();world()});$('#turnin')?.addEventListener('click',()=>{c.xp+=4;c.gold+=5;c.quest='turned';levelCheck(c);save();closeModal();world()})}
+function enemyGroup(){modal(`<h3>Grupo enemigo</h3><p>🐗 <b>Jabalí</b> · Vida 10<br>🗡️ <b>Bandido con Daga</b> · Vida 8<br>🏹 <b>Bandido con Ballesta</b> · Vida 8</p><p class="small">Entrar al combate iniciará el encuentro táctico.</p><div class="actions"><button id="fight">Combatir</button><button class="secondary" onclick="closeModal()">Cancelar</button></div>`,false);$('#fight').onclick=()=>{closeModal();battleStart()}}
+let B=null;const obs=new Set(['3,3','3,4','6,5','6,6','7,6']);
+function unit(id,name,icon,x,y,hp,ini,pa,pm,type){return{id,name,icon,x,y,hp,max:hp,shield:0,ini,pa,maxPa:pa,pm,maxPm:pm,type,alive:true,wound:0,poison:0,cd:{},uses:{}}}
+function battleStart(){let c=hero();B={round:1,turn:0,selectedAction:'move',timer:30,timerId:null,log:[],units:[unit('hero',c.name,'⚔️',1,5,c.hp,initiative(c),4,3,'hero'),unit('boar','Jabalí','🐗',8,8,10,3,3,3,'boar'),unit('dagger','Bandido con Daga','🗡️',4,5,8,3,3,3,'dagger'),unit('cross','Bandido con Ballesta','🏹',7,3,8,2,3,3,'cross')]};let ties=B.units.filter(u=>u.ini===3).sort(()=>Math.random()-.5);B.order=['hero',...ties.map(u=>u.id),'cross'];beginTurn()}
+function cur(){return B.units.find(u=>u.id===B.order[B.turn])}function getU(id){return B.units.find(u=>u.id===id)}function occupied(x,y){return B.units.find(u=>u.alive&&u.x===x&&u.y===y)}function free(x,y){return x>=0&&y>=0&&x<10&&y<10&&!obs.has(`${x},${y}`)&&!occupied(x,y)}function md(a,b){return Math.abs(a.x-b.x)+Math.abs(a.y-b.y)}function adj8(a,b){return Math.max(Math.abs(a.x-b.x),Math.abs(a.y-b.y))===1}
+function beginTurn(){clearInterval(B.timerId);while(!cur()?.alive){B.turn++;if(B.turn>=B.order.length){B.turn=0;B.round++} }let u=cur();u.pa=u.maxPa;u.pm=u.maxPm;u.uses={};for(let k in u.cd)if(u.cd[k]>0)u.cd[k]--;if(u.type==='hero'&&t(hero(),'guard'))u.shield+=2;tickStates(u);if(!u.alive){nextTurn();return}B.timer=30;renderBattle();B.timerId=setInterval(()=>{B.timer--;let el=$('#timer');if(el)el.textContent=B.timer+'s';if(B.timer<=0)nextTurn()},1000);if(u.type!=='hero')setTimeout(enemyAI,550)}
+function tickStates(u){if(u.wound>0)damage(u,1,false);if(u.poison>0){damage(u,u.poison,false);u.poison=Math.max(0,u.poison-1)}}function nextTurn(){clearInterval(B.timerId);if(checkBattleEnd())return;B.turn++;if(B.turn>=B.order.length){B.turn=0;B.round++}beginTurn()}
+function renderBattle(){let u=cur(),tiles='';let moves=u.type==='hero'&&B.selectedAction==='move'?reachable(u,u.pm):new Set();for(let y=0;y<10;y++)for(let x=0;x<10;x++){let z=occupied(x,y),classes=['tile'];if(obs.has(`${x},${y}`))classes.push('obstacle');if(moves.has(`${x},${y}`))classes.push('move');if(z?.id===u.id)classes.push('selected');if(u.type==='hero'&&B.selectedAction!=='move'&&validTargetTile(x,y,B.selectedAction))classes.push('target');tiles+=`<div class="${classes.join(' ')}" data-x="${x}" data-y="${y}">${z?`${z.icon}<span class="unit-badge">${z.hp}${z.shield?'+'+z.shield+'🛡️':''}</span>`:''}</div>`}let order=B.order.map(id=>{let z=getU(id);return`<span class="turn-chip ${z.id===u.id?'current':''}" style="opacity:${z.alive?1:.35}">${z.icon} ${z.ini}</span>`}).join('');app.innerHTML=`<section class="screen"><div class="topbar"><b>Ronda ${B.round} · ${u.icon} ${esc(u.name)}</b><span>⏱️ <b id="timer">${B.timer}s</b></span></div><div class="card"><div class="turn-order">${order}</div><p class="small">${u.type==='hero'?`PA ${u.pa}/${u.maxPa} · PM ${u.pm}/${u.maxPm} · ❤️ ${u.hp}/${u.max} · 🛡️ ${u.shield}`:'Turno enemigo…'}</p></div><div class="battle-grid" id="battleGrid">${tiles}</div>${u.type==='hero'?`<div class="combat-ui"><div class="skillbar"><button data-act="move">Mover</button><button data-act="normal">A.N. 1 PA</button><button data-act="power">Golpe Potenciado 2 PA</button><button data-act="cut">Corte 2 PA</button><button id="block">Bloqueo +3 🛡️</button><button class="secondary" id="end">Fin turno</button></div><p class="small">Acción: <b>${actionName(B.selectedAction)}</b>. Tocá una casilla válida.</p></div>`:''}<div class="card small">${B.log.slice(-3).join('<br>')||'Comienza el combate.'}</div></section>`;$('#battleGrid').onclick=battleTap;document.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>{B.selectedAction=b.dataset.act;renderBattle()});$('#block')?.addEventListener('click',()=>{let h=getU('hero');if(h.pa<1||h.uses.block>=2)return toast('No podés usar Bloqueo.');h.pa--;h.shield+=3;h.uses.block=(h.uses.block||0)+1;B.log.push('⚔️ Bloqueo: +3 Escudo.');renderBattle()});$('#end')?.addEventListener('click',nextTurn)}
+function actionName(a){return({move:'Mover',normal:'Ataque Normal',power:'Golpe Potenciado',cut:'Corte'})[a]||a}function reachable(u,pm){let seen=new Map([[`${u.x},${u.y}`,0]]),q=[[u.x,u.y]];while(q.length){let [x,y]=q.shift(),d=seen.get(`${x},${y}`);if(d>=pm)continue;for(let [dx,dy] of [[1,0],[-1,0],[0,1],[0,-1]]){let nx=x+dx,ny=y+dy,k=`${nx},${ny}`;if(free(nx,ny)&&!seen.has(k)){seen.set(k,d+1);q.push([nx,ny])}}}seen.delete(`${u.x},${u.y}`);return new Set(seen.keys())}
+function validTargetTile(x,y,a){let h=getU('hero'),z=occupied(x,y);return z&&z.type!=='hero'&&z.alive&&adj8(h,z)&&((a==='normal'&&h.pa>=1)||(a==='power'&&h.pa>=2&&(h.uses.power||0)<1)||(a==='cut'&&h.pa>=2&&(h.uses.cut||0)<2))}
+function battleTap(e){let tile=e.target.closest('.tile');if(!tile||cur().type!=='hero')return;let x=+tile.dataset.x,y=+tile.dataset.y,h=getU('hero');if(B.selectedAction==='move'){let reach=reachable(h,h.pm);if(!reach.has(`${x},${y}`))return;let path=gridPath(h,{x,y});if(!path.length)return;let old={x:h.x,y:h.y},cost=path.length-1;h.x=x;h.y=y;h.pm-=cost;enemyAoO(old,h);B.log.push(`⚔️ se mueve ${cost} casilla${cost!==1?'s':''}.`);renderBattle();return}let z=occupied(x,y);if(!z||!validTargetTile(x,y,B.selectedAction))return;if(B.selectedAction==='normal'){h.pa--;hit(h,z,baseDamage(hero()),'Ataque Normal')}if(B.selectedAction==='power'){h.pa-=2;h.uses.power=1;let broken=Math.min(3,z.shield);z.shield-=broken;hit(h,z,baseDamage(hero())+2,`Golpe Potenciado${broken?` (rompe ${broken} Escudo)`:''}`)}if(B.selectedAction==='cut'){h.pa-=2;h.uses.cut=(h.uses.cut||0)+1;hit(h,z,baseDamage(hero()),'Corte');if(z.alive)z.wound=1}renderBattle();checkBattleEnd()}
+function gridPath(a,b){let q=[[a.x,a.y]],prev=new Map([[`${a.x},${a.y}`,null]]);while(q.length){let [x,y]=q.shift();if(x===b.x&&y===b.y)break;for(let [dx,dy]of[[1,0],[-1,0],[0,1],[0,-1]]){let nx=x+dx,ny=y+dy,k=`${nx},${ny}`;if(nx<0||ny<0||nx>=10||ny>=10||obs.has(k)||prev.has(k)||(occupied(nx,ny)&&!(nx===b.x&&ny===b.y)))continue;prev.set(k,[x,y]);q.push([nx,ny])}}let k=`${b.x},${b.y}`;if(!prev.has(k))return[];let p=[b.x,b.y],out=[];while(p){out.push(p);p=prev.get(`${p[0]},${p[1]}`)}return out.reverse()}
+function enemyAoO(old,h){for(let e of B.units.filter(z=>z.alive&&z.type!=='hero')){let was=Math.abs(e.x-old.x)+Math.abs(e.y-old.y)===1,now=Math.abs(e.x-h.x)+Math.abs(e.y-h.y)===1;if(was&&!now){let dmg=e.type==='dagger'?3:2;hit(e,h,dmg,'Ataque de Oportunidad')}}}
+function hit(a,b,n,label){damage(b,n,true);B.log.push(`${a.icon} ${label}: ${n} daño a ${b.icon}.`)}function damage(u,n,useShield=true){if(useShield&&u.shield){let s=Math.min(u.shield,n);u.shield-=s;n-=s}u.hp-=n;if(u.hp<=0){u.hp=0;u.alive=false;B.log.push(`${u.icon} queda Fuera de Combate.`)}}
+function clearLine(a,b){if(a.x!==b.x&&a.y!==b.y)return false;let dx=Math.sign(b.x-a.x),dy=Math.sign(b.y-a.y),x=a.x+dx,y=a.y+dy;while(x!==b.x||y!==b.y){if(obs.has(`${x},${y}`)||occupied(x,y))return false;x+=dx;y+=dy}return true}
+function enemyAI(){if(!B||cur().type==='hero')return;let e=cur(),h=getU('hero');if(!h.alive)return nextTurn();let acted=false;if(e.type==='cross'){while(e.pa>0&&h.alive){if(md(e,h)<=2&&clearLine(e,h)){if(!e.uses.slow){e.pa--;e.uses.slow=1;damage(h,2,true);h.pm=Math.max(0,h.pm-1);B.log.push('🏹 Tiro Ralentizador: 2 daño y -1 PM.')}else if(!e.uses.sure){e.pa--;e.uses.sure=1;damage(h,3,false);B.log.push('🏹 Tiro Certero: 3 daño directo a Vida.')}else{e.pa--;hit(e,h,2,'Ataque Normal')}acted=true}else break}}else if(e.type==='dagger'){if(adj8(e,h)&&e.pa>=2){e.pa-=2;hit(e,h,3,'Corte');h.wound=1;acted=true}else if(e.pa>=2&&md(e,h)<=2){e.pa-=2;h.poison=Math.max(h.poison,2);B.log.push('🗡️ Granada Tóxica: Veneno 2.');acted=true}}else if(e.type==='boar'&&e.pa>=1&&e.x===h.x||e.type==='boar'&&e.pa>=1&&e.y===h.y){if(md(e,h)>=2&&md(e,h)<=3&&clearLine(e,h)){let dx=Math.sign(h.x-e.x),dy=Math.sign(h.y-e.y);for(let i=0;i<2;i++)if(free(e.x+dx,e.y+dy)){e.x+=dx;e.y+=dy}e.pa--;if(adj8(e,h)){hit(e,h,4,'Embestida');acted=true}}}
+ if(!acted&&e.pm>0&&!adj8(e,h)){let path=gridPath(e,h);if(path.length>1){let steps=Math.min(e.pm,Math.max(0,path.length-2));for(let i=1;i<=steps;i++){e.x=path[i][0];e.y=path[i][1]}e.pm-=steps}}if(h.alive&&adj8(e,h)){while(e.pa>0&&h.alive){if(e.type==='boar'&&e.pa>=2&&!e.uses.horn){e.pa-=2;e.uses.horn=1;hit(e,h,2,'Cornada');h.wound=1}else{e.pa--;hit(e,h,e.type==='dagger'?3:2,'Ataque Normal')}}}renderBattle();if(checkBattleEnd())return;setTimeout(nextTurn,650)}
+function checkBattleEnd(){let h=getU('hero'),enemies=B.units.filter(u=>u.type!=='hero');if(!h.alive){clearInterval(B.timerId);finishBattle(false);return true}if(enemies.every(e=>!e.alive)){clearInterval(B.timerId);finishBattle(true);return true}return false}
+function finishBattle(win){let c=hero(),defeated=B.units.filter(u=>u.type!=='hero'&&!u.alive);let xp=defeated.length*2,gold=0,drops=[];for(let e of defeated){if(e.type==='boar'){gold+=rand(1,2);roll(.4,'Piel de jabalí');roll(.15,'Colmillo de jabalí')}if(e.type==='dagger'){gold+=rand(2,4);roll(.1,'Daga oxidada');roll(.15,'Botas de tela')}if(e.type==='cross'){gold+=rand(2,4);roll(.1,'Ballesta rota');roll(.15,'Botas de tela')}}function roll(p,item){if(Math.random()<p)drops.push(item)}c.xp+=xp;c.gold+=gold;drops.forEach(i=>addItem(c,i));if(win){c.quest='done';c.hp=Math.max(1,getU('hero').hp);c.location='outskirts'}else{c.hp=1;c.location=c.startingPoint||'arca';c.worldPos.arca={x:355,y:270}}levelCheck(c);save();B=null;modal(`<h3>${win?'¡Victoria!':'Derrota'}</h3><p>EXP obtenida: <b>${xp}</b><br>Oro: <b>${gold}</b></p><div class="loot">${drops.length?drops.map(x=>'• '+x).join('<br>'):'Sin objetos adicionales.'}</div><p class="small">${win?'Regresá con el Maestro de Arca para entregar la misión.':'Conservás las recompensas de los enemigos derrotados. Volvés al Punto de Inicio con 1 Vida.'}</p><button id="continueWorld">Continuar</button>`,false);$('#continueWorld').onclick=()=>{closeModal();world()}}
+function rand(a,b){return a+Math.floor(Math.random()*(b-a+1))}function addItem(c,item){if(c.inventory.length<12)c.inventory.push(item);else toast(`${item} se perdió: mochila llena.`)}function levelCheck(c){if(c.level===1&&c.xp>=10){c.level=2;c.dev+=2;setTimeout(()=>alert('¡Nivel 2! Obtienes 2 Puntos de Desarrollo.'),50)}}
+function inventory(){let c=hero(),left=['helmet','weapon','armor','gloves','boots'],right=['offhand','amulet','ring1','ring2'];let slots=keys=>keys.map(k=>`<div class="slot"><b>${eqLabels[k]}</b><br><span class="small">${c.equipment[k]||'—'}</span></div>`).join('');let bag=Array.from({length:12},(_,i)=>`<div class="bag-slot">${c.inventory[i]?`🎒 ${c.inventory[i]}`:'—'}</div>`).join('');app.innerHTML=`<section class="screen"><div class="topbar"><b>Inventario</b><span>🪙 ${c.gold}</span></div><div class="card equip-layout"><div class="equip-col">${slots(left)}</div><div class="figure">🧍</div><div class="equip-col">${slots(right)}</div></div><div class="card"><b>Mochila básica · ${c.inventory.length}/12</b><div class="bag">${bag}</div></div><button class="secondary" id="back">Volver</button></section>`;$('#back').onclick=world}
+let draft=null,treeBranch=null;const defs={offense:[['offDamage','Daño base','+1 Daño base',3,null],['offLife','Vida','+2 Vida',5,'offDamage'],['offIni','Iniciativa','+1 Iniciativa',1,'offDamage'],['fury','Furia','Vida baja: aumenta daño',2,'offDamage']],defense:[['defLife','Vitalidad','+2 Vida',3,null],['opp','Ataque de Oportunidad','+1 daño',1,'defLife'],['guard','Guardia','+2 Escudo al iniciar turno',1,'defLife'],['defIni','Iniciativa','+1 Iniciativa',1,'defLife'],['robust','Robustez','+5 Vida',2,'vitalFull']]};
+function treeMenu(){let c=hero();draft=null;treeBranch=null;app.innerHTML=`<section class="screen"><div class="topbar"><b>Desarrollo</b><span>⭐ ${c.dev} puntos</span></div><p>Elegí un camino para abrir su árbol.</p><div class="branch-choice"><button class="branch" id="off">⚔️<br>OFENSIVA</button><button class="branch" id="def">🛡️<br>DEFENSA</button></div><button class="secondary" id="back">Volver</button></section>`;$('#off').onclick=()=>openTree('offense');$('#def').onclick=()=>openTree('defense');$('#back').onclick=world}
+function openTree(branch){let c=hero();treeBranch=branch;if(!draft)draft={tree:structuredClone(c.tree),points:c.dev,history:[]};let arr=defs[branch],rows=arr.map((d,i)=>{let [k,name,desc,max,req]=d,locked=req==='vitalFull'?draft.tree.defLife<3:req?draft.tree[req]<1:false,available=!locked&&draft.points>0&&draft.tree[k]<max;return`${i?'<div class="tree-line"></div>':''}<div class="tree-row"><button class="tree-node ${locked?'locked':available?'available':''}" data-node="${k}" ${locked||draft.tree[k]>=max?'disabled':''}><b>${name}</b><br><span class="small">${desc}</span><br>${draft.tree[k]}/${max}</button></div>`}).join('');app.innerHTML=`<section class="screen"><div class="topbar"><b>${branch==='offense'?'⚔️ Ofensiva':'🛡️ Defensa'}</b><span>⭐ ${draft.points} disponibles</span></div><div class="card tree-view">${rows}</div><div class="actions"><button id="undo" ${!draft.history.length?'disabled':''}>Deshacer</button><button id="confirm" ${!draft.history.length?'disabled':''}>Confirmar</button><button class="secondary" id="other">Cambiar camino</button><button class="secondary" id="cancelTree">Salir sin confirmar</button></div><p class="small">Los puntos son provisionales hasta tocar Confirmar. Después de confirmar no hay devolución por el momento.</p></section>`;document.querySelectorAll('[data-node]').forEach(b=>b.onclick=()=>draftSpend(b.dataset.node));$('#undo').onclick=draftUndo;$('#confirm').onclick=confirmTree;$('#other').onclick=treeMenu;$('#cancelTree').onclick=world}
+function draftSpend(k){let def=Object.values(defs).flat().find(x=>x[0]===k);if(!def||draft.points<1||draft.tree[k]>=def[3])return;let req=def[4];if(req==='vitalFull'&&draft.tree.defLife<3)return;if(req&&req!=='vitalFull'&&draft.tree[req]<1)return;draft.tree[k]++;draft.points--;draft.history.push(k);openTree(treeBranch)}function draftUndo(){let k=draft.history.pop();if(!k)return;draft.tree[k]--;draft.points++;openTree(treeBranch)}function confirmTree(){let c=hero();c.tree=structuredClone(draft.tree);c.dev=draft.points;c.hp=Math.min(c.hp,maxHp(c));save();draft=null;toast('Desarrollo confirmado.');treeMenu()}
+function rest(c){if(c.hp>=maxHp(c))return toast('Ya tenés la Vida completa.');modal(`<h3>Descanso</h3><p id="restText">Recuperando Vida… ${c.hp}/${maxHp(c)}</p><button id="stop">Terminar descanso</button>`,false);let timer=setInterval(()=>{if(c.hp<maxHp(c)){c.hp++;save();$('#restText').textContent=`Recuperando Vida… ${c.hp}/${maxHp(c)}`}else clearInterval(timer)},5000);$('#stop').onclick=()=>{clearInterval(timer);closeModal();world()}}
 home();

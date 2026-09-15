@@ -1,9 +1,1 @@
-{
-  "name": "Ghea Táctico",
-  "short_name": "Ghea Táctico",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#101713",
-  "theme_color": "#18231b",
-  "icons": []
-}
+{"name":"Ghea Táctico","short_name":"Ghea Táctico","start_url":"./","display":"standalone","background_color":"#101713","theme_color":"#18231b","description":"Prototipo 0.2 de Ghea Táctico"}
