@@ -1,4 +1,4 @@
-# Ghea Táctico 0.2.2
+# Ghea Táctico 0.2.3
 
 Versión de pulido del prototipo móvil.
 
@@ -14,3 +14,12 @@ Cambios principales:
 - Ajustes de marcadores, colores y altura visual.
 
 El guardado local de 0.2 se conserva.
+
+
+## 0.2.3
+- Movimiento animado casilla por casilla para Aventurero y enemigos.
+- Barras compactas de Vida sobre las unidades.
+- Indicador direccional de misión.
+- Interacción con equipo: ficha, desequipar y selección directa de slot compatible.
+- Espada básica y Daga oxidada pueden ir en mano principal o secundaria.
+- Furia visible en combate y aplicada al cálculo de daño.
