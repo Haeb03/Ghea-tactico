@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.12 — Bosque 30×30
+# Ghea Táctico v0.2.8.13 — Bosque 30×30
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -39,7 +39,7 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - No se modifican movimiento, alcance, IA ni reglas de combate.
 
 
-## v0.2.8.12 — Bosque del Oeste 30×30
+## v0.2.8.13 — Bosque del Oeste 30×30
 - Bosque del Oeste pasa a tablero lógico de 30×30 casillas (48 px por casilla en el prototipo).
 - Cámara/viewport móvil centrada en el Aventurero durante el movimiento.
 - Pathfinding generalizado para respetar dimensiones de cada escena.
@@ -47,10 +47,19 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - HUD de Vida/Escudo de combate elevado para no tapar la cara de la miniatura.
 - Sin arte nuevo: esta versión prueba estructura, cámara, movimiento y límites.
 
-## v0.2.8.12 — escala unificada y encuentro persistente
+## v0.2.8.13 — escala unificada y encuentro persistente
 - Bosque del Oeste mantiene 30×30, ahora con casillas de 64 px para aproximar la escala visual del combate.
 - La miniatura del Aventurero conserva una escala equivalente a la del tablero táctico.
 - Los grupos de jabalíes se muestran como miniaturas sobre peana, no como fichas circulares/emoji.
 - Al iniciar una manada se registra el sector 10×10 del mapa grande alrededor del encuentro (base para trasladar terreno/obstáculos en la siguiente etapa visual).
 - Tras vencer una manada, ese encuentro queda eliminado del mapa para ese Aventurero.
 - Al terminar el combate se conserva la posición de exploración y se vuelve al mismo mapa.
+
+
+## v0.2.8.13 — zoom táctil y HUD compacto
+- Bosque 30×30: pellizco con dos dedos para acercar/alejar.
+- Botones −/+ como alternativa y porcentaje visible.
+- Zoom persistente por personaje, con límites 42%–115%.
+- Cámara centrada en Aron y limitada a los bordes del mapa.
+- El zoom y la posición se conservan al regresar del combate.
+- HUD de Vida/Escudo contenido dentro de la casilla de cada combatiente para no invadir casillas vecinas.

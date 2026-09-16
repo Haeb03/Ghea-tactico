@@ -282,3 +282,13 @@ button:active{transform:translateY(1px)}
 /* La cámara móvil ve aproximadamente 10 casillas de ancho en un teléfono típico. */
 .world-wrap.world-camera{height:min(100vw,640px);max-height:640px}
 @media(max-width:520px){.world.map-west{width:1920px!important;height:1920px!important}.world-wrap.world-camera{height:92vw;min-height:320px;max-height:520px}}
+
+/* 0.2.8.13 — cámara de exploración con zoom + HUD compacto por casilla */
+.world-zoom-controls{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 8px;position:relative;z-index:9}
+.world-zoom-controls button{width:42px;height:36px;padding:0;font-size:24px;line-height:1}
+.world-zoom-controls span{min-width:54px;text-align:center;font-size:12px;font-weight:800;background:#101713cc;border:1px solid #50624f;border-radius:8px;padding:5px 7px}
+.world-wrap.world-camera{touch-action:pan-x pan-y;scroll-behavior:smooth}
+/* El HUD vive dentro de la casilla de su dueño: no invade la casilla superior. */
+.visual-battle .unit-vitals{top:1px!important;left:4%!important;right:4%!important;max-width:92%!important;font-size:8px!important;line-height:11px!important;padding:0 2px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important;z-index:8!important}
+.visual-battle .unit-hp{top:13px!important;left:10%!important;right:10%!important;height:4px!important;z-index:8!important}
+.visual-battle .unit-states{top:18px!important;z-index:8!important;font-size:9px!important}
