@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.6 — Miniaturas
+# Ghea Táctico v0.2.8.7 — Miniaturas
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -14,3 +14,12 @@ Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas de
 
 ## Assets
 Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega no las duplica porque ya fueron subidas al repositorio.
+
+
+## v0.2.8.7 — corrección visual
+- Eliminado el rectángulo/casilla coloreada que aparecía detrás de la miniatura activa en combate.
+- Eliminado el recuadro de fondo/borde del Guerrero en Exploración.
+- Contenedores visuales desacoplados del tamaño de la imagen para evitar que la miniatura se estire con la casilla.
+- La miniatura mantiene proporción y queda anclada por la peana abajo-centro.
+- Esta revisión no agrega todavía imágenes nuevas de tablero, árbol ni roca; quedan para la siguiente etapa visual.
+- Próximo sistema planificado: Exploración piloto 30×30 y combate como recorte 10×10 del mismo tablero.

@@ -161,3 +161,15 @@ button:active{transform:translateY(1px)}
 .visual-battle .unit-hp{top:-5px!important;left:8%!important;right:8%!important;height:6px!important;border:1px solid #090909!important;background:#251010!important;z-index:6!important}
 .visual-battle .unit-hp i{background:linear-gradient(#f4544e,#ad201f)!important}
 .visual-battle .unit-states{top:-27px!important}
+
+/* 0.2.8.7 — corrección de contenedores de miniaturas (sin assets nuevos) */
+/* La casilla activa ya no dibuja un rectángulo detrás de la miniatura. */
+.visual-battle .tile.selected{box-shadow:none!important;background:transparent!important}
+.visual-battle .tile.selected .unit-piece{filter:drop-shadow(0 0 4px rgba(217,239,255,.85)) drop-shadow(0 4px 3px #0009)}
+/* El contenedor ocupa la casilla sólo para posicionar; la imagen conserva proporción y ancla la peana abajo-centro. */
+.visual-battle .unit-piece{position:absolute;inset:0;display:grid;place-items:end center;overflow:visible;background:transparent!important}
+.visual-battle .unit-icon{position:absolute;inset:0;width:100%!important;height:100%!important;display:grid!important;place-items:end center!important;overflow:visible!important;background:transparent!important}
+.visual-battle .combat-sprite{width:auto!important;height:118%!important;max-width:138%!important;object-fit:contain!important;object-position:center bottom!important}
+/* Exploración: sin tarjeta/recuadro alrededor del Guerrero. */
+.visual-world .hero-world.miniature-world{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important;outline:0!important}
+.visual-world .hero-world.miniature-world img{display:block;width:auto!important;height:100%!important;max-width:100%!important;object-fit:contain!important;object-position:center bottom!important}
