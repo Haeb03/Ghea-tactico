@@ -149,3 +149,15 @@ button:active{transform:translateY(1px)}
 .hero-sprite,.enemy-sprite{width:94%;height:94%;max-width:none;max-height:none}
 .unit-icon{display:block;width:100%;height:100%}
 .unit-piece.corpse .combat-sprite{filter:grayscale(1) drop-shadow(0 3px 2px #0009)}
+
+/* 0.2.8.6 — miniaturas de mesa + HUD compacto */
+.miniature-world{background:transparent!important;border-radius:0!important;width:64px!important;height:76px!important;transition:left .09s linear,top .09s linear;overflow:visible}
+.miniature-world img{width:100%;height:100%;object-fit:contain;object-position:center bottom;pointer-events:none;filter:drop-shadow(0 4px 3px #0009)}
+.visual-battle .combat-sprite{width:128%;height:128%;object-fit:contain;object-position:center bottom;transform:none!important;filter:drop-shadow(0 3px 2px #0009)}
+.visual-battle .unit-icon{overflow:visible;display:grid;place-items:end center}
+.deploy-hero{width:100%;height:100%;display:grid;place-items:end center;overflow:visible}
+.deploy-hero .hero-sprite{width:128%;height:128%;object-fit:contain;object-position:center bottom;transform:none!important}
+.visual-battle .unit-vitals{position:absolute;left:50%;top:-15px;transform:translateX(-50%);z-index:7;background:#0b100de8;border:1px solid #82795e;border-radius:6px;padding:1px 4px;font-size:8px;line-height:1.2;white-space:nowrap;color:#fff;text-shadow:none}
+.visual-battle .unit-hp{top:-5px!important;left:8%!important;right:8%!important;height:6px!important;border:1px solid #090909!important;background:#251010!important;z-index:6!important}
+.visual-battle .unit-hp i{background:linear-gradient(#f4544e,#ad201f)!important}
+.visual-battle .unit-states{top:-27px!important}
