@@ -341,20 +341,3 @@ button:active{transform:translateY(1px)}
 .fighter-main{min-width:0;flex:1}.fighter-name{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}.fighter-name b{font-size:14px}.fighter-name small{font-size:10px;opacity:.75}
 .fighter-vitals{display:flex;gap:8px;flex-wrap:wrap;margin-top:3px;font-size:11px}.fighter-states{margin-top:3px;font-size:9px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 @media(max-width:520px){.fighter-panel{margin:6px 0;padding:6px 7px}.fighter-avatar{width:46px;height:46px;flex-basis:46px}.fighter-vitals{gap:6px;font-size:10px}}
-\n\n/* 0.2.8.17 — colisiones del mundo + obstáculos lógicos + HUD refinado */
-.world-prop{position:absolute;z-index:4;display:grid;place-items:center;pointer-events:none;transform:none!important;border-radius:12px;background:rgba(63,78,45,.36);box-shadow:inset 0 0 0 2px rgba(245,225,150,.55)}
-.world-prop:after{font-size:38px;filter:drop-shadow(0 3px 2px #0008)}
-.prop-tree:after{content:'🌳'}.prop-rock:after{content:'🪨'}.prop-bush:after{content:'🌿'}.prop-stump:after{content:'🪵'}.prop-fence:after{content:'🪵'}
-.visual-battle .tile.obstacle-wall:after{content:'▦'!important;background:none!important;font-size:24px;color:#d5c9a5;display:grid;place-items:center;inset:0!important}
-.visual-battle .tile.obstacle-bush:after{content:'🌿'!important;background:none!important;font-size:26px;display:grid;place-items:center;inset:0!important}
-.visual-battle .tile.obstacle-stump:after,.visual-battle .tile.obstacle-fence:after{content:'🪵'!important;background:none!important;font-size:25px;display:grid;place-items:center;inset:0!important}
-.visual-battle .tile.obstacle-tree:after{content:'🌳'!important;background:none!important;font-size:31px;display:grid;place-items:center;inset:-12%!important}
-.visual-battle .tile.obstacle-rock:after{content:'🪨'!important;background:none!important;font-size:28px;display:grid;place-items:center;inset:0!important}
-/* Vida: arriba de la miniatura, sin taparla. */
-.visual-battle .unit-vitals{top:-18px!important;font-size:7px!important;line-height:9px!important;background:rgba(8,12,9,.68)!important}
-.visual-battle .unit-hp{top:-8px!important;left:20%!important;right:20%!important;height:3px!important}
-/* Avatar: rostro centrado dentro del círculo. */
-.fighter-avatar img{width:185%!important;height:185%!important;object-fit:contain!important;object-position:center 8%!important;transform:translateY(2%)!important}
-/* Movimiento: relleno suave + borde muy legible. */
-.visual-battle .tile.move{background:rgba(95,190,104,.16)!important;box-shadow:inset 0 0 0 2px rgba(119,232,130,.92),inset 0 0 12px rgba(82,180,92,.25)!important}
-.visual-battle .tile.deploy{background:rgba(73,108,130,.20)!important;box-shadow:inset 0 0 0 2px rgba(143,198,232,.95)!important}
