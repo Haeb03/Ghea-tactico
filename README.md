@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.10 — Alineación de casillas
+# Ghea Táctico v0.2.8.11 — Bosque 30×30
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -37,3 +37,12 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Ajuste visual puntual: el centro de la peana se alinea con el centro de la casilla lógica.
 - Se conserva la corrección 10×10 y los resaltados 1×1 de v0.2.8.8.
 - No se modifican movimiento, alcance, IA ni reglas de combate.
+
+
+## v0.2.8.11 — Bosque del Oeste 30×30
+- Bosque del Oeste pasa a tablero lógico de 30×30 casillas (48 px por casilla en el prototipo).
+- Cámara/viewport móvil centrada en el Aventurero durante el movimiento.
+- Pathfinding generalizado para respetar dimensiones de cada escena.
+- Arca, Afueras e interiores conservan sus dimensiones actuales.
+- HUD de Vida/Escudo de combate elevado para no tapar la cara de la miniatura.
+- Sin arte nuevo: esta versión prueba estructura, cámara, movimiento y límites.

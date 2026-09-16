@@ -259,3 +259,15 @@ button:active{transform:translateY(1px)}
 .visual-battle .deploy-hero .hero-sprite{
   transform:translateY(-50%)!important;
 }
+
+
+/* 0.2.8.11 — prototipo Bosque del Oeste 30×30 + cámara móvil */
+.world-wrap.world-camera{height:min(78vw,520px);max-height:520px;overflow:hidden;position:relative;scroll-behavior:smooth;touch-action:manipulation}
+.world.map-west{width:1440px!important;height:1440px!important;background-color:#29442e;background-image:linear-gradient(#ffffff12 1px,transparent 1px),linear-gradient(90deg,#ffffff12 1px,transparent 1px),linear-gradient(#29442edd,#29442edd)!important;background-size:48px 48px,48px 48px,100% 100%!important;background-position:0 0!important}
+.map-west .west-road{position:absolute;left:0;right:0;top:672px;height:144px;background:#9a835b;border-top:2px solid #806b49;border-bottom:2px solid #806b49;z-index:0}
+.map-west .miniature-world{width:48px;height:48px}
+@media(max-width:520px){.world.map-west{width:1440px!important;height:1440px!important}.world-wrap.world-camera{height:72vw;min-height:300px;max-height:430px}}
+/* HUD: Vida/Escudo por encima de la cabeza, sin tapar la miniatura. */
+.visual-battle .unit-vitals{top:-31px!important}
+.visual-battle .unit-hp{top:-20px!important}
+.visual-battle .unit-states{top:-44px!important}
