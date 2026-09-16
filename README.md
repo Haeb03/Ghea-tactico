@@ -54,7 +54,15 @@ El guardado local de 0.2 se conserva.
 - Armadura de cuero de jabalí: +3 Vida máxima, venta 10.
 
 
-## 0.2.7.2 — Corrección
+## 0.2.7.3 — Corrección
 - Corrige el bloqueo al finalizar combates de jabalíes con cadáveres persistentes.
 - El combate ahora muestra la Vida máxima real del personaje (base + Desarrollo + equipo) sin curarlo al entrar.
 - Conserva nivel, EXP, Desarrollo, inventario y equipo guardados.
+
+### 0.2.7.3
+- Reubicación de comercios de Arca y Guardia Oeste para despejar accesos.
+- Tienda de artículos: Poción de Vida Básica (3 oro), Antídoto (2), Vendas (2).
+- Compra consecutiva sin cerrar la tienda y venta múltiple en una sola operación.
+- Herida, Veneno y Quemadura preparados como estados acumulables con contador.
+- Mover cuerpo: levantar (1 PA), transportar (2 PM/casilla), soltar adyacente (0 PA), sin ataques mientras se carga.
+- Se conserva Embestida del Jabalí de alcance 2 en línea recta y las herramientas de prueba.
