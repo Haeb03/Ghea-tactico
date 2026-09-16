@@ -302,3 +302,8 @@ button:active{transform:translateY(1px)}
 .visual-battle .unit-vitals{top:2px!important;left:2px!important;right:auto!important;max-width:94%!important;transform:none!important;font-size:7.5px!important;line-height:10px!important;padding:0 2px!important;border-radius:4px!important;white-space:nowrap!important;overflow:visible!important;z-index:8!important}
 .visual-battle .unit-hp{top:13px!important;left:6%!important;right:6%!important;height:4px!important;z-index:8!important}
 .visual-battle .unit-states{top:18px!important;z-index:8!important;font-size:9px!important}
+
+
+/* 0.2.8.15 — Afueras de Arca Oeste: fondo 30x30 aprobado */
+.world.map-west{background-color:#6f934f!important;background-image:linear-gradient(#ffffff12 1px,transparent 1px),linear-gradient(90deg,#ffffff12 1px,transparent 1px),url('assets/afueras-arca-oeste.png')!important;background-size:64px 64px,64px 64px,100% 100%!important;background-position:0 0,0 0,0 0!important;background-repeat:repeat,repeat,no-repeat!important;}
+.map-west .west-road{display:none!important;}

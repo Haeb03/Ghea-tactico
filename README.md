@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.14 — Cámara libre + HUD
+# Ghea Táctico v0.2.8.15 — Afueras de Arca — Oeste
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -73,3 +73,12 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - La cámara ya no sigue automáticamente al Aventurero mientras camina.
 - Se guardan zoom y posición de cámara para recuperar la vista al volver del combate.
 - HUD de combate vuelve a mostrar Vida + Escudo cuando corresponde y queda compacto dentro de la casilla de su unidad.
+
+
+## v0.2.8.15 — Afueras de Arca — Oeste
+- Integrado el fondo aprobado de la llanura exterior occidental de Arca en el tablero de exploración 30×30.
+- La muralla y la Puerta Oeste forman parte del fondo fijo.
+- Se conserva la cuadrícula lógica de 64 px por casilla sobre el arte.
+- Se retiraron los obstáculos provisionales de esta escena; árboles, rocas y otros elementos tácticos se incorporarán después como piezas independientes.
+- Se conserva sin cambios la cámara libre: arrastre con un dedo, zoom con dos dedos y botón de centrado.
+- No se modificaron las mecánicas de combate.

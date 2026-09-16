@@ -1,6 +1,6 @@
-const CACHE='ghea-tactico-02814-free-camera';
+const CACHE='ghea-tactico-02815-afueras-arca-oeste';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
-'./assets/terreno-bosque.png','./assets/obstaculo-roca.png','./assets/obstaculo-arbol.png',
+'./assets/terreno-bosque.png','./assets/afueras-arca-oeste.png','./assets/obstaculo-roca.png','./assets/obstaculo-arbol.png',
 './assets-miniaturas/guerrero-humano-abajo.png','./assets-miniaturas/guerrero-humano-arriba.png','./assets-miniaturas/guerrero-humano-izquierda.png','./assets-miniaturas/guerrero-humano-derecha.png',
 './assets-miniaturas/jabali-abajo.png','./assets-miniaturas/jabali-arriba.png','./assets-miniaturas/jabali-izquierda.png','./assets-miniaturas/jabali-derecha.png',
 './assets-miniaturas/bandido-daga-abajo.png','./assets-miniaturas/bandido-daga-arriba.png','./assets-miniaturas/bandido-daga-izquierda.png','./assets-miniaturas/bandido-daga-derecha.png',
