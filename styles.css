@@ -162,3 +162,6 @@ button:active{transform:translateY(1px)}
 /* 0.2.8.3 — prueba aislada de caminata en Exploración */
 .visual-world .hero-world{width:58px;height:58px;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible;transition:left .14s linear,top .14s linear;filter:none}
 .world-hero-sprite{width:76px;height:76px;object-fit:contain;display:block;pointer-events:none;filter:drop-shadow(0 4px 3px #0008)}
+/* 0.2.8.4 — sprite del Guerrero visible en Exploración */
+.visual-world .hero-world{background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
+.visual-world .hero-world .world-hero-sprite{width:82px;height:82px;max-width:none;object-fit:contain;display:block;pointer-events:none;transform:translateY(-8px);filter:drop-shadow(0 4px 3px #0008)}
