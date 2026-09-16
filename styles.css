@@ -307,3 +307,37 @@ button:active{transform:translateY(1px)}
 /* 0.2.8.15 — Afueras de Arca Oeste: fondo 30x30 aprobado */
 .world.map-west{background-color:#6f934f!important;background-image:linear-gradient(#ffffff12 1px,transparent 1px),linear-gradient(90deg,#ffffff12 1px,transparent 1px),url('assets/afueras-arca-oeste.png')!important;background-size:64px 64px,64px 64px,100% 100%!important;background-position:0 0,0 0,0 0!important;background-repeat:repeat,repeat,no-repeat!important;}
 .map-west .west-road{display:none!important;}
+
+
+/* 0.2.8.16 — tablero 30x30 -> sector táctico 10x10 + HUD limpio */
+/* Cuadrícula de exploración: visible pero discreta, siempre por encima del arte. */
+.world.map-west{
+  background-image:linear-gradient(rgba(245,245,220,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(245,245,220,.28) 1px,transparent 1px),url('assets/afueras-arca-oeste.png')!important;
+  background-size:64px 64px,64px 64px,100% 100%!important;
+  background-position:0 0,0 0,0 0!important;
+}
+/* El combate usa el mismo mapa 30x30 ampliado 3x y desplazado al origen del sector 10x10. */
+.visual-battle.sector-west{
+  background-image:url('assets/afueras-arca-oeste.png')!important;
+  background-size:300% 300%!important;
+  background-position:var(--sector-x,50%) var(--sector-y,50%)!important;
+  background-repeat:no-repeat!important;
+}
+.visual-battle.sector-west:before{background:transparent!important}
+.visual-battle.sector-west .tile{background:transparent;border-color:rgba(245,245,220,.30)}
+/* Sobre la miniatura sólo vida actual/máxima + barra fina. */
+.visual-battle .unit-vitals{
+  top:1px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  background:rgba(10,14,11,.58)!important;border:0!important;border-radius:3px!important;
+  padding:0 2px!important;font-size:7px!important;line-height:9px!important;max-width:none!important;
+  overflow:visible!important;color:#fff!important;box-shadow:none!important;z-index:9!important;
+}
+.visual-battle .unit-hp{top:11px!important;left:17%!important;right:17%!important;height:3px!important;border:0!important;background:rgba(20,8,8,.65)!important;border-radius:3px!important;z-index:9!important}
+.visual-battle .unit-states{display:none!important}
+/* Ficha de información: toda la información detallada sale del tablero. */
+.fighter-panel{display:flex;gap:9px;align-items:center;margin:8px 0;padding:8px 9px;background:linear-gradient(180deg,#1b241dcc,#101713e8);border:1px solid #6d745e;border-radius:12px;box-shadow:0 5px 14px #0005}
+.fighter-avatar{width:54px;height:54px;flex:0 0 54px;border-radius:50%;overflow:hidden;border:2px solid #a89158;background:#253126;display:grid;place-items:center}
+.fighter-avatar img{width:150%;height:150%;object-fit:contain;object-position:center 16%;transform:translateY(15%)}
+.fighter-main{min-width:0;flex:1}.fighter-name{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}.fighter-name b{font-size:14px}.fighter-name small{font-size:10px;opacity:.75}
+.fighter-vitals{display:flex;gap:8px;flex-wrap:wrap;margin-top:3px;font-size:11px}.fighter-states{margin-top:3px;font-size:9px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:520px){.fighter-panel{margin:6px 0;padding:6px 7px}.fighter-avatar{width:46px;height:46px;flex-basis:46px}.fighter-vitals{gap:6px;font-size:10px}}
