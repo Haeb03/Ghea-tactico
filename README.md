@@ -1,4 +1,4 @@
-# Ghea Táctico 0.2.8.0 — Primer salto visual
+# Ghea Táctico 0.2.8.1 — Primer salto visual
 
 Primera pasada visual sobre la base estable 0.2.7.4.
 
