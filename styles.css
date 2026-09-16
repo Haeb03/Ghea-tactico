@@ -158,7 +158,3 @@ button:active{transform:translateY(1px)}
 .visual-battle .unit-hp{left:7%;right:7%;top:2px;height:7px;overflow:visible;z-index:7}
 .visual-battle .unit-hp-text{position:absolute;left:50%;top:-15px;transform:translateX(-50%);z-index:8;white-space:nowrap;font-size:10px;font-weight:900;line-height:1;color:#fff;text-shadow:-1px -1px 1px #000,1px -1px 1px #000,-1px 1px 1px #000,1px 1px 1px #000;pointer-events:none}
 .visual-battle .unit-hp-text b{font-size:9px;color:#dcecff}
-
-/* Exploration walking sprite test */
-.visual-world .hero-world{width:58px;height:58px;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible;transition:left .14s linear,top .14s linear;filter:none}
-.world-hero-sprite{width:76px;height:76px;object-fit:contain;display:block;pointer-events:none;filter:drop-shadow(0 4px 3px #0008)}
