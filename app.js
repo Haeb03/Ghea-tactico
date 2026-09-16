@@ -53,7 +53,9 @@ let B=null,battleAnimating=false;const obs=new Set(['3,3','3,4','6,5','6,6','7,6
 const obstacleVisual={'3,3':'rock','3,4':'tree','6,5':'tree','6,6':'rock','7,6':'tree'};
 function obstacleClass(k){return obstacleVisual[k]==='rock'?'obstacle-rock':'obstacle-tree'}
 function heroSprite(u){return `assets/guerrero-humano-${u?.facing||'abajo'}.png`}
-function unitVisual(z){return z?.type==='hero'?`<img class="hero-sprite" src="${heroSprite(z)}" alt="">`:z?.icon||''}
+function enemySprite(u){let base={boar:'jabali',dagger:'bandido-daga',cross:'bandido-ballesta'}[u?.type];return base?`assets/${base}-${u?.facing||'abajo'}.png`:null}
+function unitVisual(z){let src=z?.type==='hero'?heroSprite(z):enemySprite(z);return src?`<img class="combat-sprite ${z.type==='hero'?'hero-sprite':'enemy-sprite'}" src="${src}" alt="">`:z?.icon||''}
+function faceTarget(u,t){let dx=t.x-u.x,dy=t.y-u.y;if(Math.abs(dx)>Math.abs(dy))u.facing=dx>0?'derecha':'izquierda';else if(Math.abs(dy)>0)u.facing=dy>0?'abajo':'arriba'}
 function faceStep(u,old){let dx=u.x-old.x,dy=u.y-old.y;if(dx>0)u.facing='derecha';else if(dx<0)u.facing='izquierda';else if(dy>0)u.facing='abajo';else if(dy<0)u.facing='arriba'}
 function faceOrthogonalTarget(u,t){let dx=t.x-u.x,dy=t.y-u.y;if(dx===0&&dy!==0)u.facing=dy>0?'abajo':'arriba';else if(dy===0&&dx!==0)u.facing=dx>0?'derecha':'izquierda'}
 function unit(id,name,icon,x,y,hp,ini,pa,pm,type){return{id,name,icon,x,y,hp,max:hp,shield:0,ini,pa,maxPa:pa,pm,maxPm:pm,type,alive:true,wound:0,poison:0,burn:0,facing:'abajo',cd:{},uses:{}}}
@@ -88,26 +90,26 @@ async function enemyAI(){
   if(h.alive&&!adj8(e,h)&&e.pm>0){let path=gridPath(e,h),maxSteps=Math.min(e.pm,Math.max(0,path.length-2)),steps=maxSteps;for(let i=1;i<=maxSteps;i++){let probe={x:path[i].x,y:path[i].y};if((probe.x===h.x||probe.y===h.y)&&md(probe,h)===2&&clearLine(probe,h)){steps=i;break}}if(steps>0){e.pm-=steps;await animateBattlePath(e,path,steps,190,false)}}
   // Alcance 2: Jabalí=0, casilla intermedia=1, objetivo=2. Solo línea recta ortogonal.
   if(h.alive&&e.pa>=1&&(e.x===h.x||e.y===h.y)&&md(e,h)===2&&clearLine(e,h)){
-   await enemyNotice(e,'Embestida');let dx=Math.sign(h.x-e.x),dy=Math.sign(h.y-e.y),nx=e.x+dx,ny=e.y+dy;
+   faceTarget(e,h);renderBattle();await enemyNotice(e,'Embestida');let dx=Math.sign(h.x-e.x),dy=Math.sign(h.y-e.y),nx=e.x+dx,ny=e.y+dy;
    if(free(nx,ny)){e.pa--;await animateBattlePath(e,[[e.x,e.y],[nx,ny]],1,150,false);await sleep(140);if(adj8(e,h)){await visualAttack(e,h,'melee','-4');hit(e,h,4,'Embestida');renderBattle();await sleep(250)}}
   }
   if(h.alive&&!adj8(e,h)&&e.pm>0){let path=gridPath(e,h),steps=Math.min(e.pm,Math.max(0,path.length-2));if(steps>0){e.pm-=steps;await animateBattlePath(e,path,steps,190,false)}}
-  if(h.alive&&adj8(e,h)&&e.pa>=2){await enemyNotice(e,'Cornada');e.pa-=2;e.uses.horn=1;await visualAttack(e,h,'melee','-2');hit(e,h,2,'Cornada');if(h.alive)h.wound=(h.wound||0)+1;renderBattle();await new Promise(r=>setTimeout(r,350))}
-  while(h.alive&&adj8(e,h)&&e.pa>0){await enemyNotice(e,'Ataque Normal');e.pa--;await visualAttack(e,h,'melee','-2');hit(e,h,2,'Ataque Normal');renderBattle();await sleep(180)}
+  if(h.alive&&adj8(e,h)&&e.pa>=2){faceTarget(e,h);renderBattle();await enemyNotice(e,'Cornada');e.pa-=2;e.uses.horn=1;await visualAttack(e,h,'melee','-2');hit(e,h,2,'Cornada');if(h.alive)h.wound=(h.wound||0)+1;renderBattle();await new Promise(r=>setTimeout(r,350))}
+  while(h.alive&&adj8(e,h)&&e.pa>0){faceTarget(e,h);renderBattle();await enemyNotice(e,'Ataque Normal');e.pa--;await visualAttack(e,h,'melee','-2');hit(e,h,2,'Ataque Normal');renderBattle();await sleep(180)}
  }
  // Daga: Granada a distancia si puede; luego se acerca y usa Corte antes que A.N.
  if(e.type==='dagger'){
-  if(e.pa>=2&&!adj8(e,h)&&md(e,h)<=2){await enemyNotice(e,'Granada Tóxica');e.pa-=2;e.uses.grenade=1;await visualAttack(e,h,'poison','');h.poison=(h.poison||0)+2;B.log.push('🗡️ Granada Tóxica: aplica Veneno 2.');renderBattle();await new Promise(r=>setTimeout(r,350))}
+  if(e.pa>=2&&!adj8(e,h)&&md(e,h)<=2){faceTarget(e,h);renderBattle();await enemyNotice(e,'Granada Tóxica');e.pa-=2;e.uses.grenade=1;await visualAttack(e,h,'poison','');h.poison=(h.poison||0)+2;B.log.push('🗡️ Granada Tóxica: aplica Veneno 2.');renderBattle();await new Promise(r=>setTimeout(r,350))}
   if(h.alive&&!adj8(e,h)&&e.pm>0){let path=gridPath(e,h),steps=Math.min(e.pm,Math.max(0,path.length-2));if(steps>0){e.pm-=steps;await animateBattlePath(e,path,steps,190,false)}}
-  if(h.alive&&adj8(e,h)&&e.pa>=2){await enemyNotice(e,'Corte');e.pa-=2;await visualAttack(e,h,'melee','-3');hit(e,h,3,'Corte');if(h.alive)h.wound=(h.wound||0)+1;renderBattle();await new Promise(r=>setTimeout(r,350))}
-  while(h.alive&&adj8(e,h)&&e.pa>0){await enemyNotice(e,'Ataque Normal');e.pa--;await visualAttack(e,h,'melee','-3');hit(e,h,3,'Ataque Normal');renderBattle();await sleep(180)}
+  if(h.alive&&adj8(e,h)&&e.pa>=2){faceTarget(e,h);renderBattle();await enemyNotice(e,'Corte');e.pa-=2;await visualAttack(e,h,'melee','-3');hit(e,h,3,'Corte');if(h.alive)h.wound=(h.wound||0)+1;renderBattle();await new Promise(r=>setTimeout(r,350))}
+  while(h.alive&&adj8(e,h)&&e.pa>0){faceTarget(e,h);renderBattle();await enemyNotice(e,'Ataque Normal');e.pa--;await visualAttack(e,h,'melee','-3');hit(e,h,3,'Ataque Normal');renderBattle();await sleep(180)}
  }
  // Ballesta: busca línea de tiro; usa sus dos técnicas antes del ataque normal.
  if(e.type==='cross'){
   if(!(md(e,h)<=3&&clearLine(e,h))&&e.pm>0){let path=gridPath(e,h),steps=Math.min(e.pm,Math.max(0,path.length-4));if(steps>0){e.pm-=steps;await animateBattlePath(e,path,steps,190,false)}}
-  if(h.alive&&md(e,h)<=3&&clearLine(e,h)&&e.pa>0){await enemyNotice(e,'Tiro Ralentizador');e.pa--;e.uses.slow=1;await visualAttack(e,h,'projectile','-2');damage(h,2,true);h.pm=Math.max(0,h.pm-1);B.log.push('🏹 Tiro Ralentizador: 2 daño y -1 PM.');renderBattle();await new Promise(r=>setTimeout(r,350))}
-  if(h.alive&&md(e,h)<=3&&clearLine(e,h)&&e.pa>0){await enemyNotice(e,'Tiro Certero');e.pa--;e.uses.sure=1;await visualAttack(e,h,'projectile','-3');damage(h,3,false);B.log.push('🏹 Tiro Certero: 3 daño directo a Vida.');renderBattle();await new Promise(r=>setTimeout(r,350))}
-  while(h.alive&&md(e,h)<=3&&clearLine(e,h)&&e.pa>0){await enemyNotice(e,'Ataque Normal');e.pa--;await visualAttack(e,h,'projectile','-2');hit(e,h,2,'Ataque Normal');renderBattle();await sleep(180)}
+  if(h.alive&&md(e,h)<=3&&clearLine(e,h)&&e.pa>0){faceTarget(e,h);renderBattle();await enemyNotice(e,'Tiro Ralentizador');e.pa--;e.uses.slow=1;await visualAttack(e,h,'projectile','-2');damage(h,2,true);h.pm=Math.max(0,h.pm-1);B.log.push('🏹 Tiro Ralentizador: 2 daño y -1 PM.');renderBattle();await new Promise(r=>setTimeout(r,350))}
+  if(h.alive&&md(e,h)<=3&&clearLine(e,h)&&e.pa>0){faceTarget(e,h);renderBattle();await enemyNotice(e,'Tiro Certero');e.pa--;e.uses.sure=1;await visualAttack(e,h,'projectile','-3');damage(h,3,false);B.log.push('🏹 Tiro Certero: 3 daño directo a Vida.');renderBattle();await new Promise(r=>setTimeout(r,350))}
+  while(h.alive&&md(e,h)<=3&&clearLine(e,h)&&e.pa>0){faceTarget(e,h);renderBattle();await enemyNotice(e,'Ataque Normal');e.pa--;await visualAttack(e,h,'projectile','-2');hit(e,h,2,'Ataque Normal');renderBattle();await sleep(180)}
  }
  B.notice='';renderBattle();if(checkBattleEnd())return;setTimeout(nextTurn,650)
 }
