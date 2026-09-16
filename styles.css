@@ -33,3 +33,61 @@ input[type=color]{min-height:46px;padding:3px!important}
 /* 0.2.7.2 testing helpers */
 .test-panel{margin:10px 0 0;padding:7px;border:1px dashed #d8b65c;border-radius:10px;background:#171d18;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.test-panel b{font-size:10px;letter-spacing:.08em;color:#e0c46c}.test-panel button{padding:6px 8px;font-size:11px}.combat-test{margin:5px 0 7px;justify-content:center}
 .sell-row.selected-sale{outline:2px solid currentColor;transform:translateX(2px)}
+
+
+/* 0.2.8.0 — primer salto visual */
+:root{--ink:#0c1511;--frame:#8d7044;--frame2:#c4a56b;--parch:#d8c394}
+body{background:radial-gradient(circle at 50% -10%,#314735 0,#17261d 36%,#09100d 100%);background-attachment:fixed}
+.screen{max-width:760px}
+.card,.action-info,.quest-track{background:linear-gradient(180deg,#1c2b22f5,#111b16f5);border-color:#6f765b;box-shadow:inset 0 0 0 1px #0a100c,0 5px 18px #0007}
+.topbar{background:linear-gradient(180deg,#17241df8,#0e1712f8);border:1px solid #756d50;box-shadow:inset 0 0 0 2px #101610,0 5px 16px #0008;color:#f5ead0}
+button{background:linear-gradient(#486e4e,#31543a);border:1px solid #8ba27b;box-shadow:inset 0 1px #ffffff18,0 2px 5px #0006}
+button:active{transform:translateY(1px)}
+.end-turn{background:linear-gradient(#8b6a31,#62491f);border-color:#b99858}
+
+/* Combate: la lógica sigue siendo 10x10; sólo cambia la piel visual. */
+.visual-battle{position:relative;border:3px solid #8c815f;border-radius:4px;overflow:hidden;background:
+ radial-gradient(circle at 14% 18%,#91a86655 0 3%,transparent 4%),
+ radial-gradient(circle at 82% 72%,#344f2d99 0 7%,transparent 8%),
+ radial-gradient(circle at 70% 18%,#c3b36d33 0 5%,transparent 6%),
+ linear-gradient(135deg,#54704a 0 24%,#688455 25% 49%,#536f48 50% 74%,#698354 75%);
+ box-shadow:inset 0 0 35px #10180eaa,0 6px 18px #0008}
+.visual-battle:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:
+ repeating-linear-gradient(27deg,transparent 0 19px,#ffffff07 20px 21px),
+ radial-gradient(ellipse at 10% 90%,#1b381faa,transparent 22%),
+ radial-gradient(ellipse at 95% 5%,#18331daa,transparent 25%)}
+.visual-battle .tile{z-index:1;border-color:#dce7bd28;background:transparent;text-shadow:0 2px 3px #000}
+.visual-battle .tile:nth-child(7n+2){background:#b9ca7b0a}.visual-battle .tile:nth-child(11n+4){background:#1b3b210d}
+.visual-battle .tile.obstacle{background:radial-gradient(circle at 55% 38%,#8b806b 0 14%,#5b5347 15% 32%,#342f29 33% 55%,#1c241c 56%);box-shadow:inset 0 0 0 1px #b8aa7c44}
+.visual-battle .tile.obstacle:after{content:'🪨';font-size:clamp(18px,5vw,31px);filter:drop-shadow(0 3px 2px #0008)}
+.visual-battle .tile.move{background:#b8db7d42;box-shadow:inset 0 0 0 1px #d9efab66}
+.visual-battle .tile.target{background:#c8a84822;box-shadow:inset 0 0 0 2px #e3c460}
+.visual-battle .tile.selected{box-shadow:inset 0 0 0 3px #d9efff,0 0 10px #6ec7ff inset}
+.visual-battle .unit-icon{font-size:1.08em;filter:drop-shadow(0 4px 2px #0009)}
+.visual-battle .unit-hp{left:8%;right:8%;top:1px;height:6px;background:#160d0d;border:1px solid #070707}
+.visual-battle .unit-hp i{background:linear-gradient(#f04a45,#ad201f)}
+.visual-battle .unit-badge{right:2px;bottom:1px;background:#0b100ddd;border:1px solid #6e725b;font-size:9px}
+.action-grid button{border-radius:8px;background:linear-gradient(#456c4c,#2c4e36);min-height:64px}.action-grid button b{font-size:12px}.action-grid button small{font-size:10px}
+.turn-chip{background:linear-gradient(#293c30,#18251d);border:1px solid #536652}.turn-chip.current{outline:2px solid #d9b84f;background:#4a4930}
+
+/* Exploración: ciudad/camino más orgánicos sin cambiar coordenadas ni colisiones. */
+.visual-world{border:5px solid #57492f;box-shadow:inset 0 0 35px #102014aa;background-color:#6e9258}
+.visual-world:before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 15%,#cbd48b22,transparent 20%),radial-gradient(circle at 85% 80%,#183d23aa,transparent 28%),repeating-linear-gradient(25deg,transparent 0 28px,#ffffff06 29px 30px)}
+.visual-world.map-arca{background:linear-gradient(#799d62 0 58%,#688b55 58%)}
+.visual-world.map-outskirts,.visual-world.map-west{background:radial-gradient(circle at 18% 22%,#89a969 0 7%,transparent 8%),radial-gradient(circle at 80% 78%,#315533 0 12%,transparent 13%),linear-gradient(#66894f,#78965b)}
+.visual-world .road{background:linear-gradient(90deg,#a8895d,#c0a36e 48%,#9e8056);border-color:#755f43;box-shadow:inset 0 0 12px #5b432d55}
+.visual-world .academy{background:linear-gradient(135deg,#75614e,#9b8268);border-color:#3b3028;box-shadow:0 7px 15px #0007,inset 0 0 0 2px #b7a27b}
+.visual-world .academy:after{color:#f1e4c3;text-shadow:0 2px 3px #000}
+.visual-world .wall{background:repeating-linear-gradient(90deg,#514a3e 0 22px,#655d4d 23px 42px);border-color:#292b24;box-shadow:0 5px 8px #0006}
+.visual-world .tree{background:radial-gradient(circle at 40% 35%,#4d713c 0 18%,#315a34 19% 48%,#1f3c27 49%);border-color:#18301e;box-shadow:0 8px 9px #0005}
+.visual-world .building{background:linear-gradient(#5d4a33,#3e3225);border-color:#b28d55;box-shadow:0 7px 12px #0008,inset 0 0 0 2px #2a2119}
+.visual-world .building:before{content:'';position:absolute;left:8px;right:8px;top:-10px;height:18px;background:#704737;clip-path:polygon(50% 0,100% 100%,0 100%);z-index:-1}
+.visual-world .building small{background:#15110de8;color:#f6e8c5;border:1px solid #79613e}
+.visual-world .exit{background:linear-gradient(#dfc879,#bca253);border:2px solid #8b733b;box-shadow:0 4px 8px #0005}
+.visual-world .actor{border:2px solid #c7b98a;box-shadow:0 4px 10px #0008;background:#243327}
+.visual-world .hero-world{background:#d8cda9;border-color:#f3df99;box-shadow:0 0 0 3px #d5a94066,0 5px 10px #0008}
+.visual-world .npc-world{background:#51476f}.visual-world .enemy-world{background:#6e3c34}
+.world-wrap{border-color:#8b7955;box-shadow:0 6px 18px #0007}
+.map-title{font-family:Georgia,serif;color:#f4e7c6;text-shadow:0 2px 3px #000}
+
+@media(max-width:520px){.screen{padding:8px}.visual-battle{border-width:2px}.action-grid button{min-height:58px;padding:6px 2px}.visual-world{border-width:3px}}
