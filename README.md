@@ -1,68 +1,15 @@
-# Ghea Táctico 0.2.4
+# Ghea Táctico 0.2.7.4
 
-Versión de pulido del prototipo móvil.
+Actualización de economía, habilidades y consumibles sobre la base estable 0.2.7.3.
 
-Cambios principales:
-- Movimiento de exploración animado con pathfinding y límites seguros.
-- Seguimiento de misión y misión inicial repetible para pruebas.
-- Curva de EXP +60% redondeada: 10, 16, 26, 42, 67, 107…
-- Subir de nivel no cura Vida; otorga 2 puntos de Desarrollo por nivel.
-- Barra de combate móvil de dos filas con ficha informativa de cada acción.
-- Escudo no persiste fuera del combate.
-- Inventario con figura central y slots alrededor.
-- Requisitos visibles del árbol; Daño base 3/3 abre la siguiente etapa ofensiva y Vitalidad 3/3 la defensiva.
-- Ajustes de marcadores, colores y altura visual.
-
-El guardado local de 0.2 se conserva.
-
-
-## 0.2.4
-- Movimiento animado casilla por casilla para Aventurero y enemigos.
-- Barras compactas de Vida sobre las unidades.
-- Indicador direccional de misión.
-- Interacción con equipo: ficha, desequipar y selección directa de slot compatible.
-- Espada básica y Daga oxidada pueden ir en mano principal o secundaria.
-- Furia visible en combate y aplicada al cálculo de daño.
-
-## 0.2.4
-- Indicadores sobre las fichas: Herida, Veneno y Furia activa.
-- IA enemiga usa y anuncia habilidades especiales durante su turno.
-- Árbol de Defensa ramificado: Vitalidad abre nivel 2; Guardia queda debajo de Robustez y requiere Robustez 2/2 + 6 puntos totales en Defensa.
-
-
-## 0.2.5
-- Fase de despliegue inicial: elegí una casilla aliada y confirmá antes de iniciar turnos/temporizador.
-- Mochila: opción Descartar con confirmación; no entrega oro.
-- Versión visible corregida a 0.2.5.
-- Se conserva la IA enemiga de 0.2.4, ya confirmada en playtest usando habilidades.
-
-## 0.2.7
-- Despliegue inicial más limitado y estratégico: combina posiciones separadas con pequeños grupos contiguos.
-- Los combatientes derrotados dejan cadáver y continúan bloqueando su casilla.
-- Acción universal **Mover cuerpo**: 1 PA, mueve un cadáver adyacente una casilla ortogonal libre, sin gastar PM.
-- Feedback visual básico de combate: impacto cuerpo a cuerpo, daño flotante, proyectiles de ballesta, efecto de Granada Tóxica y Escudo de Bloqueo.
-- El Bandido con Ballesta aumenta a alcance 3 en Ataque Normal, Tiro Certero y Tiro Ralentizador.
-- La IA enemiga conserva su lógica de 0.2.5; solo se adapta el alcance del Ballestero.
-
-## 0.2.7 — Arca viva
-- Nueva zona Camino de la Puerta Oeste con Guardia y dos manadas patrullando (3 jabalíes cada una).
-- Herrería, Joyería y Tienda de telas/cuero visitables.
-- Cadena secundaria no repetible: escudo → caza → collar → armadura.
-- Crafting consume materiales y 3 de oro. Tras completar la cadena, las recetas quedan desbloqueadas.
-- Comercios permiten vender objetos; por ahora no tienen catálogo de compra.
-- Collar de Jabalí: +1 Escudo al inicio de cada turno, venta 15.
-- Armadura de cuero de jabalí: +3 Vida máxima, venta 10.
-
-
-## 0.2.7.3 — Corrección
-- Corrige el bloqueo al finalizar combates de jabalíes con cadáveres persistentes.
-- El combate ahora muestra la Vida máxima real del personaje (base + Desarrollo + equipo) sin curarlo al entrar.
-- Conserva nivel, EXP, Desarrollo, inventario y equipo guardados.
-
-### 0.2.7.3
-- Reubicación de comercios de Arca y Guardia Oeste para despejar accesos.
-- Tienda de artículos: Poción de Vida Básica (3 oro), Antídoto (2), Vendas (2).
-- Compra consecutiva sin cerrar la tienda y venta múltiple en una sola operación.
-- Herida, Veneno y Quemadura preparados como estados acumulables con contador.
-- Mover cuerpo: levantar (1 PA), transportar (2 PM/casilla), soltar adyacente (0 PA), sin ataques mientras se carga.
-- Se conserva Embestida del Jabalí de alcance 2 en línea recta y las herramientas de prueba.
+- Pantalla Habilidades en exploración; hasta 6 activas preparadas, A.N. siempre separado y pasivas visibles.
+- Consumibles en combate por 1 PA: Poción de Vida Básica, Antídoto y Vendas.
+- Comerciantes con menú Comprar / Vender / Fabricar / Salir y retorno al menú del comerciante.
+- Compra continua y venta múltiple.
+- Herrería: Espada de Hierro y Escudo de Madera.
+- Textil/Cuero: Botas, Casco y Guantes de Cuero.
+- Joyería: Anillo Simple con Resistencia a Herida +1 acumulable entre dos anillos.
+- Collar de Jabalí: reventa 12; entrega de misión 17 oro.
+- Armadura de Cuero de Jabalí: reventa 10; entrega 15 oro.
+- Herida se resuelve antes de la Resistencia a Herida.
+- Se conserva la misma clave de localStorage para mantener personajes existentes.
