@@ -152,3 +152,9 @@ button:active{transform:translateY(1px)}
 
 /* Caminata suave Guerrero: interpolación visual entre casillas */
 .visual-battle.animating .unit-piece{will-change:transform}
+
+/* HUD compacto sobre unidades — deja visible el cuerpo y la caminata */
+.visual-battle .unit-badge{display:none!important}
+.visual-battle .unit-hp{left:7%;right:7%;top:2px;height:7px;overflow:visible;z-index:7}
+.visual-battle .unit-hp-text{position:absolute;left:50%;top:-15px;transform:translateX(-50%);z-index:8;white-space:nowrap;font-size:10px;font-weight:900;line-height:1;color:#fff;text-shadow:-1px -1px 1px #000,1px -1px 1px #000,-1px 1px 1px #000,1px 1px 1px #000;pointer-events:none}
+.visual-battle .unit-hp-text b{font-size:9px;color:#dcecff}
