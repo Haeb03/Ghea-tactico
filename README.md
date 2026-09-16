@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.13 — Bosque 30×30
+# Ghea Táctico v0.2.8.14 — Cámara libre + HUD
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -63,3 +63,13 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Cámara centrada en Aron y limitada a los bordes del mapa.
 - El zoom y la posición se conservan al regresar del combate.
 - HUD de Vida/Escudo contenido dentro de la casilla de cada combatiente para no invadir casillas vecinas.
+
+
+## v0.2.8.14 — cámara libre y HUD
+- Exploración del Bosque: arrastre con un dedo para mover libremente la cámara.
+- Pellizco con dos dedos para acercar/alejar.
+- Eliminados los botones +/− de zoom.
+- Botón 🎯 para volver a centrar la cámara en el Aventurero.
+- La cámara ya no sigue automáticamente al Aventurero mientras camina.
+- Se guardan zoom y posición de cámara para recuperar la vista al volver del combate.
+- HUD de combate vuelve a mostrar Vida + Escudo cuando corresponde y queda compacto dentro de la casilla de su unidad.

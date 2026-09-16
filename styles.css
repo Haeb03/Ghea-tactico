@@ -292,3 +292,13 @@ button:active{transform:translateY(1px)}
 .visual-battle .unit-vitals{top:1px!important;left:4%!important;right:4%!important;max-width:92%!important;font-size:8px!important;line-height:11px!important;padding:0 2px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important;z-index:8!important}
 .visual-battle .unit-hp{top:13px!important;left:10%!important;right:10%!important;height:4px!important;z-index:8!important}
 .visual-battle .unit-states{top:18px!important;z-index:8!important;font-size:9px!important}
+
+/* 0.2.8.14 — cámara libre: arrastre con 1 dedo, pinch con 2 y recentrado manual */
+.world-camera-tools{display:flex;justify-content:flex-end;margin:6px 0 8px;position:relative;z-index:9}
+.world-camera-tools button{padding:7px 11px;font-size:12px;border-radius:9px}
+.world-wrap.world-camera{overflow:auto!important;touch-action:pan-x pan-y!important;scroll-behavior:auto;overscroll-behavior:contain;scrollbar-width:none}
+.world-wrap.world-camera::-webkit-scrollbar{display:none}
+/* HUD táctico: información compacta en la esquina superior de SU propia casilla. */
+.visual-battle .unit-vitals{top:2px!important;left:2px!important;right:auto!important;max-width:94%!important;transform:none!important;font-size:7.5px!important;line-height:10px!important;padding:0 2px!important;border-radius:4px!important;white-space:nowrap!important;overflow:visible!important;z-index:8!important}
+.visual-battle .unit-hp{top:13px!important;left:6%!important;right:6%!important;height:4px!important;z-index:8!important}
+.visual-battle .unit-states{top:18px!important;z-index:8!important;font-size:9px!important}

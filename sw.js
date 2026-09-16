@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02813-zoom-hud';
+const CACHE='ghea-tactico-02814-free-camera';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/terreno-bosque.png','./assets/obstaculo-roca.png','./assets/obstaculo-arbol.png',
 './assets-miniaturas/guerrero-humano-abajo.png','./assets-miniaturas/guerrero-humano-arriba.png','./assets-miniaturas/guerrero-humano-izquierda.png','./assets-miniaturas/guerrero-humano-derecha.png',
