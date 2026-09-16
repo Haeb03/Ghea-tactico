@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.18 — Afueras de Arca — Oeste
+# Ghea Táctico v0.2.8.19 — Afueras de Arca — Oeste
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -75,7 +75,7 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - HUD de combate vuelve a mostrar Vida + Escudo cuando corresponde y queda compacto dentro de la casilla de su unidad.
 
 
-## v0.2.8.18 — Afueras de Arca — Oeste
+## v0.2.8.19 — Afueras de Arca — Oeste
 - Integrado el fondo aprobado de la llanura exterior occidental de Arca en el tablero de exploración 30×30.
 - La muralla y la Puerta Oeste forman parte del fondo fijo.
 - Se conserva la cuadrícula lógica de 64 px por casilla sobre el arte.
@@ -84,14 +84,14 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - No se modificaron las mecánicas de combate.
 
 
-## v0.2.8.18
+## v0.2.8.19
 - Recupera la cuadrícula 30×30 sobre Afueras de Arca — Oeste.
 - Los encuentros del mapa Oeste trasladan al combate el sector real 10×10 del mismo tablero.
 - Sobre las miniaturas queda sólo Vida actual/máxima y una barra fina.
 - Nueva ficha inferior de combatiente con avatar, Vida, Escudo, PA/PM y Estados.
 - Sin cambios intencionales en las mecánicas de combate.
 
-## v0.2.8.18 — prueba controlada de obstáculos
+## v0.2.8.19 — prueba controlada de obstáculos
 - Parte nuevamente de v0.2.8.16; v0.2.8.17 queda descartada.
 - Obstáculos de Afueras Oeste nacen de casillas lógicas 30×30 con semilla fija y se dibujan desde esas coordenadas.
 - Muralla del borde este bloquea exploración; el corredor de la puerta queda libre.
@@ -101,3 +101,10 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Se conservan los dos encuentros de jabalíes y su activación original; se corrigió además su índice al quedar un solo grupo.
 - Ajustes visuales: Vida más arriba de miniaturas, avatar reencuadrado y rango de movimiento más legible.
 - Obstáculos todavía usan formas provisionales: las imágenes definitivas se incorporarán después de validar la lógica.
+
+
+## v0.2.8.19
+- Corrige posiciones antiguas en bordes del mapa Oeste, ajustándolas al centro de una casilla válida.
+- Restaura los dos encuentros de jabalíes como encuentros repetibles del prototipo.
+- Sube Vida actual/máxima y su barra para no cubrir las miniaturas.
+- Actualiza versión visible de Inicio y caché del Service Worker.
