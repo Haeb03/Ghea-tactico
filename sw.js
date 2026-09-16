@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02811-bosque30';
+const CACHE='ghea-tactico-02812-mundo30';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/terreno-bosque.png','./assets/obstaculo-roca.png','./assets/obstaculo-arbol.png',
 './assets-miniaturas/guerrero-humano-abajo.png','./assets-miniaturas/guerrero-humano-arriba.png','./assets-miniaturas/guerrero-humano-izquierda.png','./assets-miniaturas/guerrero-humano-derecha.png',

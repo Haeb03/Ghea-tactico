@@ -271,3 +271,14 @@ button:active{transform:translateY(1px)}
 .visual-battle .unit-vitals{top:-31px!important}
 .visual-battle .unit-hp{top:-20px!important}
 .visual-battle .unit-states{top:-44px!important}
+
+/* 0.2.8.12 — escala unificada exploración/combate + encuentros como miniaturas */
+.world.map-west{width:1920px!important;height:1920px!important;background-size:64px 64px,64px 64px,100% 100%!important}
+.map-west .west-road{top:896px;height:192px}
+.map-west .miniature-world{width:64px!important;height:64px!important;transform:translate(-50%,-50%)!important}
+.map-west .miniature-world img{width:auto!important;height:118%!important;max-width:138%!important;object-fit:contain!important;object-position:center bottom!important;filter:drop-shadow(0 3px 2px #0009)}
+.map-west .miniature-encounter{width:64px!important;height:64px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;transform:translate(-50%,-50%)!important;display:grid!important;place-items:end center!important;overflow:visible!important}
+.map-west .miniature-encounter img{width:auto!important;height:118%!important;max-width:138%!important;object-fit:contain!important;object-position:center bottom!important;filter:drop-shadow(0 3px 2px #0009)}
+/* La cámara móvil ve aproximadamente 10 casillas de ancho en un teléfono típico. */
+.world-wrap.world-camera{height:min(100vw,640px);max-height:640px}
+@media(max-width:520px){.world.map-west{width:1920px!important;height:1920px!important}.world-wrap.world-camera{height:92vw;min-height:320px;max-height:520px}}
