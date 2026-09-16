@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.7 — Miniaturas
+# Ghea Táctico v0.2.8.8 — Alineación de casillas
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -23,3 +23,11 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - La miniatura mantiene proporción y queda anclada por la peana abajo-centro.
 - Esta revisión no agrega todavía imágenes nuevas de tablero, árbol ni roca; quedan para la siguiente etapa visual.
 - Próximo sistema planificado: Exploración piloto 30×30 y combate como recorte 10×10 del mismo tablero.
+
+
+## v0.2.8.8 — alineación de tablero
+- La cuadrícula de combate queda forzada a 10×10 filas/columnas de igual tamaño.
+- Las miniaturas ya no modifican el alto de las filas.
+- La peana queda anclada visualmente sobre el centro de su casilla lógica.
+- Los resaltados de despliegue, movimiento y objetivo permanecen exactamente en una sola casilla 1×1.
+- No se modificaron reglas, coordenadas, alcances ni mecánicas de combate.
