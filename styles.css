@@ -239,3 +239,9 @@ button:active{transform:translateY(1px)}
   object-position:center bottom!important;
   transform:none!important;
 }
+
+/* 0.2.8.9 — anclaje por peana: el centro visual de la base coincide con el centro de la casilla lógica. */
+.visual-battle .unit-icon,
+.visual-battle .deploy-hero{
+  bottom:44%!important;
+}
