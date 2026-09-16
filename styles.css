@@ -245,3 +245,17 @@ button:active{transform:translateY(1px)}
 .visual-battle .deploy-hero{
   bottom:44%!important;
 }
+
+/* 0.2.8.10 — corrección directa del desfase vertical de miniaturas.
+   La casilla sigue siendo la única coordenada lógica; movemos sólo el dibujo
+   media casilla hacia arriba para que el centro de la peana coincida con el centro 1x1. */
+.visual-battle .unit-icon,
+.visual-battle .deploy-hero{
+  bottom:50%!important;
+  height:100%!important;
+  transform:translateY(50%)!important;
+}
+.visual-battle .combat-sprite,
+.visual-battle .deploy-hero .hero-sprite{
+  transform:translateY(-50%)!important;
+}

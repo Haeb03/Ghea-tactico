@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.9 — Alineación de casillas
+# Ghea Táctico v0.2.8.10 — Alineación de casillas
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -33,7 +33,7 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - No se modificaron reglas, coordenadas, alcances ni mecánicas de combate.
 
 
-## v0.2.8.9 — anclaje de peana
+## v0.2.8.10 — anclaje de peana
 - Ajuste visual puntual: el centro de la peana se alinea con el centro de la casilla lógica.
 - Se conserva la corrección 10×10 y los resaltados 1×1 de v0.2.8.8.
 - No se modifican movimiento, alcance, IA ni reglas de combate.
