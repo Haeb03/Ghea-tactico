@@ -1,0 +1,446 @@
+:root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#f5f0df;background:#101713;--panel:#1b2820;--line:#50624f;--gold:#d8b65c;--green:#355f3f}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#263a2c,#101713 60%);min-height:100vh}button,input,select{font:inherit}button{border:1px solid #7f986f;background:#416c47;color:white;border-radius:10px;padding:10px 14px;font-weight:700}button:disabled{opacity:.4}.secondary{background:#29352e}.danger{background:#733b3b;border-color:#a45b5b}.screen{max-width:720px;margin:auto;padding:16px;min-height:100vh}.center{display:grid;place-content:center;text-align:center}.center h1{font-size:2.25rem;margin:0}.sub,.small{opacity:.75}.card{background:#1b2820eF;border:1px solid var(--line);border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 6px 18px #0004}.topbar{display:flex;justify-content:space-between;gap:10px;align-items:center;position:sticky;top:0;z-index:8;background:#162119ee;padding:10px;border-radius:0 0 12px 12px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.grid2 label{min-width:0}.grid2 input,.grid2 select{width:100%;max-width:100%;padding:9px;background:#101713;color:white;border:1px solid #667865;border-radius:8px}.char-card{display:grid;grid-template-columns:1fr auto;gap:8px}.char-buttons{display:flex;gap:6px;align-items:center}.world-wrap{overflow:auto;border:2px solid #637761;border-radius:14px;background:#17251a}.world{position:relative;width:720px;height:540px;background:linear-gradient(#6e9458 0 58%,#7c9c61 58%);overflow:hidden}.road{position:absolute;background:#b89b68;border:2px solid #9c8055}.road.main{left:0;right:0;top:330px;height:72px}.road.vert{left:340px;top:120px;width:74px;height:420px}.academy{position:absolute;left:250px;top:25px;width:250px;height:120px;background:#8a755f;border:7px solid #4f4237;border-radius:12px}.academy:after{content:'ACADEMIA DE ARCA';position:absolute;left:25px;top:40px;font-weight:900}.wall,.tree,.rock{position:absolute;background:#304e2e;border:3px solid #243a23}.tree{border-radius:50%}.exit{position:absolute;right:8px;top:340px;background:#d4bd73;color:#1a241c;padding:12px;border-radius:9px;font-weight:900}.actor{position:absolute;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;font-size:27px;transform:translate(-50%,-50%);z-index:4;filter:drop-shadow(0 3px 2px #0007)}.hero-world{background:#d8d0b5}.npc-world{background:#7562a4}.enemy-world{background:#7a3d38}.marker{position:absolute;transform:translate(-50%,-110%);font-size:28px;font-weight:1000;color:#ffe66b;text-shadow:0 2px 3px #000}.hint{position:absolute;transform:translate(-50%,15px);background:#101713dd;padding:4px 7px;border-radius:8px;font-size:12px;white-space:nowrap}.battle-grid{display:grid;grid-template-columns:repeat(10,1fr);aspect-ratio:1;border:2px solid #71856b;background:#435b3e;touch-action:manipulation}.tile{position:relative;border:1px solid #ffffff17;display:grid;place-items:center;font-size:clamp(16px,5vw,30px);min-width:0}.tile.obstacle{background:#3a332b}.tile.move{background:#6d9b62}.tile.target{box-shadow:inset 0 0 0 3px #d8b65c}.tile.selected{box-shadow:inset 0 0 0 3px white}.tile.deploy{background:#4f6f8b}.unit-badge{position:absolute;right:1px;bottom:0;font-size:9px;background:#111c;padding:1px 3px;border-radius:5px}.combat-ui{display:grid;grid-template-columns:1fr;gap:8px}.skillbar{display:flex;gap:6px;overflow:auto;padding-bottom:4px}.skillbar button{white-space:nowrap}.turn-order{display:flex;gap:5px;overflow:auto}.turn-chip{padding:5px 8px;background:#26382b;border-radius:8px;white-space:nowrap}.turn-chip.current{outline:2px solid var(--gold)}.equip-layout{display:grid;grid-template-columns:1fr 1.2fr 1fr;gap:8px;align-items:center}.equip-col{display:grid;gap:7px}.slot{min-height:62px;border:1px dashed #73826f;border-radius:10px;padding:7px;text-align:center;background:#121b15}.figure{min-height:270px;border-radius:40% 40% 20% 20%;background:linear-gradient(#26372a,#18221b);display:grid;place-items:center;font-size:90px;border:1px solid #52644f}.bag{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.bag-slot{min-height:62px;border:1px solid #536450;border-radius:9px;padding:5px;font-size:12px;background:#121b15}.branch-choice{display:grid;grid-template-columns:1fr 1fr;gap:12px}.branch{min-height:140px;font-size:1.15rem}.tree-view{text-align:center}.tree-row{display:flex;justify-content:center;gap:12px;margin:14px 0;position:relative}.tree-node{width:140px;min-height:76px;background:#26382b;border:2px solid #647862;border-radius:14px;padding:8px}.tree-node.available{border-color:#d8b65c}.tree-node.locked{opacity:.45}.tree-line{width:3px;height:22px;background:#647862;margin:auto}.modal{position:fixed;inset:0;background:#000b;display:grid;place-items:center;padding:18px;z-index:30}.modal>.card{width:min(480px,100%);max-height:90vh;overflow:auto}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#111e;padding:10px 16px;border-radius:10px;z-index:50}.loot{display:grid;gap:4px}.hpbar{height:8px;background:#4a2525;border-radius:5px;overflow:hidden}.hpbar i{display:block;height:100%;background:#7baa69}@media(max-width:520px){.screen{padding:10px}.grid2{grid-template-columns:1fr}.char-card{grid-template-columns:1fr}.char-buttons{flex-wrap:wrap}.world{width:650px;height:500px}.equip-layout{grid-template-columns:1fr 1fr}.figure{grid-column:1/-1;grid-row:1;min-height:180px}.equip-col{grid-row:2}.bag{grid-template-columns:repeat(3,1fr)}.tree-node{width:125px;font-size:13px}.branch-choice{grid-template-columns:1fr 1fr}.topbar{font-size:13px}}
+/* 0.2.1 */
+.map-title{margin:14px 4px 8px}.quest-track{background:#26382b;border:1px solid #647862;border-radius:10px;padding:8px 10px;margin:0 0 8px;font-size:13px}.marker{transform:translate(-50%,-145%)}
+.action-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.action-grid button{min-width:0;padding:7px 3px;display:grid;gap:1px;place-items:center;font-size:16px}.action-grid button b{font-size:11px;line-height:1.05}.action-grid button small{font-size:9px;opacity:.8}.end-turn{background:#6b5128}.action-info{background:#1b2820;border:1px solid #75896f;border-radius:12px;padding:9px 10px;margin-top:6px}.action-info>div:first-child{display:flex;justify-content:space-between;gap:8px}.action-info>div:first-child span{font-weight:800;color:#e0c46c}.action-info p{font-size:12px;margin:5px 0}.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:3px 8px;font-size:10px;opacity:.85}.combat-help{margin:2px 2px 0}.battle-status{margin:6px 0;padding:8px}.battle-status p{margin:6px 0 0}
+.equipment-stage{position:relative;height:430px;overflow:hidden}.paperdoll{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:34%;height:60%;display:grid;place-items:center;font-size:90px;background:linear-gradient(#26372a,#18221b);border:1px solid #52644f;border-radius:42% 42% 22% 22%}.paperdoll.short{height:50%;font-size:78px}.paperdoll.tall{height:69%;font-size:102px}.equipment-stage .slot{position:absolute;width:29%;min-height:58px;display:grid;place-content:center;padding:5px}.equipment-stage .slot b{font-size:10px}.equipment-stage .slot span{font-size:9px;opacity:.75}.s-helmet{left:35.5%;top:2%}.s-amulet{right:2%;top:5%}.s-weapon{left:2%;top:24%}.s-offhand{right:2%;top:24%}.s-armor{left:35.5%;top:29%}.s-gloves{left:2%;top:48%}.s-ring1{right:2%;top:48%}.s-ring2{right:2%;top:68%}.s-boots{left:35.5%;bottom:2%}.requirement{display:block;margin-top:5px;font-size:9px;color:#f0ce78}
+input[type=color]{min-height:46px;padding:3px!important}
+@media(max-width:520px){.equipment-stage{height:390px}.paperdoll{font-size:76px}.paperdoll.short{font-size:66px}.paperdoll.tall{font-size:88px}.world-wrap{max-width:100%;}.action-info{padding:7px 8px}.battle-grid{width:100%}.combat-ui{gap:5px}}
+/* 0.2.2 */
+.tree-fork{height:34px;position:relative;max-width:440px;margin:auto}.tree-fork:before{content:'';position:absolute;left:50%;top:0;width:3px;height:15px;background:#647862}.tree-fork:after{content:'';position:absolute;left:16.5%;right:16.5%;top:14px;height:3px;background:#647862}.tree-fork i{position:absolute;top:14px;width:3px;height:20px;background:#647862}.tree-fork i:nth-child(1){left:16.5%}.tree-fork i:nth-child(2){left:50%}.tree-fork i:nth-child(3){right:16.5%}.tree-children{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;justify-items:center}.tree-children .tree-node{width:100%;max-width:140px}.bag-slot{color:#f5f0df;text-align:left}.s-armor{left:35.5%;top:40%}.paperdoll{z-index:2}.equipment-stage .slot{z-index:3}.s-armor{z-index:1}
+@media(max-width:520px){.tree-children{gap:4px}.tree-children .tree-node{font-size:11px;padding:5px}.tree-fork:after{left:15%;right:15%}.tree-fork i:nth-child(1){left:15%}.tree-fork i:nth-child(3){right:15%}}
+/* 0.2.3 */
+.mission-arrow{position:absolute;right:14px;top:14px;z-index:7;background:#101713e8;border:1px solid #d8b65c;border-radius:12px;padding:5px 8px;display:flex;align-items:center;gap:6px;pointer-events:none}.mission-arrow span{display:inline-block;color:#ffe36d;font-size:25px;line-height:1}.mission-arrow small{font-size:10px;max-width:95px;color:#fff}.unit-piece{position:relative;width:100%;height:100%;display:grid;place-items:center}.unit-icon{line-height:1}.unit-hp{position:absolute;left:12%;right:12%;top:3px;height:5px;background:#090909;border:1px solid #111;border-radius:4px;overflow:hidden;z-index:3}.unit-hp i{display:block;height:100%;background:#c43b3b}.unit-badge{z-index:4}.equipment-stage .slot{color:#f5f0df}.equipment-stage .slot.compatible{border:2px solid #e0c46c;box-shadow:0 0 12px #e0c46c88;background:#3c4a2c}.equip-mode{background:#2a3b2c;border:1px solid #d8b65c;border-radius:12px;padding:9px;margin:8px 0;font-size:12px}.equip-mode button{padding:5px 8px;margin-left:5px}.battle-grid.animating{pointer-events:none}
+/* 0.2.4: estados sobre fichas, avisos de habilidades y Defensa ramificada */
+.unit-states{position:absolute;left:50%;top:-13px;transform:translateX(-50%);z-index:6;display:flex;gap:1px;align-items:center;white-space:nowrap;font-size:10px;line-height:1;background:#101713d9;border-radius:6px;padding:2px 3px;pointer-events:none}.enemy-action-banner{margin:6px auto;padding:7px 10px;width:max-content;max-width:95%;border:1px solid #d8b65c;border-radius:9px;background:#101713ee;text-align:center;font-size:12px;box-shadow:0 3px 10px #0007}.tree-level-label{margin:8px auto 2px;font-size:10px;font-weight:900;letter-spacing:.08em;color:#d8b65c;opacity:.9}.defense-fork{max-width:440px}.guard-link{width:3px;height:28px;background:#647862;margin:0 16.5% 0 auto;transform:translateX(1px)}
+@media(max-width:520px){.unit-states{font-size:8px;top:-11px;padding:1px 2px}.enemy-action-banner{font-size:11px;padding:6px 8px}.guard-link{margin-right:15%}}
+
+.tile.deploy{background:#496c82;box-shadow:inset 0 0 0 2px #8fc6e8}.tile.deploy-chosen{background:#806d38;box-shadow:inset 0 0 0 3px #ffe36d}.deploy-hero{font-size:clamp(18px,6vw,32px);filter:drop-shadow(0 2px 2px #0008)}.deployment-actions{justify-content:center;margin:12px 0}.deployment-actions button{min-width:150px}
+
+/* 0.2.6 combat feedback */
+.unit-piece.corpse{filter:grayscale(1);opacity:.68;transform:scale(.88)}
+.corpse-tile{background:#332f2a}
+.fx-attacker .unit-piece{animation:combatLunge .22s ease-in-out}
+.fx-target{animation:combatHit .22s ease-in-out}
+.fx-projectile{box-shadow:inset 0 0 12px #fff7}
+.fx-poison{background:#50623b;box-shadow:inset 0 0 15px #d7ff6a99}
+.battle-projectile{position:absolute;z-index:9;font-size:22px;filter:drop-shadow(0 2px 2px #000)}
+.damage-float{position:absolute;left:50%;top:15%;z-index:10;font-weight:1000;font-size:14px;transform:translateX(-50%);text-shadow:0 2px 3px #000;animation:damageFloat .5s ease-out both;white-space:nowrap}
+@keyframes combatLunge{50%{transform:scale(1.18)}}
+@keyframes combatHit{25%{transform:translateX(-3px)}50%{transform:translateX(3px)}75%{transform:translateX(-2px)}}
+@keyframes damageFloat{from{opacity:1;transform:translate(-50%,8px)}to{opacity:0;transform:translate(-50%,-16px)}}
+/* 0.2.7 Arca viva */
+.building{position:absolute;transform:translate(-50%,-50%);z-index:5;width:78px;height:58px;border:2px solid #9d8251;border-radius:10px;background:#493d2d;display:grid;place-items:center;font-size:28px;box-shadow:0 4px 10px #0007}.building small{font-size:9px;background:#111c;padding:2px 4px;border-radius:4px}.west-exit{left:8px!important;right:auto!important}.west-return{right:8px}.world.interior{background:#514735}.shop-floor{position:absolute;inset:35px;background:repeating-linear-gradient(90deg,#6b5a42 0 30px,#62523d 30px 60px);border:12px solid #30291f}.interior-exit{left:50%;right:auto;transform:translateX(-50%);bottom:4px}.artisan{font-size:32px}.boar-patrol{transition:left .6s linear,top .6s linear}.sell-row{width:100%;display:flex;justify-content:space-between;margin:5px 0;text-align:left}
+/* 0.2.7.2 testing helpers */
+.test-panel{margin:10px 0 0;padding:7px;border:1px dashed #d8b65c;border-radius:10px;background:#171d18;display:flex;gap:6px;align-items:center;flex-wrap:wrap}.test-panel b{font-size:10px;letter-spacing:.08em;color:#e0c46c}.test-panel button{padding:6px 8px;font-size:11px}.combat-test{margin:5px 0 7px;justify-content:center}
+.sell-row.selected-sale{outline:2px solid currentColor;transform:translateX(2px)}
+
+
+/* 0.2.8.0 — primer salto visual */
+:root{--ink:#0c1511;--frame:#8d7044;--frame2:#c4a56b;--parch:#d8c394}
+body{background:radial-gradient(circle at 50% -10%,#314735 0,#17261d 36%,#09100d 100%);background-attachment:fixed}
+.screen{max-width:760px}
+.card,.action-info,.quest-track{background:linear-gradient(180deg,#1c2b22f5,#111b16f5);border-color:#6f765b;box-shadow:inset 0 0 0 1px #0a100c,0 5px 18px #0007}
+.topbar{background:linear-gradient(180deg,#17241df8,#0e1712f8);border:1px solid #756d50;box-shadow:inset 0 0 0 2px #101610,0 5px 16px #0008;color:#f5ead0}
+button{background:linear-gradient(#486e4e,#31543a);border:1px solid #8ba27b;box-shadow:inset 0 1px #ffffff18,0 2px 5px #0006}
+button:active{transform:translateY(1px)}
+.end-turn{background:linear-gradient(#8b6a31,#62491f);border-color:#b99858}
+
+/* Combate: la lógica sigue siendo 10x10; sólo cambia la piel visual. */
+.visual-battle{position:relative;border:3px solid #8c815f;border-radius:4px;overflow:hidden;background:
+ radial-gradient(circle at 14% 18%,#91a86655 0 3%,transparent 4%),
+ radial-gradient(circle at 82% 72%,#344f2d99 0 7%,transparent 8%),
+ radial-gradient(circle at 70% 18%,#c3b36d33 0 5%,transparent 6%),
+ linear-gradient(135deg,#54704a 0 24%,#688455 25% 49%,#536f48 50% 74%,#698354 75%);
+ box-shadow:inset 0 0 35px #10180eaa,0 6px 18px #0008}
+.visual-battle:before{content:'';position:absolute;inset:0;pointer-events:none;z-index:0;background:
+ repeating-linear-gradient(27deg,transparent 0 19px,#ffffff07 20px 21px),
+ radial-gradient(ellipse at 10% 90%,#1b381faa,transparent 22%),
+ radial-gradient(ellipse at 95% 5%,#18331daa,transparent 25%)}
+.visual-battle .tile{z-index:1;border-color:#dce7bd28;background:transparent;text-shadow:0 2px 3px #000}
+.visual-battle .tile:nth-child(7n+2){background:#b9ca7b0a}.visual-battle .tile:nth-child(11n+4){background:#1b3b210d}
+.visual-battle .tile.obstacle{background:radial-gradient(circle at 55% 38%,#8b806b 0 14%,#5b5347 15% 32%,#342f29 33% 55%,#1c241c 56%);box-shadow:inset 0 0 0 1px #b8aa7c44}
+.visual-battle .tile.obstacle:after{content:'🪨';font-size:clamp(18px,5vw,31px);filter:drop-shadow(0 3px 2px #0008)}
+.visual-battle .tile.move{background:#b8db7d42;box-shadow:inset 0 0 0 1px #d9efab66}
+.visual-battle .tile.target{background:#c8a84822;box-shadow:inset 0 0 0 2px #e3c460}
+.visual-battle .tile.selected{box-shadow:inset 0 0 0 3px #d9efff,0 0 10px #6ec7ff inset}
+.visual-battle .unit-icon{font-size:1.08em;filter:drop-shadow(0 4px 2px #0009)}
+.visual-battle .unit-hp{left:8%;right:8%;top:1px;height:6px;background:#160d0d;border:1px solid #070707}
+.visual-battle .unit-hp i{background:linear-gradient(#f04a45,#ad201f)}
+.visual-battle .unit-badge{right:2px;bottom:1px;background:#0b100ddd;border:1px solid #6e725b;font-size:9px}
+.action-grid button{border-radius:8px;background:linear-gradient(#456c4c,#2c4e36);min-height:64px}.action-grid button b{font-size:12px}.action-grid button small{font-size:10px}
+.turn-chip{background:linear-gradient(#293c30,#18251d);border:1px solid #536652}.turn-chip.current{outline:2px solid #d9b84f;background:#4a4930}
+
+/* Exploración: ciudad/camino más orgánicos sin cambiar coordenadas ni colisiones. */
+.visual-world{border:5px solid #57492f;box-shadow:inset 0 0 35px #102014aa;background-color:#6e9258}
+.visual-world:before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 15% 15%,#cbd48b22,transparent 20%),radial-gradient(circle at 85% 80%,#183d23aa,transparent 28%),repeating-linear-gradient(25deg,transparent 0 28px,#ffffff06 29px 30px)}
+.visual-world.map-arca{background:linear-gradient(#799d62 0 58%,#688b55 58%)}
+.visual-world.map-outskirts,.visual-world.map-west{background:radial-gradient(circle at 18% 22%,#89a969 0 7%,transparent 8%),radial-gradient(circle at 80% 78%,#315533 0 12%,transparent 13%),linear-gradient(#66894f,#78965b)}
+.visual-world .road{background:linear-gradient(90deg,#a8895d,#c0a36e 48%,#9e8056);border-color:#755f43;box-shadow:inset 0 0 12px #5b432d55}
+.visual-world .academy{background:linear-gradient(135deg,#75614e,#9b8268);border-color:#3b3028;box-shadow:0 7px 15px #0007,inset 0 0 0 2px #b7a27b}
+.visual-world .academy:after{color:#f1e4c3;text-shadow:0 2px 3px #000}
+.visual-world .wall{background:repeating-linear-gradient(90deg,#514a3e 0 22px,#655d4d 23px 42px);border-color:#292b24;box-shadow:0 5px 8px #0006}
+.visual-world .tree{background:radial-gradient(circle at 40% 35%,#4d713c 0 18%,#315a34 19% 48%,#1f3c27 49%);border-color:#18301e;box-shadow:0 8px 9px #0005}
+.visual-world .building{background:linear-gradient(#5d4a33,#3e3225);border-color:#b28d55;box-shadow:0 7px 12px #0008,inset 0 0 0 2px #2a2119}
+.visual-world .building:before{content:'';position:absolute;left:8px;right:8px;top:-10px;height:18px;background:#704737;clip-path:polygon(50% 0,100% 100%,0 100%);z-index:-1}
+.visual-world .building small{background:#15110de8;color:#f6e8c5;border:1px solid #79613e}
+.visual-world .exit{background:linear-gradient(#dfc879,#bca253);border:2px solid #8b733b;box-shadow:0 4px 8px #0005}
+.visual-world .actor{border:2px solid #c7b98a;box-shadow:0 4px 10px #0008;background:#243327}
+.visual-world .hero-world{background:#d8cda9;border-color:#f3df99;box-shadow:0 0 0 3px #d5a94066,0 5px 10px #0008}
+.visual-world .npc-world{background:#51476f}.visual-world .enemy-world{background:#6e3c34}
+.world-wrap{border-color:#8b7955;box-shadow:0 6px 18px #0007}
+.map-title{font-family:Georgia,serif;color:#f4e7c6;text-shadow:0 2px 3px #000}
+
+@media(max-width:520px){.screen{padding:8px}.visual-battle{border-width:2px}.action-grid button{min-height:58px;padding:6px 2px}.visual-world{border-width:3px}}
+
+/* 0.2.8.1 — escenario ilustrado aprobado */
+.visual-battle{position:relative;background-image:linear-gradient(rgba(20,35,20,.10),rgba(20,35,20,.10)),url('assets/bosque-combate.jpg');background-size:cover;background-position:center;border:3px solid #8b7950;box-shadow:0 0 0 2px #253327,0 8px 24px #0008;overflow:hidden}
+.visual-battle .tile{background:rgba(38,65,36,.06);border-color:rgba(235,239,208,.26);text-shadow:0 2px 3px #000}
+.visual-battle .tile.obstacle{background:rgba(35,28,20,.58);box-shadow:inset 0 0 0 1px #1d1913}
+.visual-battle .tile.obstacle:after{content:'🪨';filter:drop-shadow(0 4px 3px #0008);font-size:clamp(19px,5vw,31px)}
+.visual-battle .tile.move{background:rgba(145,205,105,.34);box-shadow:inset 0 0 0 1px rgba(215,241,166,.45)}
+.visual-battle .tile.target{background:rgba(210,168,66,.20)}
+.visual-battle .unit-piece{filter:drop-shadow(0 4px 3px #0009)}
+.visual-battle .unit-icon{font-size:1.08em}
+.visual-battle .unit-hp{top:2px;height:6px;border-color:#0a0a0a;background:#080808}
+.visual-battle .unit-hp i{background:linear-gradient(#f2534d,#b71f24)}
+.map-arca{background:radial-gradient(circle at 50% 35%,rgba(255,232,157,.18),transparent 28%),linear-gradient(90deg,rgba(39,78,42,.30),transparent 15% 85%,rgba(39,78,42,.30)),linear-gradient(#759e5e,#638b51)}
+.map-arca .road{background:linear-gradient(90deg,#aa8b5c,#c7ad76 45%,#a7895b);border-color:#8d704b;box-shadow:inset 0 0 16px #fff2}
+.map-arca .academy{background:linear-gradient(#5e6570,#89745d);border-color:#40392f;box-shadow:0 8px 15px #0006}
+.building{box-shadow:0 5px 10px #0007!important;border-color:#8f744c!important;background:linear-gradient(#6b4d35,#3e3026)!important}
+.interior{background:repeating-linear-gradient(90deg,#685944 0 42px,#77664d 42px 84px)!important;box-shadow:inset 0 0 55px #0008}
+.shop-floor{position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,#8a7351 0,#66543d 55%,#443a2e 100%);opacity:.65}
+
+/* 0.2.8.1 — escenario ilustrado aprobado */
+.visual-battle{position:relative;background-image:linear-gradient(rgba(20,35,20,.10),rgba(20,35,20,.10)),url('assets/bosque-combate.jpg');background-size:cover;background-position:center;border:3px solid #8b7950;box-shadow:0 0 0 2px #253327,0 8px 24px #0008;overflow:hidden}
+.visual-battle .tile{background:rgba(38,65,36,.06);border-color:rgba(235,239,208,.26);text-shadow:0 2px 3px #000}
+.visual-battle .tile.obstacle{background:rgba(35,28,20,.58);box-shadow:inset 0 0 0 1px #1d1913}
+.visual-battle .tile.obstacle:after{content:'🪨';filter:drop-shadow(0 4px 3px #0008);font-size:clamp(19px,5vw,31px)}
+.visual-battle .tile.move{background:rgba(145,205,105,.34);box-shadow:inset 0 0 0 1px rgba(215,241,166,.45)}
+.visual-battle .tile.target{background:rgba(210,168,66,.20)}
+.visual-battle .unit-piece{filter:drop-shadow(0 4px 3px #0009)}
+.visual-battle .unit-icon{font-size:1.08em}
+.visual-battle .unit-hp{top:2px;height:6px;border-color:#0a0a0a;background:#080808}
+.visual-battle .unit-hp i{background:linear-gradient(#f2534d,#b71f24)}
+.map-arca{background:radial-gradient(circle at 50% 35%,rgba(255,232,157,.18),transparent 28%),linear-gradient(90deg,rgba(39,78,42,.30),transparent 15% 85%,rgba(39,78,42,.30)),linear-gradient(#759e5e,#638b51)}
+.map-arca .road{background:linear-gradient(90deg,#aa8b5c,#c7ad76 45%,#a7895b);border-color:#8d704b;box-shadow:inset 0 0 16px #fff2}
+.map-arca .academy{background:linear-gradient(#5e6570,#89745d);border-color:#40392f;box-shadow:0 8px 15px #0006}
+.building{box-shadow:0 5px 10px #0007!important;border-color:#8f744c!important;background:linear-gradient(#6b4d35,#3e3026)!important}
+.interior{background:repeating-linear-gradient(90deg,#685944 0 42px,#77664d 42px 84px)!important;box-shadow:inset 0 0 55px #0008}
+.shop-floor{position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,#8a7351 0,#66543d 55%,#443a2e 100%);opacity:.65}
+
+/* 0.2.8.2 — prueba visual modular: terreno, obstáculos y Guerrero independientes */
+.visual-battle{
+  background-image:linear-gradient(rgba(18,32,18,.05),rgba(18,32,18,.05)),url('assets/terreno-bosque.png')!important;
+  background-size:cover!important;background-position:center!important;
+}
+.visual-battle .tile.obstacle{background:transparent!important;box-shadow:none!important;position:relative}
+.visual-battle .tile.obstacle:after{content:''!important;position:absolute;inset:-24%;background-repeat:no-repeat;background-position:center;background-size:contain;z-index:1;pointer-events:none;filter:drop-shadow(0 3px 2px #0007)}
+.visual-battle .tile.obstacle-rock:after{background-image:url('assets/obstaculo-roca.png')}
+.visual-battle .tile.obstacle-tree:after{background-image:url('assets/obstaculo-arbol.png');inset:-58%;z-index:2}
+.hero-sprite{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 3px 2px #0008)}
+.visual-battle .unit-icon{display:block;width:88%;height:88%;font-size:1.08em;z-index:2}
+.visual-battle .unit-icon .hero-sprite{transform:scale(1.28);transform-origin:center bottom}
+.deploy-hero{width:88%;height:88%;display:grid;place-items:center;z-index:3}
+.deploy-hero .hero-sprite{transform:scale(1.28);transform-origin:center bottom}
+.visual-battle .unit-hp,.visual-battle .unit-badge,.visual-battle .unit-states{z-index:5}
+
+/* 0.2.8.2 — sprites direccionales de enemigos */
+.combat-sprite{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;user-select:none;filter:drop-shadow(0 3px 2px #0009)}
+.hero-sprite,.enemy-sprite{width:94%;height:94%;max-width:none;max-height:none}
+.unit-icon{display:block;width:100%;height:100%}
+.unit-piece.corpse .combat-sprite{filter:grayscale(1) drop-shadow(0 3px 2px #0009)}
+
+/* 0.2.8.6 — miniaturas de mesa + HUD compacto */
+.miniature-world{background:transparent!important;border-radius:0!important;width:64px!important;height:76px!important;transition:left .09s linear,top .09s linear;overflow:visible}
+.miniature-world img{width:100%;height:100%;object-fit:contain;object-position:center bottom;pointer-events:none;filter:drop-shadow(0 4px 3px #0009)}
+.visual-battle .combat-sprite{width:128%;height:128%;object-fit:contain;object-position:center bottom;transform:none!important;filter:drop-shadow(0 3px 2px #0009)}
+.visual-battle .unit-icon{overflow:visible;display:grid;place-items:end center}
+.deploy-hero{width:100%;height:100%;display:grid;place-items:end center;overflow:visible}
+.deploy-hero .hero-sprite{width:128%;height:128%;object-fit:contain;object-position:center bottom;transform:none!important}
+.visual-battle .unit-vitals{position:absolute;left:50%;top:-15px;transform:translateX(-50%);z-index:7;background:#0b100de8;border:1px solid #82795e;border-radius:6px;padding:1px 4px;font-size:8px;line-height:1.2;white-space:nowrap;color:#fff;text-shadow:none}
+.visual-battle .unit-hp{top:-5px!important;left:8%!important;right:8%!important;height:6px!important;border:1px solid #090909!important;background:#251010!important;z-index:6!important}
+.visual-battle .unit-hp i{background:linear-gradient(#f4544e,#ad201f)!important}
+.visual-battle .unit-states{top:-27px!important}
+
+/* 0.2.8.7 — corrección de contenedores de miniaturas (sin assets nuevos) */
+/* La casilla activa ya no dibuja un rectángulo detrás de la miniatura. */
+.visual-battle .tile.selected{box-shadow:none!important;background:transparent!important}
+.visual-battle .tile.selected .unit-piece{filter:drop-shadow(0 0 4px rgba(217,239,255,.85)) drop-shadow(0 4px 3px #0009)}
+/* El contenedor ocupa la casilla sólo para posicionar; la imagen conserva proporción y ancla la peana abajo-centro. */
+.visual-battle .unit-piece{position:absolute;inset:0;display:grid;place-items:end center;overflow:visible;background:transparent!important}
+.visual-battle .unit-icon{position:absolute;inset:0;width:100%!important;height:100%!important;display:grid!important;place-items:end center!important;overflow:visible!important;background:transparent!important}
+.visual-battle .combat-sprite{width:auto!important;height:118%!important;max-width:138%!important;object-fit:contain!important;object-position:center bottom!important}
+/* Exploración: sin tarjeta/recuadro alrededor del Guerrero. */
+.visual-world .hero-world.miniature-world{background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;filter:none!important;outline:0!important}
+.visual-world .hero-world.miniature-world img{display:block;width:auto!important;height:100%!important;max-width:100%!important;object-fit:contain!important;object-position:center bottom!important}
+
+/* 0.2.8.8 — alineación lógica/visual de casillas y miniaturas */
+/* Fuerza una matriz 10×10 real: el contenido de una miniatura ya no puede agrandar una fila. */
+.visual-battle{
+  grid-template-columns:repeat(10,minmax(0,1fr))!important;
+  grid-template-rows:repeat(10,minmax(0,1fr))!important;
+}
+.visual-battle .tile{
+  min-width:0!important;
+  min-height:0!important;
+  width:auto!important;
+  height:auto!important;
+  overflow:visible;
+}
+/* Los resaltados pertenecen siempre a la celda 1×1, independientemente del tamaño del PNG. */
+.visual-battle .tile.deploy,
+.visual-battle .tile.deploy-chosen,
+.visual-battle .tile.move,
+.visual-battle .tile.target,
+.visual-battle .tile.fx-target,
+.visual-battle .tile.fx-attacker{
+  background-clip:padding-box;
+}
+/* La peana se centra sobre la casilla lógica; el cuerpo puede sobresalir hacia arriba como una miniatura física. */
+.visual-battle .unit-piece{inset:0!important;overflow:visible!important}
+.visual-battle .unit-icon{
+  left:0!important;
+  right:0!important;
+  top:auto!important;
+  bottom:34%!important;
+  width:100%!important;
+  height:118%!important;
+  overflow:visible!important;
+  display:grid!important;
+  place-items:end center!important;
+}
+.visual-battle .combat-sprite{
+  width:auto!important;
+  height:100%!important;
+  max-width:138%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+}
+/* Despliegue: mismo anclaje que una unidad ya colocada, sin estirar la casilla seleccionada. */
+.visual-battle .deploy-hero{
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:auto!important;
+  bottom:34%!important;
+  width:100%!important;
+  height:118%!important;
+  overflow:visible!important;
+  display:grid!important;
+  place-items:end center!important;
+}
+.visual-battle .deploy-hero .hero-sprite{
+  width:auto!important;
+  height:100%!important;
+  max-width:138%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:none!important;
+}
+
+/* 0.2.8.9 — anclaje por peana: el centro visual de la base coincide con el centro de la casilla lógica. */
+.visual-battle .unit-icon,
+.visual-battle .deploy-hero{
+  bottom:44%!important;
+}
+
+/* 0.2.8.10 — corrección directa del desfase vertical de miniaturas.
+   La casilla sigue siendo la única coordenada lógica; movemos sólo el dibujo
+   media casilla hacia arriba para que el centro de la peana coincida con el centro 1x1. */
+.visual-battle .unit-icon,
+.visual-battle .deploy-hero{
+  bottom:50%!important;
+  height:100%!important;
+  transform:translateY(50%)!important;
+}
+.visual-battle .combat-sprite,
+.visual-battle .deploy-hero .hero-sprite{
+  transform:translateY(-50%)!important;
+}
+
+
+/* 0.2.8.11 — prototipo Bosque del Oeste 30×30 + cámara móvil */
+.world-wrap.world-camera{height:min(78vw,520px);max-height:520px;overflow:hidden;position:relative;scroll-behavior:smooth;touch-action:manipulation}
+.world.map-west{width:1440px!important;height:1440px!important;background-color:#29442e;background-image:linear-gradient(#ffffff12 1px,transparent 1px),linear-gradient(90deg,#ffffff12 1px,transparent 1px),linear-gradient(#29442edd,#29442edd)!important;background-size:48px 48px,48px 48px,100% 100%!important;background-position:0 0!important}
+.map-west .west-road{position:absolute;left:0;right:0;top:672px;height:144px;background:#9a835b;border-top:2px solid #806b49;border-bottom:2px solid #806b49;z-index:0}
+.map-west .miniature-world{width:48px;height:48px}
+@media(max-width:520px){.world.map-west{width:1440px!important;height:1440px!important}.world-wrap.world-camera{height:72vw;min-height:300px;max-height:430px}}
+/* HUD: Vida/Escudo por encima de la cabeza, sin tapar la miniatura. */
+.visual-battle .unit-vitals{top:-31px!important}
+.visual-battle .unit-hp{top:-20px!important}
+.visual-battle .unit-states{top:-44px!important}
+
+/* 0.2.8.12 — escala unificada exploración/combate + encuentros como miniaturas */
+.world.map-west{width:1920px!important;height:1920px!important;background-size:64px 64px,64px 64px,100% 100%!important}
+.map-west .west-road{top:896px;height:192px}
+.map-west .miniature-world{width:64px!important;height:64px!important;transform:translate(-50%,-50%)!important}
+.map-west .miniature-world img{width:auto!important;height:118%!important;max-width:138%!important;object-fit:contain!important;object-position:center bottom!important;filter:drop-shadow(0 3px 2px #0009)}
+.map-west .miniature-encounter{width:64px!important;height:64px!important;background:transparent!important;border:0!important;border-radius:0!important;box-shadow:none!important;transform:translate(-50%,-50%)!important;display:grid!important;place-items:end center!important;overflow:visible!important}
+.map-west .miniature-encounter img{width:auto!important;height:118%!important;max-width:138%!important;object-fit:contain!important;object-position:center bottom!important;filter:drop-shadow(0 3px 2px #0009)}
+/* La cámara móvil ve aproximadamente 10 casillas de ancho en un teléfono típico. */
+.world-wrap.world-camera{height:min(100vw,640px);max-height:640px}
+@media(max-width:520px){.world.map-west{width:1920px!important;height:1920px!important}.world-wrap.world-camera{height:92vw;min-height:320px;max-height:520px}}
+
+/* 0.2.8.13 — cámara de exploración con zoom + HUD compacto por casilla */
+.world-zoom-controls{display:flex;align-items:center;justify-content:center;gap:8px;margin:6px 0 8px;position:relative;z-index:9}
+.world-zoom-controls button{width:42px;height:36px;padding:0;font-size:24px;line-height:1}
+.world-zoom-controls span{min-width:54px;text-align:center;font-size:12px;font-weight:800;background:#101713cc;border:1px solid #50624f;border-radius:8px;padding:5px 7px}
+.world-wrap.world-camera{touch-action:pan-x pan-y;scroll-behavior:smooth}
+/* El HUD vive dentro de la casilla de su dueño: no invade la casilla superior. */
+.visual-battle .unit-vitals{top:1px!important;left:4%!important;right:4%!important;max-width:92%!important;font-size:8px!important;line-height:11px!important;padding:0 2px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important;z-index:8!important}
+.visual-battle .unit-hp{top:13px!important;left:10%!important;right:10%!important;height:4px!important;z-index:8!important}
+.visual-battle .unit-states{top:18px!important;z-index:8!important;font-size:9px!important}
+
+/* 0.2.8.14 — cámara libre: arrastre con 1 dedo, pinch con 2 y recentrado manual */
+.world-camera-tools{display:flex;justify-content:flex-end;margin:6px 0 8px;position:relative;z-index:9}
+.world-camera-tools button{padding:7px 11px;font-size:12px;border-radius:9px}
+.world-wrap.world-camera{overflow:auto!important;touch-action:pan-x pan-y!important;scroll-behavior:auto;overscroll-behavior:contain;scrollbar-width:none}
+.world-wrap.world-camera::-webkit-scrollbar{display:none}
+/* HUD táctico: información compacta en la esquina superior de SU propia casilla. */
+.visual-battle .unit-vitals{top:2px!important;left:2px!important;right:auto!important;max-width:94%!important;transform:none!important;font-size:7.5px!important;line-height:10px!important;padding:0 2px!important;border-radius:4px!important;white-space:nowrap!important;overflow:visible!important;z-index:8!important}
+.visual-battle .unit-hp{top:13px!important;left:6%!important;right:6%!important;height:4px!important;z-index:8!important}
+.visual-battle .unit-states{top:18px!important;z-index:8!important;font-size:9px!important}
+
+
+/* 0.2.8.15 — Afueras de Arca Oeste: fondo 30x30 aprobado */
+.world.map-west{background-color:#6f934f!important;background-image:linear-gradient(#ffffff12 1px,transparent 1px),linear-gradient(90deg,#ffffff12 1px,transparent 1px),url('assets/afueras-arca-oeste.png')!important;background-size:64px 64px,64px 64px,100% 100%!important;background-position:0 0,0 0,0 0!important;background-repeat:repeat,repeat,no-repeat!important;}
+.map-west .west-road{display:none!important;}
+
+
+/* 0.2.8.16 — tablero 30x30 -> sector táctico 10x10 + HUD limpio */
+/* Cuadrícula de exploración: visible pero discreta, siempre por encima del arte. */
+.world.map-west{
+  background-image:linear-gradient(rgba(245,245,220,.28) 1px,transparent 1px),linear-gradient(90deg,rgba(245,245,220,.28) 1px,transparent 1px),url('assets/afueras-arca-oeste.png')!important;
+  background-size:64px 64px,64px 64px,100% 100%!important;
+  background-position:0 0,0 0,0 0!important;
+}
+/* El combate usa el mismo mapa 30x30 ampliado 3x y desplazado al origen del sector 10x10. */
+.visual-battle.sector-west{
+  background-image:url('assets/afueras-arca-oeste.png')!important;
+  background-size:300% 300%!important;
+  background-position:var(--sector-x,50%) var(--sector-y,50%)!important;
+  background-repeat:no-repeat!important;
+}
+.visual-battle.sector-west:before{background:transparent!important}
+.visual-battle.sector-west .tile{background:transparent;border-color:rgba(245,245,220,.30)}
+/* Sobre la miniatura sólo vida actual/máxima + barra fina. */
+.visual-battle .unit-vitals{
+  top:1px!important;left:50%!important;right:auto!important;transform:translateX(-50%)!important;
+  background:rgba(10,14,11,.58)!important;border:0!important;border-radius:3px!important;
+  padding:0 2px!important;font-size:7px!important;line-height:9px!important;max-width:none!important;
+  overflow:visible!important;color:#fff!important;box-shadow:none!important;z-index:9!important;
+}
+.visual-battle .unit-hp{top:11px!important;left:17%!important;right:17%!important;height:3px!important;border:0!important;background:rgba(20,8,8,.65)!important;border-radius:3px!important;z-index:9!important}
+.visual-battle .unit-states{display:none!important}
+/* Ficha de información: toda la información detallada sale del tablero. */
+.fighter-panel{display:flex;gap:9px;align-items:center;margin:8px 0;padding:8px 9px;background:linear-gradient(180deg,#1b241dcc,#101713e8);border:1px solid #6d745e;border-radius:12px;box-shadow:0 5px 14px #0005}
+.fighter-avatar{width:54px;height:54px;flex:0 0 54px;border-radius:50%;overflow:hidden;border:2px solid #a89158;background:#253126;display:grid;place-items:center}
+.fighter-avatar img{width:150%;height:150%;object-fit:contain;object-position:center 16%;transform:translateY(15%)}
+.fighter-main{min-width:0;flex:1}.fighter-name{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}.fighter-name b{font-size:14px}.fighter-name small{font-size:10px;opacity:.75}
+.fighter-vitals{display:flex;gap:8px;flex-wrap:wrap;margin-top:3px;font-size:11px}.fighter-states{margin-top:3px;font-size:9px;opacity:.85;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:520px){.fighter-panel{margin:6px 0;padding:6px 7px}.fighter-avatar{width:46px;height:46px;flex-basis:46px}.fighter-vitals{gap:6px;font-size:10px}}
+
+/* v0.2.8.18 TEST — obstáculos lógicos, colisiones y ajustes HUD */
+.map-west .west-prop{position:absolute;width:48px;height:48px;transform:translate(-50%,-50%);z-index:2;pointer-events:none;display:grid;place-items:center;border-radius:50%;box-sizing:border-box}
+.map-west .prop-tree{background:radial-gradient(circle,#315d32 0 48%,#213c24 50% 66%,transparent 68%);border:2px solid #1c3520}
+.map-west .prop-rock{width:42px;height:34px;background:#777b70;border:2px solid #4d514a;border-radius:45% 55% 42% 58%}
+.map-west .prop-bush{width:42px;height:30px;background:#4f743e;border:2px solid #304c2d;border-radius:50%}
+.map-west .prop-stump{width:30px;height:30px;background:#77563a;border:3px solid #4e3928;border-radius:50%}
+.visual-battle .obstacle-wall{background:rgba(83,72,60,.56)!important;box-shadow:inset 0 0 0 2px rgba(50,42,35,.75)}
+.visual-battle .obstacle-rock:after,.visual-battle .obstacle-tree:after,.visual-battle .obstacle-bush:after,.visual-battle .obstacle-stump:after{content:'';width:58%;height:58%;border-radius:50%;display:block;background:rgba(63,77,55,.72);box-shadow:inset 0 0 0 2px rgba(25,34,24,.55)}
+.visual-battle .obstacle-rock:after{background:rgba(105,108,101,.78);border-radius:42% 58% 45% 55%}
+.visual-battle .obstacle-stump:after{width:42%;height:42%;background:rgba(112,78,50,.82)}
+/* Vida: más arriba, sin tocar la cabeza de la miniatura. */
+.visual-battle .unit-vitals{top:-13px!important;font-size:7px!important;line-height:9px!important}
+.visual-battle .unit-hp{top:-3px!important;left:18%!important;right:18%!important;height:3px!important}
+/* Avatar: rostro y hombros centrados. */
+.fighter-avatar img{width:145%!important;height:145%!important;object-fit:contain!important;object-position:center 30%!important;transform:translateY(-2%)!important}
+/* Movimiento: relleno leve + borde claro, sin tapar el mapa. */
+.visual-battle .tile.move{background:rgba(94,156,83,.20)!important;box-shadow:inset 0 0 0 2px rgba(116,210,101,.90)!important}
+.visual-battle .tile.deploy{background:rgba(71,128,177,.22)!important;box-shadow:inset 0 0 0 2px rgba(104,179,238,.92)!important}
+
+/* v0.2.8.19 — correcciones de borde, HUD y encuentros repetibles */
+.visual-battle .unit-vitals{top:-20px!important}
+.visual-battle .unit-hp{top:-10px!important}
+
+/* v0.2.8.20 — interfaz de combate compacta y organizada */
+.combat-screen{padding-top:7px}
+.combat-head{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin:0 1px 5px;padding:6px 8px;background:linear-gradient(180deg,#1c2b22e8,#111b16e8);border:1px solid #596b55;border-radius:10px}
+.combat-head>div{min-width:0;flex:1}.combat-head>div>b{font-size:13px}.combat-timer{white-space:nowrap;font-size:13px;color:#e3c66b;padding-top:1px}
+.compact-order{gap:4px;margin-top:4px}.compact-order .turn-chip{padding:2px 6px;font-size:9px;border-radius:6px}
+.compact-test{margin:3px 0 5px;padding:4px 6px;min-height:0}.compact-test button{padding:4px 7px;font-size:10px}
+.fighter-panel-new{margin:6px 0 5px;padding:7px 9px;min-height:72px}
+.fighter-avatar-new{width:66px;height:66px;flex:0 0 66px;border-width:2px}
+.fighter-avatar-new img{width:150%!important;height:150%!important;object-position:center 27%!important;transform:translateY(-1%)!important}
+.fighter-panel-new .fighter-name b{font-size:15px}.fighter-panel-new .fighter-name small{font-size:10px}.fighter-panel-new .fighter-vitals{font-size:11px;gap:9px}.fighter-panel-new .fighter-states{font-size:9px}
+.main-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.main-actions button{min-width:0;min-height:51px;padding:5px 2px;border-radius:8px;display:grid;place-items:center;align-content:center;gap:2px;font-size:17px;background:linear-gradient(#456c4c,#2c4e36)}
+.main-actions button b{font-size:9px;line-height:1.05}.main-actions .end-turn{background:linear-gradient(#8b6a31,#62491f)}
+.main-actions button.active-action{outline:2px solid #d9b84f;background:linear-gradient(#557c55,#365c3d)}
+.skill-drawer{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px;margin-top:5px;padding:6px;background:#111a15;border:1px solid #536652;border-radius:9px}
+.skill-drawer button{min-width:0;padding:6px 3px;display:grid;place-items:center;gap:1px;font-size:15px}.skill-drawer button b{font-size:10px}.skill-drawer button small{font-size:8px;opacity:.8}
+.combat-ui-new .action-info{margin-top:5px;padding:6px 8px}.combat-ui-new .action-info p{margin:3px 0;font-size:10px}.combat-ui-new .info-grid{font-size:9px}.combat-ui-new .combat-help{font-size:9px;margin:3px 2px 0}.combat-log{margin-top:5px;padding:6px 8px;font-size:9px;opacity:.85}
+@media(max-width:520px){.fighter-avatar-new{width:62px;height:62px;flex-basis:62px}.fighter-panel-new{min-height:68px}.main-actions button{min-height:48px}.combat-head{padding:5px 7px}.combat-screen{padding-top:5px}}
+
+
+/* v0.2.8.21 — inspección universal + HUD mínimo + registro plegable */
+.visual-battle .unit-vitals{top:-25px!important;font-size:5.8px!important;line-height:7px!important;padding:0 1px!important;border-radius:3px!important;min-width:0!important}
+.visual-battle .unit-hp{top:-17px!important;left:25%!important;right:25%!important;height:2px!important;border-radius:2px!important}
+.visual-battle .tile.inspected .unit-piece{filter:drop-shadow(0 0 4px rgba(230,198,90,.9)) drop-shadow(0 3px 2px #0009)!important}
+.visual-battle .tile.inspected{box-shadow:inset 0 0 0 1px rgba(230,198,90,.75)!important}
+.visual-battle .tile.turn-unit:not(.inspected){box-shadow:inset 0 0 0 1px rgba(180,210,190,.35)!important}
+.combat-log-toggle{width:100%;margin-top:5px;padding:6px 8px;border-radius:8px;background:#18241d;border:1px solid #536652;font-size:10px;color:#d8dfd6}
+.combat-log{margin-top:4px!important}
+
+/* v0.2.8.22 — interfaz de exploración */
+.exploration-screen{padding-top:7px}
+.explore-hero-card{display:flex;align-items:center;gap:9px;margin:0 0 7px;padding:7px 9px;background:linear-gradient(180deg,#1c2b22ee,#111b16ee);border:1px solid #596b55;border-radius:11px}
+.explore-avatar{width:54px;height:54px;flex:0 0 54px;border:2px solid #a38b55;border-radius:50%;overflow:hidden;background:#243228;display:grid;place-items:center}
+.explore-avatar img,.explore-context-avatar img{width:150%;height:150%;object-fit:contain;object-position:center 27%;transform:translateY(-1%)}
+.explore-hero-info{min-width:0;flex:1}.explore-hero-info>div:first-child{display:flex;align-items:baseline;gap:7px;flex-wrap:wrap}.explore-hero-info b{font-size:15px}.explore-hero-info span{font-size:10px;opacity:.8}.explore-stats{display:flex;gap:12px;flex-wrap:wrap;margin-top:4px}.explore-stats b{font-size:11px;font-weight:700}
+.explore-zone-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:stretch;margin-bottom:7px}.explore-zone{padding:6px 9px;background:#17241d;border:1px solid #536652;border-radius:9px;display:grid;align-content:center}.explore-zone small{font-size:8px;opacity:.7}.explore-zone b{font-family:Georgia,serif;font-size:13px;color:#f1dfb2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.quest-track.explore-objectives{margin:0;padding:0;border-radius:9px;min-width:112px;font-size:10px}.explore-objectives summary{list-style:none;cursor:pointer;padding:10px 9px;font-weight:700;white-space:nowrap}.explore-objectives summary::-webkit-details-marker{display:none}.explore-objectives[open]{grid-column:1/-1}.explore-objectives div{padding:0 9px 8px;line-height:1.45;font-size:9px}.explore-objectives div b{font-weight:600}
+.world-stage{position:relative}.center-camera-overlay{position:absolute;right:7px;top:7px;z-index:20;width:auto!important;min-width:0!important;padding:5px 7px!important;border-radius:18px!important;font-size:12px!important;display:flex;align-items:center;gap:3px;box-shadow:0 2px 7px #0008}.center-camera-overlay span{font-size:8px}
+.explore-context{margin:7px 0 6px;padding:7px 9px;min-height:58px;background:linear-gradient(180deg,#17241dee,#101914ee);border:1px solid #536652;border-radius:10px;display:flex;align-items:center;justify-content:space-between;gap:8px}.explore-context-main{display:flex;align-items:center;gap:8px;min-width:0}.explore-context-avatar{width:48px;height:48px;flex:0 0 48px;border:2px solid #9a8351;border-radius:50%;overflow:hidden;background:#243228;display:grid;place-items:center;font-size:24px}.explore-context-main>div:last-child{min-width:0}.explore-context-main b{display:block;font-size:13px}.explore-context-main small{display:block;font-size:9px;opacity:.72}.explore-context-main p{margin:2px 0 0;font-size:9px;opacity:.9}.context-action{width:auto!important;min-width:82px!important;padding:8px!important;font-size:10px!important;white-space:nowrap}.danger-context{background:linear-gradient(#6e5c38,#4e4028)!important}
+.explore-actions{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}.explore-actions button{min-width:0;min-height:53px;padding:5px 2px;border-radius:8px;display:grid;place-items:center;align-content:center;gap:2px;background:linear-gradient(#456c4c,#2c4e36)}.explore-actions button span{font-size:17px}.explore-actions button b{font-size:8px;line-height:1.05}
+.explore-tests{margin-top:7px;padding:0!important}.explore-tests summary{cursor:pointer;padding:6px 8px;font-size:9px;font-weight:700}.explore-tests>div{display:flex;gap:6px;padding:0 6px 6px}.explore-tests button{padding:5px 7px;font-size:9px}
+@media(max-width:520px){.explore-avatar{width:50px;height:50px;flex-basis:50px}.explore-stats{gap:9px}.explore-zone-row{grid-template-columns:minmax(0,1fr) 112px}.explore-actions button{min-height:50px}.explore-context-avatar{width:45px;height:45px;flex-basis:45px}}
+/* v0.2.8.23: la ficha de exploración sólo aparece al inspeccionar algo */
+.explore-context:empty{display:none}
+
+/* v0.2.8.25 — obstáculos visuales reales sobre la capa lógica de terreno */
+.map-west .west-prop{width:74px!important;height:74px!important;background:transparent!important;border:0!important;border-radius:0!important;background-image:var(--prop-url)!important;background-size:contain!important;background-position:center bottom!important;background-repeat:no-repeat!important;filter:drop-shadow(0 3px 2px #0005);transform:translate(-50%,-58%)!important;overflow:visible!important}
+.map-west .west-prop.prop-tree{width:104px!important;height:118px!important;z-index:3!important;transform:translate(-50%,-72%)!important}
+.map-west .west-prop.prop-bush{width:72px!important;height:64px!important}
+.map-west .west-prop.prop-rock{width:76px!important;height:68px!important}
+.map-west .west-prop.prop-stump,.map-west .west-prop.prop-log{width:82px!important;height:68px!important}
+.visual-battle .tile.obstacle:not(.obstacle-wall):after{content:''!important;position:absolute!important;inset:-22%!important;background-image:var(--obstacle-url)!important;background-size:contain!important;background-position:center bottom!important;background-repeat:no-repeat!important;filter:drop-shadow(0 2px 2px #0006)!important;z-index:2!important;border:0!important;border-radius:0!important;width:auto!important;height:auto!important}
+.visual-battle .tile.obstacle-tree:after{inset:-62% -42% -20%!important}
+.visual-battle .tile.obstacle-wall:after{content:''!important}
+
+/* 0.2.8.26 — obstáculos: escala física, anclaje por base y profundidad */
+.map-west .west-prop{transform:translate(-50%,-100%)!important;background-position:center bottom!important;transform-origin:center bottom!important;filter:drop-shadow(0 3px 2px #0005)!important}
+.map-west .west-prop.prop-tree{width:172px!important;height:188px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-rock{width:132px!important;height:112px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-bush{width:82px!important;height:72px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-stump{width:88px!important;height:78px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-log{width:142px!important;height:86px!important;transform:translate(-50%,-100%)!important}
+.map-west #worldHero{position:absolute!important}
+
+/* v0.2.8.27 — lectura del personaje detrás de árboles */
+.map-west .west-prop.prop-tree{transition:opacity .16s ease}
+.map-west .west-prop.prop-tree.hero-behind{opacity:.46!important}
+/* v0.2.8.28 hotfix: una imagen por obstáculo multicasilla en combate */
+.visual-battle .tile.obstacle-footprint:after{content:none!important}
+.visual-battle .tile.obstacle[style*="--obstacle-url"]:after{
+  inset:auto!important;
+  left:0!important;
+  top:0!important;
+  width:calc(var(--obstacle-w,1) * 100%)!important;
+  height:calc(var(--obstacle-h,1) * 100%)!important;
+  background-size:contain!important;
+  background-position:center bottom!important;
+  pointer-events:none!important;
+}
