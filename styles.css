@@ -432,3 +432,15 @@ button:active{transform:translateY(1px)}
 /* v0.2.8.27 — lectura del personaje detrás de árboles */
 .map-west .west-prop.prop-tree{transition:opacity .16s ease}
 .map-west .west-prop.prop-tree.hero-behind{opacity:.46!important}
+/* v0.2.8.28 hotfix: una imagen por obstáculo multicasilla en combate */
+.visual-battle .tile.obstacle-footprint:after{content:none!important}
+.visual-battle .tile.obstacle[style*="--obstacle-url"]:after{
+  inset:auto!important;
+  left:0!important;
+  top:0!important;
+  width:calc(var(--obstacle-w,1) * 100%)!important;
+  height:calc(var(--obstacle-h,1) * 100%)!important;
+  background-size:contain!important;
+  background-position:center bottom!important;
+  pointer-events:none!important;
+}

@@ -188,3 +188,15 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Los árboles bajan temporalmente su opacidad cuando Aron queda visualmente detrás de su copa.
 - Se mantienen escala, ocupación lógica, anclaje, terreno y transferencia al combate de v0.2.8.26.
 - PNG de obstáculos limpiados para retirar contaminación blanca de los bordes.
+
+
+## v0.2.8.28 — separación natural de obstáculos
+- El generador deja al menos una casilla libre entre las huellas lógicas de obstáculos naturales para evitar imágenes pegadas o superpuestas.
+- Se conserva la distribución de Llanura: 30% árboles, 25% arbustos, 25% piedra y 20% madera.
+- Se mantienen sin cambios la transparencia árbol–Guerrero, escalas, ocupaciones, terreno lógico, caminos, muros, puerta y transferencia al combate.
+- Incluye el paquete gráfico de obstáculos ya corregido sin halo blanco.
+
+### Corrección incluida en v0.2.8.28 — obstáculos multicasilla en combate
+- Un obstáculo 2×2 (por ejemplo un árbol) conserva sus cuatro casillas bloqueadas, pero se dibuja una sola vez en el tablero táctico.
+- La huella lógica de colisión queda separada de la representación visual.
+- La misma lógica sirve para futuros obstáculos 2×1, 2×2 y otras huellas sin duplicar su imagen.
