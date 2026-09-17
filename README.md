@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.22 — Interfaz de exploración
+# Ghea Táctico v0.2.8.23 — Pulido de interfaces
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -139,3 +139,12 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Registro de combate plegable.
 - Vida flotante más pequeña, fina y elevada.
 - Mecánicas de combate, obstáculos y encuentros conservadas.
+
+
+## v0.2.8.23 — pulido de interfaces
+- Combate: tocar por segunda vez la misma acción la cancela y vuelve al modo inspección.
+- Combate: al cancelar una acción se limpian sus resaltados sin gastar PA/PM.
+- Combate: la ficha de enemigos suma Ataque e Iniciativa.
+- Combate: cambiar de una acción a otra sigue siendo directo y sólo queda una activa.
+- Exploración: la ficha inferior ya no duplica a Aron por defecto; sólo aparece al inspeccionar un elemento contextual (o al tocar al propio Aron).
+- Se conserva sin cambios el mapa 30×30, cámara, zoom y controles de exploración.
