@@ -1,6 +1,19 @@
-# Ghea Táctico v0.2.8.21 — Afueras de Arca — Oeste
+# Ghea Táctico v0.2.8.22 — Interfaz de exploración
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
+
+
+## v0.2.8.22 — interfaz de exploración
+- Nueva cabecera compacta con avatar, clase, nivel, Vida, EXP y Oro.
+- Nombre de zona integrado en una franja compacta.
+- Objetivos plegables para liberar espacio vertical.
+- Botón Centrar integrado como control discreto sobre el mapa Oeste.
+- Se conserva sin cambios el mapa 30×30, paneo con un dedo, zoom con dos dedos y cámara persistente.
+- Nueva ficha contextual bajo el mapa: Aron por defecto; Guardia Oeste y manadas de jabalíes al tocarlos.
+- En el Oeste, tocar un encuentro lo inspecciona primero y “Acercarse” conserva el flujo existente hacia combate.
+- Botonera inferior compacta: Inventario, Habilidades, Desarrollo, Personajes y Descansar.
+- Herramientas de PRUEBAS conservadas en un bloque plegable separado.
+- No se modifican en esta versión el problema del borde de la miniatura, el sprite superior del jabalí ni la lógica pendiente del Guardia.
 
 ## Cambios de esta versión
 - Nuevo sistema visual de **miniaturas estilo juego de mesa**.
