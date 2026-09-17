@@ -444,3 +444,10 @@ button:active{transform:translateY(1px)}
   background-position:center bottom!important;
   pointer-events:none!important;
 }
+
+/* v0.2.8.29 — un obstáculo lógico multicasilla = una sola imagen en combate */
+.visual-battle{position:relative!important;overflow:visible}
+.visual-battle .tile.obstacle:not(.obstacle-wall):after{content:none!important;background-image:none!important}
+.visual-battle .battle-obstacle-visual{position:absolute;z-index:2;pointer-events:none;background-image:var(--obstacle-url);background-size:contain;background-position:center bottom;background-repeat:no-repeat;filter:drop-shadow(0 2px 2px #0006)}
+.visual-battle .battle-obstacle-visual.obstacle-tree{transform:scale(1.08);transform-origin:center bottom}
+.visual-battle .unit-piece{z-index:3}
