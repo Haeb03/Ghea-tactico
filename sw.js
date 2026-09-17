@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02830-scenery-scale-modal-layer';
+const CACHE='ghea-tactico-02831-obstacle-render-peana-anchor';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',

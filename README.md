@@ -214,3 +214,10 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Las huellas lógicas de ocupación permanecen activas pero son completamente invisibles.
 - Los árboles 2×2 siguen siendo una única imagen con cuatro casillas bloqueadas.
 - Los modales de exploración quedan por encima de héroe, NPC, enemigos y obstáculos.
+
+
+## v0.2.8.31 — obstáculos y anclaje de miniaturas
+- Se elimina del combate la representación visual antigua de obstáculos naturales; la ocupación lógica se conserva.
+- Las texturas de obstáculos mantienen una escala coherente con exploración.
+- Los obstáculos multicasilla siguen usando una sola textura sobre toda su huella.
+- Se corrige el anclaje visual de Aventureros y enemigos tomando la peana como referencia de la casilla, sin alterar coordenadas lógicas.
