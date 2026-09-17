@@ -1,7 +1,19 @@
-# Ghea Táctico v0.2.8.23 — Pulido de interfaces
+# Ghea Táctico v0.2.8.24 — Motor universal de obstáculos y biomas
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
+
+## v0.2.8.24 — motor universal de obstáculos y biomas
+- Nuevo motor reutilizable para mapas 30×30: el bioma define qué tipos de obstáculos admite y cada mapa define densidad/semilla.
+- Primer bioma activo: **Llanura** en Afueras de Arca — Oeste.
+- Los marcadores siguen siendo provisionales; todavía no se agregan PNG definitivos.
+- Separación entre obstáculos naturales generados y estructuras permanentes del mapa.
+- La muralla Este sigue bloqueando movimiento y conserva libre la abertura de la puerta.
+- Camino principal, acceso a la puerta, Guardia, encuentros y aparición del aventurero quedan protegidos de la generación.
+- Los obstáculos se generan automáticamente sin superponerse entre sí ni con zonas reservadas.
+- El mismo mapa lógico de obstáculos se reutiliza al extraer el sector real 10×10 para combate; no se regeneran obstáculos al entrar en batalla.
+- Despliegue y aparición de enemigos continúan descartando casillas bloqueadas.
+- La generación usa semilla estable para que el escenario no cambie de lugar al recargar la página.
 
 ## v0.2.8.22 — interfaz de exploración
 - Nueva cabecera compacta con avatar, clase, nivel, Vida, EXP y Oro.

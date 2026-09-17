@@ -8,7 +8,7 @@ let state=migrate();save();function save(){localStorage.setItem(KEY,JSON.stringi
 function t(c,k){return c.tree?.[k]||0}function woundRes(c){return (c.equipment.ring1==='Anillo Simple'?1:0)+(c.equipment.ring2==='Anillo Simple'?1:0)}function furyBonus(c,hp=c.hp){let r=t(c,'fury');return r>=2&&hp<=4?2:r>=1&&hp<=3?1:0}function maxHp(c){return 14+t(c,'offLife')*2+t(c,'defLife')*2+t(c,'robust')*5+(['Botas de tela','Botas de Cuero'].includes(c.equipment.boots)?2:0)+(c.equipment.helmet==='Casco de Cuero'?2:0)+(c.equipment.armor==='Armadura de cuero de jabalí'?3:0)}function initiative(c){return 4+t(c,'offIni')+t(c,'defIni')}function weaponBonus(name){return name==='Espada de Hierro'?2:(name==='Espada básica'||name==='Daga oxidada'?1:0)}function baseDamage(c,hp=c.hp){return 1+t(c,'offDamage')+weaponBonus(c.equipment.weapon)+weaponBonus(c.equipment.offhand)+furyBonus(c,hp)}
 function toast(s){document.body.insertAdjacentHTML('beforeend',`<div class="toast">${s}</div>`);setTimeout(()=>$('.toast')?.remove(),1700)}
 function modal(html,closable=true){document.body.insertAdjacentHTML('beforeend',`<div class="modal" id="modal"><div class="card">${html}${closable?'<div class="actions"><button class="secondary" onclick="closeModal()">Cerrar</button></div>':''}</div></div>`)}window.closeModal=()=>$('#modal')?.remove();
-function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.8.23 · Pulido de interfaces</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
+function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.8.24 · Motor universal de obstáculos</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
 function characters(){app.innerHTML=`<section class="screen"><h2>Aventureros</h2><div id="chars"></div><div class="actions"><button id="new" ${state.characters.length>=3?'disabled':''}>${state.characters.length>=3?'Límite 3/3':'Crear Aventurero'}</button><button class="secondary" id="back">Volver</button></div></section>`;let box=$('#chars');if(!state.characters.length)box.innerHTML='<div class="card">Todavía no creaste ningún Aventurero.</div>';state.characters.forEach((c,i)=>box.insertAdjacentHTML('beforeend',`<div class="card char-card"><div><b>${esc(c.name)}</b> · Humano Guerrero · Nivel ${c.level}<br><span class="small">❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)} · PA 4 · PM 3 · 🪙 ${c.gold}</span></div><div class="char-buttons"><button onclick="enter(${i})">Seleccionar</button><button class="danger" onclick="askDelete(${i})">Eliminar</button></div></div>`));$('#new').onclick=createChar;$('#back').onclick=home}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 window.enter=i=>{state.selected=i;save();world()};window.askDelete=i=>{let c=state.characters[i];modal(`<h3>¿Eliminar a ${esc(c.name)}?</h3><p>Se eliminará este personaje y todo su progreso. Esta acción no se puede deshacer.</p><div class="actions"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="danger" id="confirmDelete">Eliminar definitivamente</button></div>`,false);$('#confirmDelete').onclick=()=>{state.characters.splice(i,1);if(state.selected===i)state.selected=null;else if(state.selected>i)state.selected--;save();closeModal();characters()}}
@@ -16,7 +16,7 @@ function createChar(){if(state.characters.length>=3)return;app.innerHTML=`<secti
 const mapData={
 arca:{w:720,h:540,obstacles:[{x:250,y:25,w:250,h:120},{x:20,y:55,w:90,h:80},{x:570,y:55,w:110,h:95},{x:80,y:420,w:120,h:80},{x:500,y:430,w:130,h:70}],mage:{x:350,y:195},smith:{x:165,y:180},jeweler:{x:485,y:180},textile:{x:485,y:350},itemshop:{x:165,y:350},east:{x:685,y:376},west:{x:25,y:300}},
 outskirts:{w:720,h:540,obstacles:[{x:180,y:70,w:90,h:70},{x:390,y:80,w:75,h:120},{x:260,y:350,w:120,h:70},{x:545,y:320,w:80,h:95}],enemy:{x:560,y:190},exit:{x:25,y:270}},
-west:{w:1920,h:1920,cell:64,cols:30,rows:30,obstacles:[],guard:{x:1480,y:667},exit:{x:1856,y:960},boars:[{x:627,y:787},{x:1120,y:1387}]},
+west:{w:1920,h:1920,cell:64,cols:30,rows:30,obstacles:[],biome:'llanura',obstacleDensity:'media',obstacleSeed:0x47484541,guard:{x:1480,y:667},exit:{x:1856,y:960},boars:[{x:627,y:787},{x:1120,y:1387}]},
 smith:{w:720,h:540,obstacles:[],npc:{x:360,y:180},exit:{x:360,y:505}},jeweler:{w:720,h:540,obstacles:[],npc:{x:360,y:180},exit:{x:360,y:505}},textile:{w:720,h:540,obstacles:[],npc:{x:360,y:180},exit:{x:360,y:505}},itemshop:{w:720,h:540,obstacles:[],npc:{x:360,y:180},exit:{x:360,y:505}}
 };
 let moving=null,patrolTimer=null;
@@ -24,30 +24,68 @@ function side(c){return c.sideQuest||'none'}
 function countItem(c,n){return c.inventory.filter(x=>x===n).length}
 function removeItems(c,n,q){for(let i=0;i<q;i++){let k=c.inventory.indexOf(n);if(k<0)return false;c.inventory.splice(k,1)}return true}
 function missionArrow(c,map,pos,d){let target=null,label='';if(c.quest==='accepted'){if(map==='arca'){target=d.east;label='Salida hacia Afueras'}else if(map==='outskirts'){target=d.enemy;label='Grupo enemigo'}}else if(c.quest==='done'){if(map==='outskirts'){target={x:8,y:376};label='Regresá a Arca'}else if(map==='arca'){target=d.mage;label='Maestro de Arca'}}else if(c.quest==='none'&&map==='arca'){target=d.mage;label='Misión disponible'}if(map==='arca'&&side(c)==='deliverShield'){target=d.west;label='Puerta Oeste'}if(map==='west'&&['deliverShield','hunt','huntReady','returnCollar','returnArmor'].includes(side(c))){target=d.guard;label='Guardia Oeste'}if(map==='arca'&&side(c)==='craftCollar'){target=d.jeweler;label='Joyero'}if(map==='arca'&&side(c)==='craftArmor'){target=d.textile;label='Tienda textil'}if(!target)return'';let ang=Math.atan2(target.y-pos.y,target.x-pos.x)*180/Math.PI;return `<div class="mission-arrow" title="${label}"><span style="transform:rotate(${ang}deg)">➜</span><small>${label}</small></div>`}
-// v0.2.8.18 — obstáculos lógicos del mapa Oeste (semilla fija)
-function seededWestObstacles(){
-  if(seededWestObstacles.cache)return seededWestObstacles.cache;
-  const d=mapData.west, out=[], used=new Set(), reserved=new Set();
-  // Reservas: puerta/camino de acceso, Guardia y los dos encuentros existentes.
-  for(let y=13;y<=17;y++)for(let x=22;x<30;x++)reserved.add(`${x},${y}`);
-  const reserveAround=(px,py,r=1)=>{let cx=Math.floor(px/d.cell),cy=Math.floor(py/d.cell);for(let y=cy-r;y<=cy+r;y++)for(let x=cx-r;x<=cx+r;x++)reserved.add(`${x},${y}`)};
-  reserveAround(d.guard.x,d.guard.y,1); d.boars.forEach(b=>reserveAround(b.x,b.y,2));
-  let seed=0x47484541; const rnd=()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296};
-  const types=['tree','rock','bush','rock','bush','stump'];
-  let tries=0;
-  while(out.length<24&&tries++<1200){
-    let x=2+Math.floor(rnd()*24), y=2+Math.floor(rnd()*26), k=`${x},${y}`;
-    // Mantener una franja central y el acceso a Arca relativamente despejados.
-    if(reserved.has(k)||used.has(k)||Math.abs(y-15)<=1||(x>20&&y>10&&y<20))continue;
-    // Evitar que la llanura se convierta en un bosque compacto.
-    if(out.some(o=>Math.max(Math.abs(o.x-x),Math.abs(o.y-y))<2))continue;
-    used.add(k);out.push({x,y,type:types[Math.floor(rnd()*types.length)]});
-  }
-  seededWestObstacles.cache=out; return out;
+// v0.2.8.24 — motor universal de obstáculos y biomas
+// La lógica de ocupación queda separada de la imagen: hoy se muestran marcadores de prueba.
+const OBSTACLE_TYPES={
+  tree:{blocks:true,size:{w:1,h:1}},
+  rock:{blocks:true,size:{w:1,h:1}},
+  bush:{blocks:true,size:{w:1,h:1}},
+  stump:{blocks:true,size:{w:1,h:1}},
+  log:{blocks:true,size:{w:2,h:1}}
+};
+const BIOMES={
+  llanura:{types:['tree','rock','bush','rock','bush','stump'],counts:{baja:14,media:24,alta:34}},
+  bosque:{types:['tree','tree','tree','rock','bush','log'],counts:{baja:28,media:44,alta:62}},
+  montana:{types:['rock','rock','rock','bush','stump'],counts:{baja:24,media:38,alta:52}},
+  desierto:{types:['rock','rock','bush','stump'],counts:{baja:12,media:20,alta:30}}
+};
+const obstacleCache={};
+function mapStructureBlocked(map,x,y){
+  // Estructuras permanentes pertenecen al diseño del mapa, no al generador natural.
+  if(map==='west')return x>=27 && !(y>=13&&y<=17); // muralla Este, salvo la puerta
+  return false;
 }
-function westWallCell(x,y){return x>=27 && !(y>=13&&y<=17)}
-function westBlockedCell(x,y){return x<0||y<0||x>=30||y>=30||westWallCell(x,y)||seededWestObstacles().some(o=>o.x===x&&o.y===y)}
-function westSceneryHTML(){const cell=mapData.west.cell;return seededWestObstacles().map(o=>`<div class="west-prop prop-${o.type}" style="left:${o.x*cell+cell/2}px;top:${o.y*cell+cell/2}px" title="Obstáculo"></div>`).join('')}
+function protectedCells(map){
+  const d=mapData[map], out=new Set(); if(!d?.cell)return out;
+  const reserve=(cx,cy,r=1)=>{for(let y=cy-r;y<=cy+r;y++)for(let x=cx-r;x<=cx+r;x++)if(x>=0&&y>=0&&x<d.cols&&y<d.rows)out.add(`${x},${y}`)};
+  const reserveWorld=(p,r=1)=>reserve(Math.floor(p.x/d.cell),Math.floor(p.y/d.cell),r);
+  if(map==='west'){
+    // Camino principal y corredor hacia la puerta siempre transitables.
+    for(let y=14;y<=16;y++)for(let x=0;x<d.cols;x++)out.add(`${x},${y}`);
+    for(let y=13;y<=17;y++)for(let x=22;x<d.cols;x++)out.add(`${x},${y}`);
+    reserveWorld(d.guard,1); d.boars.forEach(b=>reserveWorld(b,2));
+    // Punto de aparición original del aventurero.
+    reserveWorld({x:1824,y:960},1);
+  }
+  return out;
+}
+function generatedObstacles(map){
+  if(obstacleCache[map])return obstacleCache[map];
+  const d=mapData[map], biome=BIOMES[d?.biome];
+  if(!d?.cell||!biome)return obstacleCache[map]=[];
+  const target=biome.counts[d.obstacleDensity]??biome.counts.media, reserved=protectedCells(map), used=new Set(), out=[];
+  let seed=(d.obstacleSeed>>>0)||0x47484541; const rnd=()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296};
+  let tries=0;
+  while(out.length<target&&tries++<4000){
+    const type=biome.types[Math.floor(rnd()*biome.types.length)], def=OBSTACLE_TYPES[type]||OBSTACLE_TYPES.rock;
+    const w=def.size?.w||1,h=def.size?.h||1;
+    const x=1+Math.floor(rnd()*Math.max(1,d.cols-w-2)), y=1+Math.floor(rnd()*Math.max(1,d.rows-h-2));
+    let cells=[],bad=false;
+    for(let yy=y;yy<y+h;yy++)for(let xx=x;xx<x+w;xx++){let k=`${xx},${yy}`;cells.push(k);if(reserved.has(k)||used.has(k)||mapStructureBlocked(map,xx,yy))bad=true;}
+    if(bad)continue;
+    // Distribución natural: evita amontonar marcadores en la llanura.
+    if(map==='west'&&out.some(o=>Math.max(Math.abs(o.x-x),Math.abs(o.y-y))<2))continue;
+    cells.forEach(k=>used.add(k)); out.push({x,y,type,w,h});
+  }
+  return obstacleCache[map]=out;
+}
+function obstacleAt(map,x,y){return generatedObstacles(map).some(o=>x>=o.x&&y>=o.y&&x<o.x+(o.w||1)&&y<o.y+(o.h||1));}
+function mapBlockedCell(map,x,y){let d=mapData[map];return !d||x<0||y<0||x>=d.cols||y>=d.rows||mapStructureBlocked(map,x,y)||obstacleAt(map,x,y)}
+// Alias conservados para no alterar el resto de la lógica del Oeste.
+function seededWestObstacles(){return generatedObstacles('west')}
+function westWallCell(x,y){return mapStructureBlocked('west',x,y)}
+function westBlockedCell(x,y){return mapBlockedCell('west',x,y)}
+function westSceneryHTML(){const cell=mapData.west.cell;return generatedObstacles('west').map(o=>`<div class="west-prop prop-${o.type}" style="left:${o.x*cell+cell/2}px;top:${o.y*cell+cell/2}px" title="Obstáculo · ${o.type}"></div>`).join('')}
 function exploreHeroCard(c){return `<div class="explore-hero-card"><div class="explore-avatar"><img src="assets-miniaturas/guerrero-humano-abajo.png" alt=""></div><div class="explore-hero-info"><div><b>${esc(c.name)}</b><span>Guerrero · Nv.${c.level}</span></div><div class="explore-stats"><b>❤️ ${c.hp}/${maxHp(c)}</b><b>✨ ${c.xp}/${xpNeed(c.level)}</b><b>🪙 ${c.gold}</b></div></div></div>`}
 function exploreContextHero(c){return `<div class="explore-context-main"><div class="explore-context-avatar"><img src="assets-miniaturas/guerrero-humano-abajo.png" alt=""></div><div><b>${esc(c.name)}</b><small>Guerrero · Nv.${c.level}</small><p>❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)}</p></div></div>`}
 function setExploreContext(kind,data={}){let box=$('#exploreContext');if(!box)return;let c=hero();if(kind==='guard'){box.innerHTML=`<div class="explore-context-main"><div class="explore-context-avatar npc-avatar">🛡️</div><div><b>Guardia Oeste</b><small>Guardia de Arca</small><p>Vigila el camino junto a la Puerta Oeste.</p></div></div><button class="context-action" id="contextTalk">💬 Hablar</button>`;$('#contextTalk').onclick=()=>{if(typeof guardDialog==='function')approachAndInteract('west',mapData.west.guard,guardDialog);else toast('Interacción del Guardia pendiente de corrección.')}}else if(kind==='boar'){let i=data.index??0;box.innerHTML=`<div class="explore-context-main"><div class="explore-context-avatar"><img src="assets-miniaturas/jabali-abajo.png" alt=""></div><div><b>Manada de jabalíes</b><small>Encuentro</small><p>🐗 Jabalí ×3</p></div></div><button class="context-action danger-context" id="contextEncounter">⚔️ Acercarse</button>`;$('#contextEncounter').onclick=()=>{let el=$(`#boar${i}`),d=mapData.west;if(!el)return;let r=el.getBoundingClientRect(),wr=$('#worldMap').getBoundingClientRect(),target={x:(r.left+r.width/2-wr.left)*d.w/wr.width,y:(r.top+r.height/2-wr.top)*d.h/wr.height};approachAndInteract('west',target,()=>boarGroup(i))}}else box.innerHTML=exploreContextHero(c)}
@@ -85,7 +123,7 @@ function questDialog(){let c=hero(),text,btn='';if(c.quest==='none'){text='Se ha
 function enemyGroup(){modal(`<h3>Grupo enemigo</h3><p>🐗 <b>Jabalí</b> · Vida 10<br>🗡️ <b>Bandido con Daga</b> · Vida 8<br>🏹 <b>Bandido con Ballesta</b> · Vida 8</p><p class="small">Entrar al combate iniciará el encuentro táctico.</p><div class="actions"><button id="fight">Combatir</button><button class="secondary" onclick="closeModal()">Cancelar</button></div>`,false);$('#fight').onclick=()=>{closeModal();battleStart()}}
 let B=null,battleAnimating=false;const legacyObs=['3,3','3,4','6,5','6,6','7,6'];let obs=new Set(legacyObs);
 let obstacleVisual={'3,3':'rock','3,4':'tree','6,5':'tree','6,6':'rock','7,6':'tree'};
-function setBattleObstacles(sector){obs=new Set();obstacleVisual={};if(!sector||sector.map!=='west'){legacyObs.forEach(k=>obs.add(k));Object.assign(obstacleVisual,{'3,3':'rock','3,4':'tree','6,5':'tree','6,6':'rock','7,6':'tree'});return;}let ox=sector.origin.x,oy=sector.origin.y;for(let y=0;y<10;y++)for(let x=0;x<10;x++){let wx=ox+x,wy=oy+y,k=`${x},${y}`;if(westWallCell(wx,wy)){obs.add(k);obstacleVisual[k]='wall';}}seededWestObstacles().forEach(o=>{let x=o.x-ox,y=o.y-oy;if(x>=0&&y>=0&&x<10&&y<10){let k=`${x},${y}`;obs.add(k);obstacleVisual[k]=o.type;}})}
+function setBattleObstacles(sector){obs=new Set();obstacleVisual={};if(!sector?.map||!mapData[sector.map]?.cell){legacyObs.forEach(k=>obs.add(k));Object.assign(obstacleVisual,{'3,3':'rock','3,4':'tree','6,5':'tree','6,6':'rock','7,6':'tree'});return;}let map=sector.map,ox=sector.origin.x,oy=sector.origin.y;for(let y=0;y<10;y++)for(let x=0;x<10;x++){let wx=ox+x,wy=oy+y,k=`${x},${y}`;if(mapStructureBlocked(map,wx,wy)){obs.add(k);obstacleVisual[k]='wall';}}generatedObstacles(map).forEach(o=>{for(let yy=0;yy<(o.h||1);yy++)for(let xx=0;xx<(o.w||1);xx++){let x=o.x+xx-ox,y=o.y+yy-oy;if(x>=0&&y>=0&&x<10&&y<10){let k=`${x},${y}`;obs.add(k);obstacleVisual[k]=o.type;}}})}
 function randomizeEnemyStarts(){if(!B)return;let taken=new Set();B.units.filter(u=>u.type!=='hero').forEach(u=>{let choices=[];for(let y=1;y<9;y++)for(let x=6;x<10;x++){let k=`${x},${y}`;if(!obs.has(k)&&!taken.has(k)&&!B.deployTiles.includes(k))choices.push([x,y]);}if(!choices.length)return;let [x,y]=choices[Math.floor(Math.random()*choices.length)];u.x=x;u.y=y;taken.add(`${x},${y}`);});}
 function obstacleClass(k){let t=obstacleVisual[k]||'rock';return `obstacle-${t}`}
 function heroSprite(u){return `assets-miniaturas/guerrero-humano-${u?.facing||'abajo'}.png`}
