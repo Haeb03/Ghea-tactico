@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02819-edge-boars-hud';
+const CACHE='ghea-tactico-02821-combat-inspection';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-miniaturas/guerrero-humano-abajo.png','./assets-miniaturas/guerrero-humano-arriba.png','./assets-miniaturas/guerrero-humano-izquierda.png','./assets-miniaturas/guerrero-humano-derecha.png',

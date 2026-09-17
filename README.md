@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.8.20 — Afueras de Arca — Oeste
+# Ghea Táctico v0.2.8.21 — Afueras de Arca — Oeste
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
 
@@ -75,7 +75,7 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - HUD de combate vuelve a mostrar Vida + Escudo cuando corresponde y queda compacto dentro de la casilla de su unidad.
 
 
-## v0.2.8.20 — Afueras de Arca — Oeste
+## v0.2.8.21 — Afueras de Arca — Oeste
 - Integrado el fondo aprobado de la llanura exterior occidental de Arca en el tablero de exploración 30×30.
 - La muralla y la Puerta Oeste forman parte del fondo fijo.
 - Se conserva la cuadrícula lógica de 64 px por casilla sobre el arte.
@@ -84,14 +84,14 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - No se modificaron las mecánicas de combate.
 
 
-## v0.2.8.20
+## v0.2.8.21
 - Recupera la cuadrícula 30×30 sobre Afueras de Arca — Oeste.
 - Los encuentros del mapa Oeste trasladan al combate el sector real 10×10 del mismo tablero.
 - Sobre las miniaturas queda sólo Vida actual/máxima y una barra fina.
 - Nueva ficha inferior de combatiente con avatar, Vida, Escudo, PA/PM y Estados.
 - Sin cambios intencionales en las mecánicas de combate.
 
-## v0.2.8.20 — prueba controlada de obstáculos
+## v0.2.8.21 — prueba controlada de obstáculos
 - Parte nuevamente de v0.2.8.16; v0.2.8.17 queda descartada.
 - Obstáculos de Afueras Oeste nacen de casillas lógicas 30×30 con semilla fija y se dibujan desde esas coordenadas.
 - Muralla del borde este bloquea exploración; el corredor de la puerta queda libre.
@@ -103,13 +103,13 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Obstáculos todavía usan formas provisionales: las imágenes definitivas se incorporarán después de validar la lógica.
 
 
-## v0.2.8.20
+## v0.2.8.21
 - Corrige posiciones antiguas en bordes del mapa Oeste, ajustándolas al centro de una casilla válida.
 - Restaura los dos encuentros de jabalíes como encuentros repetibles del prototipo.
 - Sube Vida actual/máxima y su barra para no cubrir las miniaturas.
 - Actualiza versión visible de Inicio y caché del Service Worker.
 
-## v0.2.8.20 — Nueva interfaz de combate
+## v0.2.8.21 — Nueva interfaz de combate
 - Cabecera compacta con ronda, combatiente activo, temporizador e iniciativa.
 - Se elimina la repetición de Vida/Escudo/PA/PM en la parte superior.
 - Ficha inferior ampliada con avatar, Vida, Escudo, PA/PM y estados.
@@ -117,3 +117,12 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Las habilidades equipadas se muestran en un panel desplegable.
 - Descripción contextual de acciones compactada.
 - Se conserva el tamaño del tablero 10×10 y la lógica de combate existente.
+
+
+## v0.2.8.21 — Inspección de combatientes
+- Toque sin acción activa: inspecciona Aventurero o enemigo en la ficha inferior.
+- Las acciones requieren seleccionar primero Mover/Ataque/Habilidad/Objeto.
+- Combatiente inspeccionado con resaltado sutil.
+- Registro de combate plegable.
+- Vida flotante más pequeña, fina y elevada.
+- Mecánicas de combate, obstáculos y encuentros conservadas.
