@@ -181,3 +181,10 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Profundidad visual por fila Y: personaje y obstáculos se superponen según posición.
 - La ficha contextual inferior queda oculta cuando no hay un objetivo seleccionado.
 - Se preservan terreno lógico, camino protegido, muros/puerta y traslado de obstáculos al combate.
+
+
+## v0.2.8.27 — refinado de obstáculos de Llanura
+- Distribución del bioma Llanura: 30% árboles, 25% arbustos, 25% piedra y 20% madera.
+- Los árboles bajan temporalmente su opacidad cuando Aron queda visualmente detrás de su copa.
+- Se mantienen escala, ocupación lógica, anclaje, terreno y transferencia al combate de v0.2.8.26.
+- PNG de obstáculos limpiados para retirar contaminación blanca de los bordes.
