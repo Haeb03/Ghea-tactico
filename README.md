@@ -207,3 +207,10 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - En combate y despliegue la imagen se dibuja una sola vez como capa visual sobre la huella completa.
 - Las casillas secundarias de la huella ya no renderizan copias del obstáculo.
 - No cambia la generación, colisiones, despliegue ni posiciones del escenario.
+
+
+## v0.2.8.30 — escala y capas del escenario
+- Los obstáculos de combate conservan una presencia visual equivalente a exploración.
+- Las huellas lógicas de ocupación permanecen activas pero son completamente invisibles.
+- Los árboles 2×2 siguen siendo una única imagen con cuatro casillas bloqueadas.
+- Los modales de exploración quedan por encima de héroe, NPC, enemigos y obstáculos.

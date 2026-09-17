@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02829-obstacle-single-render';
+const CACHE='ghea-tactico-02830-scenery-scale-modal-layer';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',

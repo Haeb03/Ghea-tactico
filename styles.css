@@ -451,3 +451,22 @@ button:active{transform:translateY(1px)}
 .visual-battle .battle-obstacle-visual{position:absolute;z-index:2;pointer-events:none;background-image:var(--obstacle-url);background-size:contain;background-position:center bottom;background-repeat:no-repeat;filter:drop-shadow(0 2px 2px #0006)}
 .visual-battle .battle-obstacle-visual.obstacle-tree{transform:scale(1.08);transform-origin:center bottom}
 .visual-battle .unit-piece{z-index:3}
+
+/* v0.2.8.30 — escala coherente, huellas invisibles y modales por encima del mapa */
+.modal{z-index:10000!important}
+.modal>.card{position:relative;z-index:10001}
+/* La ocupación lógica sigue en las casillas, pero nunca se dibuja como círculo/mancha. */
+.visual-battle .tile.obstacle:after,
+.visual-battle .tile.obstacle-rock:after,
+.visual-battle .tile.obstacle-tree:after,
+.visual-battle .tile.obstacle-bush:after,
+.visual-battle .tile.obstacle-stump:after,
+.visual-battle .tile.obstacle-log:after,
+.visual-battle .tile.obstacle-footprint:after{content:none!important;display:none!important;background:none!important;box-shadow:none!important}
+/* Igualar la presencia visual aproximada de exploración sin cambiar la huella lógica. */
+.visual-battle .battle-obstacle-visual{transform-origin:center bottom!important}
+.visual-battle .battle-obstacle-visual.obstacle-tree{transform:scale(1.40)!important}
+.visual-battle .battle-obstacle-visual.obstacle-rock{transform:scale(1.08)!important}
+.visual-battle .battle-obstacle-visual.obstacle-bush{transform:scale(1.28)!important}
+.visual-battle .battle-obstacle-visual.obstacle-stump{transform:scale(1.34)!important}
+.visual-battle .battle-obstacle-visual.obstacle-log{transform:scale(1.12)!important}
