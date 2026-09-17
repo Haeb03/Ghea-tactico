@@ -409,3 +409,13 @@ button:active{transform:translateY(1px)}
 @media(max-width:520px){.explore-avatar{width:50px;height:50px;flex-basis:50px}.explore-stats{gap:9px}.explore-zone-row{grid-template-columns:minmax(0,1fr) 112px}.explore-actions button{min-height:50px}.explore-context-avatar{width:45px;height:45px;flex-basis:45px}}
 /* v0.2.8.23: la ficha de exploración sólo aparece al inspeccionar algo */
 .explore-context:empty{display:none}
+
+/* v0.2.8.25 — obstáculos visuales reales sobre la capa lógica de terreno */
+.map-west .west-prop{width:74px!important;height:74px!important;background:transparent!important;border:0!important;border-radius:0!important;background-image:var(--prop-url)!important;background-size:contain!important;background-position:center bottom!important;background-repeat:no-repeat!important;filter:drop-shadow(0 3px 2px #0005);transform:translate(-50%,-58%)!important;overflow:visible!important}
+.map-west .west-prop.prop-tree{width:104px!important;height:118px!important;z-index:3!important;transform:translate(-50%,-72%)!important}
+.map-west .west-prop.prop-bush{width:72px!important;height:64px!important}
+.map-west .west-prop.prop-rock{width:76px!important;height:68px!important}
+.map-west .west-prop.prop-stump,.map-west .west-prop.prop-log{width:82px!important;height:68px!important}
+.visual-battle .tile.obstacle:not(.obstacle-wall):after{content:''!important;position:absolute!important;inset:-22%!important;background-image:var(--obstacle-url)!important;background-size:contain!important;background-position:center bottom!important;background-repeat:no-repeat!important;filter:drop-shadow(0 2px 2px #0006)!important;z-index:2!important;border:0!important;border-radius:0!important;width:auto!important;height:auto!important}
+.visual-battle .tile.obstacle-tree:after{inset:-62% -42% -20%!important}
+.visual-battle .tile.obstacle-wall:after{content:''!important}

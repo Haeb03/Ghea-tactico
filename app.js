@@ -8,7 +8,7 @@ let state=migrate();save();function save(){localStorage.setItem(KEY,JSON.stringi
 function t(c,k){return c.tree?.[k]||0}function woundRes(c){return (c.equipment.ring1==='Anillo Simple'?1:0)+(c.equipment.ring2==='Anillo Simple'?1:0)}function furyBonus(c,hp=c.hp){let r=t(c,'fury');return r>=2&&hp<=4?2:r>=1&&hp<=3?1:0}function maxHp(c){return 14+t(c,'offLife')*2+t(c,'defLife')*2+t(c,'robust')*5+(['Botas de tela','Botas de Cuero'].includes(c.equipment.boots)?2:0)+(c.equipment.helmet==='Casco de Cuero'?2:0)+(c.equipment.armor==='Armadura de cuero de jabalí'?3:0)}function initiative(c){return 4+t(c,'offIni')+t(c,'defIni')}function weaponBonus(name){return name==='Espada de Hierro'?2:(name==='Espada básica'||name==='Daga oxidada'?1:0)}function baseDamage(c,hp=c.hp){return 1+t(c,'offDamage')+weaponBonus(c.equipment.weapon)+weaponBonus(c.equipment.offhand)+furyBonus(c,hp)}
 function toast(s){document.body.insertAdjacentHTML('beforeend',`<div class="toast">${s}</div>`);setTimeout(()=>$('.toast')?.remove(),1700)}
 function modal(html,closable=true){document.body.insertAdjacentHTML('beforeend',`<div class="modal" id="modal"><div class="card">${html}${closable?'<div class="actions"><button class="secondary" onclick="closeModal()">Cerrar</button></div>':''}</div></div>`)}window.closeModal=()=>$('#modal')?.remove();
-function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.8.24 · Motor universal de obstáculos</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
+function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.8.25 · Terreno lógico y obstáculos visuales</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
 function characters(){app.innerHTML=`<section class="screen"><h2>Aventureros</h2><div id="chars"></div><div class="actions"><button id="new" ${state.characters.length>=3?'disabled':''}>${state.characters.length>=3?'Límite 3/3':'Crear Aventurero'}</button><button class="secondary" id="back">Volver</button></div></section>`;let box=$('#chars');if(!state.characters.length)box.innerHTML='<div class="card">Todavía no creaste ningún Aventurero.</div>';state.characters.forEach((c,i)=>box.insertAdjacentHTML('beforeend',`<div class="card char-card"><div><b>${esc(c.name)}</b> · Humano Guerrero · Nivel ${c.level}<br><span class="small">❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)} · PA 4 · PM 3 · 🪙 ${c.gold}</span></div><div class="char-buttons"><button onclick="enter(${i})">Seleccionar</button><button class="danger" onclick="askDelete(${i})">Eliminar</button></div></div>`));$('#new').onclick=createChar;$('#back').onclick=home}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 window.enter=i=>{state.selected=i;save();world()};window.askDelete=i=>{let c=state.characters[i];modal(`<h3>¿Eliminar a ${esc(c.name)}?</h3><p>Se eliminará este personaje y todo su progreso. Esta acción no se puede deshacer.</p><div class="actions"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="danger" id="confirmDelete">Eliminar definitivamente</button></div>`,false);$('#confirmDelete').onclick=()=>{state.characters.splice(i,1);if(state.selected===i)state.selected=null;else if(state.selected>i)state.selected--;save();closeModal();characters()}}
@@ -24,14 +24,20 @@ function side(c){return c.sideQuest||'none'}
 function countItem(c,n){return c.inventory.filter(x=>x===n).length}
 function removeItems(c,n,q){for(let i=0;i<q;i++){let k=c.inventory.indexOf(n);if(k<0)return false;c.inventory.splice(k,1)}return true}
 function missionArrow(c,map,pos,d){let target=null,label='';if(c.quest==='accepted'){if(map==='arca'){target=d.east;label='Salida hacia Afueras'}else if(map==='outskirts'){target=d.enemy;label='Grupo enemigo'}}else if(c.quest==='done'){if(map==='outskirts'){target={x:8,y:376};label='Regresá a Arca'}else if(map==='arca'){target=d.mage;label='Maestro de Arca'}}else if(c.quest==='none'&&map==='arca'){target=d.mage;label='Misión disponible'}if(map==='arca'&&side(c)==='deliverShield'){target=d.west;label='Puerta Oeste'}if(map==='west'&&['deliverShield','hunt','huntReady','returnCollar','returnArmor'].includes(side(c))){target=d.guard;label='Guardia Oeste'}if(map==='arca'&&side(c)==='craftCollar'){target=d.jeweler;label='Joyero'}if(map==='arca'&&side(c)==='craftArmor'){target=d.textile;label='Tienda textil'}if(!target)return'';let ang=Math.atan2(target.y-pos.y,target.x-pos.x)*180/Math.PI;return `<div class="mission-arrow" title="${label}"><span style="transform:rotate(${ang}deg)">➜</span><small>${label}</small></div>`}
-// v0.2.8.24 — motor universal de obstáculos y biomas
-// La lógica de ocupación queda separada de la imagen: hoy se muestran marcadores de prueba.
+// v0.2.8.25 — terreno lógico + recursos visuales de Llanura
+// Terreno y objetos son capas independientes: una casilla puede ser PASTO + ÁRBOL, por ejemplo.
+const TERRAIN_TYPES={
+  PASTO:{transitable:true,allowsNaturalObstacles:true},
+  CAMINO:{transitable:true,allowsNaturalObstacles:false},
+  MURO:{transitable:false,allowsNaturalObstacles:false},
+  PUERTA:{transitable:true,allowsNaturalObstacles:false}
+};
 const OBSTACLE_TYPES={
-  tree:{blocks:true,size:{w:1,h:1}},
-  rock:{blocks:true,size:{w:1,h:1}},
-  bush:{blocks:true,size:{w:1,h:1}},
-  stump:{blocks:true,size:{w:1,h:1}},
-  log:{blocks:true,size:{w:2,h:1}}
+  tree:{blocks:true,size:{w:1,h:1},category:'arbol',resource:null,variants:5,folder:'arboles',file:'arbol'},
+  rock:{blocks:true,size:{w:1,h:1},category:'roca',resource:'piedra_comun',variants:5,folder:'rocas',file:'piedra-comun'},
+  bush:{blocks:true,size:{w:1,h:1},category:'arbusto',resource:null,variants:5,folder:'arbustos',file:'arbusto'},
+  stump:{blocks:true,size:{w:1,h:1},category:'madera',resource:null,variants:4,folder:'madera',file:'madera'},
+  log:{blocks:true,size:{w:2,h:1},category:'madera',resource:null,variants:2,folder:'madera',file:'madera'}
 };
 const BIOMES={
   llanura:{types:['tree','rock','bush','rock','bush','stump'],counts:{baja:14,media:24,alta:34}},
@@ -40,52 +46,63 @@ const BIOMES={
   desierto:{types:['rock','rock','bush','stump'],counts:{baja:12,media:20,alta:30}}
 };
 const obstacleCache={};
-function mapStructureBlocked(map,x,y){
-  // Estructuras permanentes pertenecen al diseño del mapa, no al generador natural.
-  if(map==='west')return x>=27 && !(y>=13&&y<=17); // muralla Este, salvo la puerta
-  return false;
+function distCellToSegment(px,py,ax,ay,bx,by){let vx=bx-ax,vy=by-ay,wx=px-ax,wy=py-ay,c1=vx*wx+vy*wy;if(c1<=0)return Math.hypot(px-ax,py-ay);let c2=vx*vx+vy*vy;if(c2<=c1)return Math.hypot(px-bx,py-by);let t=c1/c2;return Math.hypot(px-(ax+t*vx),py-(ay+t*vy));}
+function westRoadCell(x,y){
+  // Máscara lógica del camino ilustrado. Se puede reutilizar luego para coste de PM u otros efectos.
+  const px=x+.5,py=y+.5;
+  const segments=[
+    [-1,14.6,27.4,14.6],      // camino principal hacia la Puerta Oeste
+    [1.0,-1,5.0,1.4],[5.0,1.4,6.2,5.2],[6.2,5.2,8.1,9.2],[8.1,9.2,10.7,14.6],
+    [10.0,14.6,8.6,18.7],[8.6,18.7,7.0,22.5],[7.0,22.5,3.2,25.2],[-1,27.4,3.2,25.2]
+  ];
+  return segments.some(a=>distCellToSegment(px,py,...a)<=1.15);
 }
+function terrainAt(map,x,y){
+  if(map!=='west')return 'PASTO';
+  if(x>=27){ if(y>=13&&y<=17)return 'PUERTA'; return 'MURO'; }
+  if(westRoadCell(x,y))return 'CAMINO';
+  return 'PASTO';
+}
+function terrainDef(map,x,y){return TERRAIN_TYPES[terrainAt(map,x,y)]||TERRAIN_TYPES.PASTO;}
+function mapStructureBlocked(map,x,y){return !terrainDef(map,x,y).transitable;}
 function protectedCells(map){
-  const d=mapData[map], out=new Set(); if(!d?.cell)return out;
+  const d=mapData[map],out=new Set();if(!d?.cell)return out;
   const reserve=(cx,cy,r=1)=>{for(let y=cy-r;y<=cy+r;y++)for(let x=cx-r;x<=cx+r;x++)if(x>=0&&y>=0&&x<d.cols&&y<d.rows)out.add(`${x},${y}`)};
   const reserveWorld=(p,r=1)=>reserve(Math.floor(p.x/d.cell),Math.floor(p.y/d.cell),r);
   if(map==='west'){
-    // Camino principal y corredor hacia la puerta siempre transitables.
-    for(let y=14;y<=16;y++)for(let x=0;x<d.cols;x++)out.add(`${x},${y}`);
-    for(let y=13;y<=17;y++)for(let x=22;x<d.cols;x++)out.add(`${x},${y}`);
-    reserveWorld(d.guard,1); d.boars.forEach(b=>reserveWorld(b,2));
-    // Punto de aparición original del aventurero.
-    reserveWorld({x:1824,y:960},1);
+    // La capa de terreno protege CAMINO/MURO/PUERTA; aquí sólo reservamos actores y puntos importantes.
+    reserveWorld(d.guard,1);d.boars.forEach(b=>reserveWorld(b,2));reserveWorld({x:1824,y:960},1);
   }
   return out;
 }
+function obstacleImage(type,variant){
+  const d=OBSTACLE_TYPES[type]||OBSTACLE_TYPES.rock;
+  if(type==='bush'&&variant===2)return 'assets-obstaculos/arbustos/arbusto-frambuesas.png';
+  return `assets-obstaculos/${d.folder}/${d.file}-${String(variant).padStart(2,'0')}.png`;
+}
 function generatedObstacles(map){
   if(obstacleCache[map])return obstacleCache[map];
-  const d=mapData[map], biome=BIOMES[d?.biome];
-  if(!d?.cell||!biome)return obstacleCache[map]=[];
-  const target=biome.counts[d.obstacleDensity]??biome.counts.media, reserved=protectedCells(map), used=new Set(), out=[];
-  let seed=(d.obstacleSeed>>>0)||0x47484541; const rnd=()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296};
+  const d=mapData[map],biome=BIOMES[d?.biome];if(!d?.cell||!biome)return obstacleCache[map]=[];
+  const target=biome.counts[d.obstacleDensity]??biome.counts.media,reserved=protectedCells(map),used=new Set(),out=[];
+  let seed=(d.obstacleSeed>>>0)||0x47484541;const rnd=()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296};
   let tries=0;
-  while(out.length<target&&tries++<4000){
-    const type=biome.types[Math.floor(rnd()*biome.types.length)], def=OBSTACLE_TYPES[type]||OBSTACLE_TYPES.rock;
-    const w=def.size?.w||1,h=def.size?.h||1;
-    const x=1+Math.floor(rnd()*Math.max(1,d.cols-w-2)), y=1+Math.floor(rnd()*Math.max(1,d.rows-h-2));
+  while(out.length<target&&tries++<5000){
+    const type=biome.types[Math.floor(rnd()*biome.types.length)],def=OBSTACLE_TYPES[type]||OBSTACLE_TYPES.rock;
+    const w=def.size?.w||1,h=def.size?.h||1,x=1+Math.floor(rnd()*Math.max(1,d.cols-w-2)),y=1+Math.floor(rnd()*Math.max(1,d.rows-h-2));
     let cells=[],bad=false;
-    for(let yy=y;yy<y+h;yy++)for(let xx=x;xx<x+w;xx++){let k=`${xx},${yy}`;cells.push(k);if(reserved.has(k)||used.has(k)||mapStructureBlocked(map,xx,yy))bad=true;}
-    if(bad)continue;
-    // Distribución natural: evita amontonar marcadores en la llanura.
-    if(map==='west'&&out.some(o=>Math.max(Math.abs(o.x-x),Math.abs(o.y-y))<2))continue;
-    cells.forEach(k=>used.add(k)); out.push({x,y,type,w,h});
+    for(let yy=y;yy<y+h;yy++)for(let xx=x;xx<x+w;xx++){let k=`${xx},${yy}`;cells.push(k);if(reserved.has(k)||used.has(k)||!terrainDef(map,xx,yy).allowsNaturalObstacles)bad=true;}
+    if(bad)continue;if(map==='west'&&out.some(o=>Math.max(Math.abs(o.x-x),Math.abs(o.y-y))<2))continue;
+    const variant=1+Math.floor(rnd()*def.variants),resource=(type==='bush'&&variant===2)?'frambuesas':def.resource;
+    cells.forEach(k=>used.add(k));out.push({x,y,type,w,h,variant,category:def.category,resource,image:obstacleImage(type,variant)});
   }
   return obstacleCache[map]=out;
 }
 function obstacleAt(map,x,y){return generatedObstacles(map).some(o=>x>=o.x&&y>=o.y&&x<o.x+(o.w||1)&&y<o.y+(o.h||1));}
-function mapBlockedCell(map,x,y){let d=mapData[map];return !d||x<0||y<0||x>=d.cols||y>=d.rows||mapStructureBlocked(map,x,y)||obstacleAt(map,x,y)}
-// Alias conservados para no alterar el resto de la lógica del Oeste.
+function mapBlockedCell(map,x,y){let d=mapData[map];return !d||x<0||y<0||x>=d.cols||y>=d.rows||!terrainDef(map,x,y).transitable||obstacleAt(map,x,y)}
 function seededWestObstacles(){return generatedObstacles('west')}
-function westWallCell(x,y){return mapStructureBlocked('west',x,y)}
+function westWallCell(x,y){return terrainAt('west',x,y)==='MURO'}
 function westBlockedCell(x,y){return mapBlockedCell('west',x,y)}
-function westSceneryHTML(){const cell=mapData.west.cell;return generatedObstacles('west').map(o=>`<div class="west-prop prop-${o.type}" style="left:${o.x*cell+cell/2}px;top:${o.y*cell+cell/2}px" title="Obstáculo · ${o.type}"></div>`).join('')}
+function westSceneryHTML(){const cell=mapData.west.cell;return generatedObstacles('west').map(o=>`<div class="west-prop prop-${o.type}" style="left:${o.x*cell+cell/2}px;top:${o.y*cell+cell/2}px;--prop-url:url('${o.image}')" title="${o.category}${o.resource?' · '+o.resource.replace('_',' '):''}"></div>`).join('')}
 function exploreHeroCard(c){return `<div class="explore-hero-card"><div class="explore-avatar"><img src="assets-miniaturas/guerrero-humano-abajo.png" alt=""></div><div class="explore-hero-info"><div><b>${esc(c.name)}</b><span>Guerrero · Nv.${c.level}</span></div><div class="explore-stats"><b>❤️ ${c.hp}/${maxHp(c)}</b><b>✨ ${c.xp}/${xpNeed(c.level)}</b><b>🪙 ${c.gold}</b></div></div></div>`}
 function exploreContextHero(c){return `<div class="explore-context-main"><div class="explore-context-avatar"><img src="assets-miniaturas/guerrero-humano-abajo.png" alt=""></div><div><b>${esc(c.name)}</b><small>Guerrero · Nv.${c.level}</small><p>❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)}</p></div></div>`}
 function setExploreContext(kind,data={}){let box=$('#exploreContext');if(!box)return;let c=hero();if(kind==='guard'){box.innerHTML=`<div class="explore-context-main"><div class="explore-context-avatar npc-avatar">🛡️</div><div><b>Guardia Oeste</b><small>Guardia de Arca</small><p>Vigila el camino junto a la Puerta Oeste.</p></div></div><button class="context-action" id="contextTalk">💬 Hablar</button>`;$('#contextTalk').onclick=()=>{if(typeof guardDialog==='function')approachAndInteract('west',mapData.west.guard,guardDialog);else toast('Interacción del Guardia pendiente de corrección.')}}else if(kind==='boar'){let i=data.index??0;box.innerHTML=`<div class="explore-context-main"><div class="explore-context-avatar"><img src="assets-miniaturas/jabali-abajo.png" alt=""></div><div><b>Manada de jabalíes</b><small>Encuentro</small><p>🐗 Jabalí ×3</p></div></div><button class="context-action danger-context" id="contextEncounter">⚔️ Acercarse</button>`;$('#contextEncounter').onclick=()=>{let el=$(`#boar${i}`),d=mapData.west;if(!el)return;let r=el.getBoundingClientRect(),wr=$('#worldMap').getBoundingClientRect(),target={x:(r.left+r.width/2-wr.left)*d.w/wr.width,y:(r.top+r.height/2-wr.top)*d.h/wr.height};approachAndInteract('west',target,()=>boarGroup(i))}}else box.innerHTML=exploreContextHero(c)}
@@ -123,9 +140,10 @@ function questDialog(){let c=hero(),text,btn='';if(c.quest==='none'){text='Se ha
 function enemyGroup(){modal(`<h3>Grupo enemigo</h3><p>🐗 <b>Jabalí</b> · Vida 10<br>🗡️ <b>Bandido con Daga</b> · Vida 8<br>🏹 <b>Bandido con Ballesta</b> · Vida 8</p><p class="small">Entrar al combate iniciará el encuentro táctico.</p><div class="actions"><button id="fight">Combatir</button><button class="secondary" onclick="closeModal()">Cancelar</button></div>`,false);$('#fight').onclick=()=>{closeModal();battleStart()}}
 let B=null,battleAnimating=false;const legacyObs=['3,3','3,4','6,5','6,6','7,6'];let obs=new Set(legacyObs);
 let obstacleVisual={'3,3':'rock','3,4':'tree','6,5':'tree','6,6':'rock','7,6':'tree'};
-function setBattleObstacles(sector){obs=new Set();obstacleVisual={};if(!sector?.map||!mapData[sector.map]?.cell){legacyObs.forEach(k=>obs.add(k));Object.assign(obstacleVisual,{'3,3':'rock','3,4':'tree','6,5':'tree','6,6':'rock','7,6':'tree'});return;}let map=sector.map,ox=sector.origin.x,oy=sector.origin.y;for(let y=0;y<10;y++)for(let x=0;x<10;x++){let wx=ox+x,wy=oy+y,k=`${x},${y}`;if(mapStructureBlocked(map,wx,wy)){obs.add(k);obstacleVisual[k]='wall';}}generatedObstacles(map).forEach(o=>{for(let yy=0;yy<(o.h||1);yy++)for(let xx=0;xx<(o.w||1);xx++){let x=o.x+xx-ox,y=o.y+yy-oy;if(x>=0&&y>=0&&x<10&&y<10){let k=`${x},${y}`;obs.add(k);obstacleVisual[k]=o.type;}}})}
+function setBattleObstacles(sector){obs=new Set();obstacleVisual={};if(!sector?.map||!mapData[sector.map]?.cell){legacyObs.forEach(k=>obs.add(k));Object.assign(obstacleVisual,{'3,3':'rock','3,4':'tree','6,5':'tree','6,6':'rock','7,6':'tree'});return;}let map=sector.map,ox=sector.origin.x,oy=sector.origin.y;for(let y=0;y<10;y++)for(let x=0;x<10;x++){let wx=ox+x,wy=oy+y,k=`${x},${y}`;if(!terrainDef(map,wx,wy).transitable){obs.add(k);obstacleVisual[k]={type:'wall',image:null};}}generatedObstacles(map).forEach(o=>{for(let yy=0;yy<(o.h||1);yy++)for(let xx=0;xx<(o.w||1);xx++){let x=o.x+xx-ox,y=o.y+yy-oy;if(x>=0&&y>=0&&x<10&&y<10){let k=`${x},${y}`;obs.add(k);obstacleVisual[k]={type:o.type,image:o.image};}}})}
 function randomizeEnemyStarts(){if(!B)return;let taken=new Set();B.units.filter(u=>u.type!=='hero').forEach(u=>{let choices=[];for(let y=1;y<9;y++)for(let x=6;x<10;x++){let k=`${x},${y}`;if(!obs.has(k)&&!taken.has(k)&&!B.deployTiles.includes(k))choices.push([x,y]);}if(!choices.length)return;let [x,y]=choices[Math.floor(Math.random()*choices.length)];u.x=x;u.y=y;taken.add(`${x},${y}`);});}
-function obstacleClass(k){let t=obstacleVisual[k]||'rock';return `obstacle-${t}`}
+function obstacleClass(k){let v=obstacleVisual[k]||{type:'rock'};let t=typeof v==='string'?v:v.type;return `obstacle-${t}`}
+function obstacleStyle(k){let v=obstacleVisual[k];return v&&typeof v==='object'&&v.image?` style="--obstacle-url:url('${v.image}')"`:''}
 function heroSprite(u){return `assets-miniaturas/guerrero-humano-${u?.facing||'abajo'}.png`}
 function enemySprite(u){let base={boar:'jabali',dagger:'bandido-daga',cross:'bandido-ballesta'}[u?.type];return base?`assets-miniaturas/${base}-${u?.facing||'abajo'}.png`:null}
 function unitVisual(z){let src=z?.type==='hero'?heroSprite(z):enemySprite(z);return src?`<img class="combat-sprite ${z.type==='hero'?'hero-sprite':'enemy-sprite'}" src="${src}" alt="">`:z?.icon||''}
@@ -137,7 +155,7 @@ function battleStart(encounter='bandits',worldEncounter=null){let c=hero();let s
 function battleBoardAttrs(){if(B?.worldSector?.map!=='west')return {cls:'',style:''};let o=B.worldSector.origin||{x:0,y:0},px=(o.x/20*100).toFixed(2),py=(o.y/20*100).toFixed(2);return {cls:' sector-west',style:` style="--sector-x:${px}%;--sector-y:${py}%"`}}
 function combatPortrait(u){if(u?.type==='hero')return 'assets-miniaturas/guerrero-humano-abajo.png';let src=enemySprite(u);return src||''}
 function combatStates(u){let a=[];if(u?.wound>0)a.push(`🩸 Herida ×${u.wound}`);if(u?.poison>0)a.push(`☠️ Veneno ×${u.poison}`);if(u?.burn>0)a.push(`🔥 Quemadura ×${u.burn}`);if(u?.type==='hero'&&furyBonus(hero(),u.hp)>0)a.push(`🔥 Furia +${furyBonus(hero(),u.hp)}`);return a.length?a.join(' · '):'Sin estados'}
-function renderDeployment(){let tiles='';for(let y=0;y<10;y++)for(let x=0;x<10;x++){let k=`${x},${y}`,z=occupied(x,y),valid=B.deployTiles.includes(k)&&!obs.has(k)&&!z,chosen=B.deployPos===k,classes=['tile'];if(obs.has(k))classes.push('obstacle',obstacleClass(k));if(valid)classes.push('deploy');if(chosen)classes.push('deploy-chosen');tiles+=`<div class="${classes.join(' ')}" data-x="${x}" data-y="${y}">${z?`<div class="unit-piece"><div class="unit-vitals">${z.hp}/${z.max}</div><div class="unit-hp"><i style="width:${Math.max(0,Math.min(100,z.hp/z.max*100))}%"></i></div><span class="unit-icon">${unitVisual(z)}</span></div>`:chosen?`<div class="deploy-hero"><img class="hero-sprite" src="assets-miniaturas/guerrero-humano-abajo.png" alt=""></div>`:''}</div>`}app.innerHTML=`<section class="screen"><div class="topbar"><b>Despliegue inicial</b><span>Antes de la Ronda 1</span></div><div class="card"><b>Elegí dónde iniciar</b><p class="small">Tocá una de las posiciones resaltadas. Algunas están juntas y otras separadas. La iniciativa y el temporizador comenzarán recién cuando confirmes.</p></div><div class="battle-grid visual-battle${battleBoardAttrs().cls}" id="battleGrid"${battleBoardAttrs().style}>${tiles}</div><div class="actions deployment-actions"><button id="confirmDeploy" ${B.deployPos?'':'disabled'}>Confirmar posición</button><button class="secondary" id="cancelBattle">Cancelar combate</button></div></section>`;$('#battleGrid').onclick=e=>{let t=e.target.closest('.tile');if(!t)return;let k=`${t.dataset.x},${t.dataset.y}`;if(!B.deployTiles.includes(k)||obs.has(k)||occupied(+t.dataset.x,+t.dataset.y))return;B.deployPos=k;renderDeployment()};$('#confirmDeploy').onclick=()=>{let [x,y]=B.deployPos.split(',').map(Number),h=getU('hero');h.x=x;h.y=y;B.deployment=false;B.deployPos=null;beginTurn()};$('#cancelBattle').onclick=()=>{B=null;world()}}
+function renderDeployment(){let tiles='';for(let y=0;y<10;y++)for(let x=0;x<10;x++){let k=`${x},${y}`,z=occupied(x,y),valid=B.deployTiles.includes(k)&&!obs.has(k)&&!z,chosen=B.deployPos===k,classes=['tile'];if(obs.has(k))classes.push('obstacle',obstacleClass(k));if(valid)classes.push('deploy');if(chosen)classes.push('deploy-chosen');tiles+=`<div class="${classes.join(' ')}" data-x="${x}" data-y="${y}"${obs.has(k)?obstacleStyle(k):''}>${z?`<div class="unit-piece"><div class="unit-vitals">${z.hp}/${z.max}</div><div class="unit-hp"><i style="width:${Math.max(0,Math.min(100,z.hp/z.max*100))}%"></i></div><span class="unit-icon">${unitVisual(z)}</span></div>`:chosen?`<div class="deploy-hero"><img class="hero-sprite" src="assets-miniaturas/guerrero-humano-abajo.png" alt=""></div>`:''}</div>`}app.innerHTML=`<section class="screen"><div class="topbar"><b>Despliegue inicial</b><span>Antes de la Ronda 1</span></div><div class="card"><b>Elegí dónde iniciar</b><p class="small">Tocá una de las posiciones resaltadas. Algunas están juntas y otras separadas. La iniciativa y el temporizador comenzarán recién cuando confirmes.</p></div><div class="battle-grid visual-battle${battleBoardAttrs().cls}" id="battleGrid"${battleBoardAttrs().style}>${tiles}</div><div class="actions deployment-actions"><button id="confirmDeploy" ${B.deployPos?'':'disabled'}>Confirmar posición</button><button class="secondary" id="cancelBattle">Cancelar combate</button></div></section>`;$('#battleGrid').onclick=e=>{let t=e.target.closest('.tile');if(!t)return;let k=`${t.dataset.x},${t.dataset.y}`;if(!B.deployTiles.includes(k)||obs.has(k)||occupied(+t.dataset.x,+t.dataset.y))return;B.deployPos=k;renderDeployment()};$('#confirmDeploy').onclick=()=>{let [x,y]=B.deployPos.split(',').map(Number),h=getU('hero');h.x=x;h.y=y;B.deployment=false;B.deployPos=null;beginTurn()};$('#cancelBattle').onclick=()=>{B=null;world()}}
 function cur(){return B.units.find(u=>u.id===B.order[B.turn])}function getU(id){return B.units.find(u=>u.id===id)}function occupied(x,y){return B.units.find(u=>u.x===x&&u.y===y)}function aliveOccupied(x,y){return B.units.find(u=>u.alive&&u.x===x&&u.y===y)}function corpseAt(x,y){return B.units.find(u=>!u.alive&&u.x===x&&u.y===y)}function free(x,y){return x>=0&&y>=0&&x<10&&y<10&&!obs.has(`${x},${y}`)&&!occupied(x,y)}function md(a,b){return Math.abs(a.x-b.x)+Math.abs(a.y-b.y)}function adj8(a,b){return Math.max(Math.abs(a.x-b.x),Math.abs(a.y-b.y))===1}
 function beginTurn(){clearInterval(B.timerId);while(!cur()?.alive){B.turn++;if(B.turn>=B.order.length){B.turn=0;B.round++} }let u=cur();u.pa=u.maxPa;u.pm=u.maxPm;u.shield=0;u.uses={};for(let k in u.cd)if(u.cd[k]>0)u.cd[k]--;if(u.type==='hero'&&t(hero(),'guard'))u.shield+=2;if(u.type==='hero'&&hero().equipment.amulet==='Collar de Jabalí')u.shield+=1;if(u.type==='hero'&&hero().equipment.offhand==='Escudo de Madera')u.shield+=1;tickStates(u);if(!u.alive){nextTurn();return}B.timer=30;B.selectedAction=null;B.skillsOpen=false;B.selectedUnitId=u.id;renderBattle();B.timerId=setInterval(()=>{B.timer--;let el=$('#timer');if(el)el.textContent=B.timer+'s';if(B.timer<=0)nextTurn()},1000);if(u.type!=='hero')setTimeout(enemyAI,550)}
 function tickStates(u){if(u.wound>0){damage(u,u.wound,false);if(u.type==='hero'&&u.alive){let r=woundRes(hero());if(r)u.wound=Math.max(0,u.wound-r)}}if(u.poison>0&&u.alive)damage(u,u.poison,false);if(u.burn>0&&u.alive)damage(u,u.burn,false)}function nextTurn(){clearInterval(B.timerId);if(checkBattleEnd())return;B.turn++;if(B.turn>=B.order.length){B.turn=0;B.round++}beginTurn()}
@@ -145,7 +163,7 @@ function actionInfo(a){let c=hero(),h=getU('hero'),d=baseDamage(c,h?.hp??c.hp);r
 function infoPanel(a){let z=actionInfo(a);if(!z)return'';return `<div class="action-info"><div><b>${z[0]}</b><span>${z[2]}</span></div><p>${z[1]}</p><div class="info-grid"><span>🎯 ${z[3]}</span><span>📏 ${z[4]}</span><span>🔁 ${z[5]}</span><span>⏳ ${z[6]}</span></div></div>`}
 function unitStateIcons(z){let a=[];if(z.wound>0)a.push(`<span title="Herida ${z.wound}">🩸×${z.wound}</span>`);if(z.poison>0)a.push(`<span title="Veneno ${z.poison}">☠️×${z.poison}</span>`);if(z.burn>0)a.push(`<span title="Quemadura ${z.burn}">🔥×${z.burn}</span>`);if(z.type==='hero'&&furyBonus(hero(),z.hp)>0)a.push(`<span title="Furia +${furyBonus(hero(),z.hp)} Daño">🔥</span>`);return a.length?`<div class="unit-states">${a.join('')}</div>`:''}
 function enemyAttack(u){return u.type==='dagger'?3:u.type==='boar'||u.type==='cross'?2:0}
-function renderBattle(){let u=cur(),view=getU(B.selectedUnitId)||u;if(!view?.alive)view=u;let tiles='';let moves=u.type==='hero'&&B.selectedAction==='move'?reachable(u,B.carryingBody?Math.floor(u.pm/2):u.pm):new Set();for(let y=0;y<10;y++)for(let x=0;x<10;x++){let z=occupied(x,y),classes=['tile'],k=`${x},${y}`;if(obs.has(k))classes.push('obstacle',obstacleClass(k));if(moves.has(k))classes.push('move');if(z?.id===B.selectedUnitId&&z.alive)classes.push('inspected');if(z?.id===u.id&&z.alive)classes.push('turn-unit');if(z&&!z.alive)classes.push('corpse-tile');if(u.type==='hero'&&B.selectedAction&&!['move','block'].includes(B.selectedAction)&&validTargetTile(x,y,B.selectedAction))classes.push('target');if(B.fx?.attacker===k)classes.push('fx-attacker');if(B.fx?.target===k)classes.push('fx-target');if(B.fx?.cells?.includes(k))classes.push(B.fx.kind==='poison'?'fx-poison':'fx-projectile');tiles+=`<div class="${classes.join(' ')}" data-x="${x}" data-y="${y}">${z?`<div class="unit-piece ${z.alive?'':'corpse'}">${z.alive?unitStateIcons(z):''}${z.alive?`<div class="unit-vitals">${z.hp}/${z.max}</div>`:''}<div class="unit-hp"><i style="width:${Math.max(0,Math.min(100,z.hp/z.max*100))}%"></i></div><span class="unit-icon">${z.alive?unitVisual(z):'☠️'}</span>${z.alive?'':'<span class="unit-badge">KO</span>'}${B.fx?.floatAt===k?`<span class="damage-float">${B.fx.floatText}</span>`:''}</div>`:''}${B.fx?.projectileAt===k?`<span class="battle-projectile">${B.fx.projectile||'✦'}</span>`:''}</div>`}
+function renderBattle(){let u=cur(),view=getU(B.selectedUnitId)||u;if(!view?.alive)view=u;let tiles='';let moves=u.type==='hero'&&B.selectedAction==='move'?reachable(u,B.carryingBody?Math.floor(u.pm/2):u.pm):new Set();for(let y=0;y<10;y++)for(let x=0;x<10;x++){let z=occupied(x,y),classes=['tile'],k=`${x},${y}`;if(obs.has(k))classes.push('obstacle',obstacleClass(k));if(moves.has(k))classes.push('move');if(z?.id===B.selectedUnitId&&z.alive)classes.push('inspected');if(z?.id===u.id&&z.alive)classes.push('turn-unit');if(z&&!z.alive)classes.push('corpse-tile');if(u.type==='hero'&&B.selectedAction&&!['move','block'].includes(B.selectedAction)&&validTargetTile(x,y,B.selectedAction))classes.push('target');if(B.fx?.attacker===k)classes.push('fx-attacker');if(B.fx?.target===k)classes.push('fx-target');if(B.fx?.cells?.includes(k))classes.push(B.fx.kind==='poison'?'fx-poison':'fx-projectile');tiles+=`<div class="${classes.join(' ')}" data-x="${x}" data-y="${y}"${obs.has(k)?obstacleStyle(k):''}>${z?`<div class="unit-piece ${z.alive?'':'corpse'}">${z.alive?unitStateIcons(z):''}${z.alive?`<div class="unit-vitals">${z.hp}/${z.max}</div>`:''}<div class="unit-hp"><i style="width:${Math.max(0,Math.min(100,z.hp/z.max*100))}%"></i></div><span class="unit-icon">${z.alive?unitVisual(z):'☠️'}</span>${z.alive?'':'<span class="unit-badge">KO</span>'}${B.fx?.floatAt===k?`<span class="damage-float">${B.fx.floatText}</span>`:''}</div>`:''}${B.fx?.projectileAt===k?`<span class="battle-projectile">${B.fx.projectile||'✦'}</span>`:''}</div>`}
 let order=B.order.map(id=>{let z=getU(id);return`<span class="turn-chip ${z.id===u.id?'current':''}" style="opacity:${z.alive?1:.35}">${z.alive?z.icon:'☠️'} ${z.ini}</span>`}).join('');
 let bodyButton=(B.carryingBody||B.units.some(z=>!z.alive))?`<button data-act="movebody">☠️<b>${B.carryingBody?'Soltar':'Cuerpo'}</b></button>`:'';
 let skills=`${hero().activeAbilities?.includes('cut')?'<button data-act="cut">🩸<b>Corte</b><small>2 PA</small></button>':''}${hero().activeAbilities?.includes('power')?'<button data-act="power">💥<b>G. Potenciado</b><small>2 PA</small></button>':''}${hero().activeAbilities?.includes('block')?'<button data-act="block">🛡️<b>Bloqueo</b><small>1 PA</small></button>':''}${bodyButton}`;

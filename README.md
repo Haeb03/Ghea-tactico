@@ -160,3 +160,15 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Combate: cambiar de una acción a otra sigue siendo directo y sólo queda una activa.
 - Exploración: la ficha inferior ya no duplica a Aron por defecto; sólo aparece al inspeccionar un elemento contextual (o al tocar al propio Aron).
 - Se conserva sin cambios el mapa 30×30, cámara, zoom y controles de exploración.
+
+## v0.2.8.25 — terreno lógico y obstáculos visuales
+- Nueva capa lógica de terreno independiente del fondo ilustrado: `PASTO`, `CAMINO`, `MURO` y `PUERTA`.
+- `PASTO`: transitable y permite obstáculos naturales.
+- `CAMINO`: transitable y no permite obstáculos naturales.
+- `MURO`: no transitable y no permite obstáculos naturales.
+- `PUERTA`: transitable y no permite obstáculos naturales.
+- Afueras de Arca — Oeste incorpora una máscara lógica que sigue el camino ilustrado; el generador ya no coloca obstáculos naturales sobre él.
+- Los muros usan la misma capa lógica para bloquear movimiento y generación.
+- Se reemplazan los marcadores provisionales por los 20 PNG validados de obstáculos de Llanura v3.
+- Cada obstáculo conserva categoría, recurso e imagen por separado. Rocas = `piedra_comun`; Arbusto 2 = `frambuesas`; especie de árbol pendiente.
+- El sector 10×10 de combate reutiliza los mismos obstáculos y la misma ocupación del mapa 30×30.
