@@ -161,7 +161,7 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Exploración: la ficha inferior ya no duplica a Aron por defecto; sólo aparece al inspeccionar un elemento contextual (o al tocar al propio Aron).
 - Se conserva sin cambios el mapa 30×30, cámara, zoom y controles de exploración.
 
-## v0.2.8.25 — terreno lógico y obstáculos visuales
+## v0.2.8.26 — terreno lógico y obstáculos visuales
 - Nueva capa lógica de terreno independiente del fondo ilustrado: `PASTO`, `CAMINO`, `MURO` y `PUERTA`.
 - `PASTO`: transitable y permite obstáculos naturales.
 - `CAMINO`: transitable y no permite obstáculos naturales.
@@ -172,3 +172,12 @@ Las 16 PNG nuevas deben existir en `assets-miniaturas/` en GitHub. Esta entrega 
 - Se reemplazan los marcadores provisionales por los 20 PNG validados de obstáculos de Llanura v3.
 - Cada obstáculo conserva categoría, recurso e imagen por separado. Rocas = `piedra_comun`; Arbusto 2 = `frambuesas`; especie de árbol pendiente.
 - El sector 10×10 de combate reutiliza los mismos obstáculos y la misma ocupación del mapa 30×30.
+
+
+## v0.2.8.26
+- Limpieza conservadora del halo blanco de los PNG de obstáculos.
+- Árboles y rocas grandes pasan a ocupar 2×2 casillas lógicas; arbustos mantienen 1×1.
+- Obstáculos visuales anclados por su base, independientes de su huella lógica.
+- Profundidad visual por fila Y: personaje y obstáculos se superponen según posición.
+- La ficha contextual inferior queda oculta cuando no hay un objetivo seleccionado.
+- Se preservan terreno lógico, camino protegido, muros/puerta y traslado de obstáculos al combate.

@@ -419,3 +419,12 @@ button:active{transform:translateY(1px)}
 .visual-battle .tile.obstacle:not(.obstacle-wall):after{content:''!important;position:absolute!important;inset:-22%!important;background-image:var(--obstacle-url)!important;background-size:contain!important;background-position:center bottom!important;background-repeat:no-repeat!important;filter:drop-shadow(0 2px 2px #0006)!important;z-index:2!important;border:0!important;border-radius:0!important;width:auto!important;height:auto!important}
 .visual-battle .tile.obstacle-tree:after{inset:-62% -42% -20%!important}
 .visual-battle .tile.obstacle-wall:after{content:''!important}
+
+/* 0.2.8.26 — obstáculos: escala física, anclaje por base y profundidad */
+.map-west .west-prop{transform:translate(-50%,-100%)!important;background-position:center bottom!important;transform-origin:center bottom!important;filter:drop-shadow(0 3px 2px #0005)!important}
+.map-west .west-prop.prop-tree{width:172px!important;height:188px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-rock{width:132px!important;height:112px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-bush{width:82px!important;height:72px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-stump{width:88px!important;height:78px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-log{width:142px!important;height:86px!important;transform:translate(-50%,-100%)!important}
+.map-west #worldHero{position:absolute!important}

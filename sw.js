@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02825-terrain-visuals';
+const CACHE='ghea-tactico-02826-obstacle-depth';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',
