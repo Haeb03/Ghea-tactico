@@ -1,6 +1,14 @@
-# Ghea Táctico v0.2.8.24 — Motor universal de obstáculos y biomas
+# Ghea Táctico v0.2.8.32 — Centrado, bordes y escenario corregidos
 
 Base recuperada: **v0.2.8.2 — enemigos**, última base previa a las pruebas descartadas de caminata por frames.
+## v0.2.8.32 — centrado, bordes y escenario corregidos
+- Miniaturas de exploración y combate centradas verticalmente dentro de su casilla, sin alterar coordenadas lógicas ni tamaño base.
+- El movimiento en el mapa Oeste respeta un margen visual en los bordes para que las miniaturas no queden recortadas.
+- Se eliminan definitivamente los óvalos/marcadores visuales provisionales de obstáculos; la colisión lógica se conserva.
+- Los PNG de árbol, roca, arbusto, tocón y tronco mantienen en combate la misma escala física usada en exploración.
+- La muralla sur deja de recibir el sombreado ambiental que la hacía verse difuminada y conserva el mismo aspecto/opacidad que la muralla norte.
+- Inicio, README y caché del Service Worker actualizados a v0.2.8.32.
+
 
 
 ## v0.2.8.24 — motor universal de obstáculos y biomas

@@ -508,3 +508,48 @@ button:active{transform:translateY(1px)}
 .map-west .miniature-world img{transform:translateX(-7%)!important;transform-origin:center bottom!important}
 .visual-battle .combat-sprite,
 .visual-battle .deploy-hero .hero-sprite{transform:translate(-7%,-50%)!important;transform-origin:center bottom!important}
+\n\n/* v0.2.8.32 — centrado vertical, límites visuales y limpieza final del escenario */
+/* La casilla lógica sigue centrada en su coordenada. El PNG baja sólo lo necesario
+   para que la miniatura completa quede visualmente centrada dentro de la casilla. */
+.map-west .miniature-world img{
+  transform:translateY(8%)!important;
+  transform-origin:center center!important;
+}
+.visual-battle .combat-sprite,
+.visual-battle .deploy-hero .hero-sprite{
+  transform:translateY(8%)!important;
+  transform-origin:center center!important;
+}
+/* Los marcadores ovalados del sistema provisional quedan anulados definitivamente.
+   La ocupación continúa siendo lógica; sólo se muestran los PNG de los obstáculos. */
+.visual-battle .tile.obstacle:not(.obstacle-wall),
+.visual-battle .tile.obstacle-rock,
+.visual-battle .tile.obstacle-tree,
+.visual-battle .tile.obstacle-bush,
+.visual-battle .tile.obstacle-stump,
+.visual-battle .tile.obstacle-log,
+.visual-battle .tile.obstacle-footprint{
+  background:transparent!important;
+  box-shadow:none!important;
+  border-radius:0!important;
+}
+.visual-battle .tile.obstacle:not(.obstacle-wall)::before,
+.visual-battle .tile.obstacle:not(.obstacle-wall)::after,
+.visual-battle .tile.obstacle-rock::before,.visual-battle .tile.obstacle-rock::after,
+.visual-battle .tile.obstacle-tree::before,.visual-battle .tile.obstacle-tree::after,
+.visual-battle .tile.obstacle-bush::before,.visual-battle .tile.obstacle-bush::after,
+.visual-battle .tile.obstacle-stump::before,.visual-battle .tile.obstacle-stump::after,
+.visual-battle .tile.obstacle-log::before,.visual-battle .tile.obstacle-log::after,
+.visual-battle .tile.obstacle-footprint::before,.visual-battle .tile.obstacle-footprint::after{
+  content:none!important;display:none!important;background:none!important;box-shadow:none!important;
+}
+/* Escala 1:1 con exploración: 2×2 árbol/roca y huellas 1×1/2×1 conservan
+   la misma presencia física que sus equivalentes del mapa exterior. */
+.visual-battle .battle-obstacle-visual.obstacle-tree{transform:scale(1.34375,1.46875)!important}
+.visual-battle .battle-obstacle-visual.obstacle-rock{transform:scale(1.03125,.875)!important}
+.visual-battle .battle-obstacle-visual.obstacle-bush{transform:scale(1.28125,1.125)!important}
+.visual-battle .battle-obstacle-visual.obstacle-stump{transform:scale(1.375,1.21875)!important}
+.visual-battle .battle-obstacle-visual.obstacle-log{transform:scale(1.109375,1.34375)!important}
+/* El sombreado ambiental general no debe lavar/difuminar la muralla sur del fondo.
+   La muralla queda con el mismo arte/opacidad que la sección norte. */
+.visual-world.map-west::before{background:transparent!important}
