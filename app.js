@@ -11,7 +11,7 @@ function weaponBonus(name){return name==='Espada de Hierro'?2:(name==='Espada de
 function baseDamage(c,hp=c.hp){return 1+t(c,'offDamage')+weaponBonus(c.equipment.weapon)+weaponBonus(c.equipment.offhand)+furyBonus(c,hp)}
 function toast(s){document.body.insertAdjacentHTML('beforeend',`<div class="toast">${s}</div>`);setTimeout(()=>$('.toast')?.remove(),1700)}
 function modal(html,closable=true){document.body.insertAdjacentHTML('beforeend',`<div class="modal" id="modal"><div class="card">${html}${closable?'<div class="actions"><button class="secondary" onclick="closeModal()">Cerrar</button></div>':''}</div></div>`)}window.closeModal=()=>$('#modal')?.remove();
-function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.9.0 · Nueva Arca</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
+function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.9.1 · Arca jugable</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
 function characters(){app.innerHTML=`<section class="screen"><h2>Aventureros</h2><div id="chars"></div><div class="actions"><button id="new" ${state.characters.length>=3?'disabled':''}>${state.characters.length>=3?'Límite 3/3':'Crear Aventurero'}</button><button class="secondary" id="back">Volver</button></div></section>`;let box=$('#chars');if(!state.characters.length)box.innerHTML='<div class="card">Todavía no creaste ningún Aventurero.</div>';state.characters.forEach((c,i)=>box.insertAdjacentHTML('beforeend',`<div class="card char-card"><div><b>${esc(c.name)}</b> · Humano Guerrero · Nivel ${c.level}<br><span class="small">❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)} · PA 4 · PM 3 · 🪙 ${c.gold}</span></div><div class="char-buttons"><button onclick="enter(${i})">Seleccionar</button><button class="danger" onclick="askDelete(${i})">Eliminar</button></div></div>`));$('#new').onclick=createChar;$('#back').onclick=home}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 window.enter=i=>{state.selected=i;save();world()};window.askDelete=i=>{let c=state.characters[i];modal(`<h3>¿Eliminar a ${esc(c.name)}?</h3><p>Se eliminará este personaje y todo su progreso. Esta acción no se puede deshacer.</p><div class="actions"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="danger" id="confirmDelete">Eliminar definitivamente</button></div>`,false);$('#confirmDelete').onclick=()=>{state.characters.splice(i,1);if(state.selected===i)state.selected=null;else if(state.selected>i)state.selected--;save();closeModal();characters()}}
@@ -340,7 +340,7 @@ function world(){
  let marker=['tutorialTalk','returnMaster','tutorialStage2'].includes(c.quest)?`<div class="marker arca-master-marker" style="left:${d.academy.x}px;top:${d.academy.y+75}px">!</div>`:'';
  app.innerHTML=`<section class="screen exploration-screen">${exploreHeroCard(c)}<div class="explore-zone-row"><div class="explore-zone"><small>📍 Zona</small><b>Arca · Ciudad</b></div><details class="quest-track explore-objectives" open><summary>📜 Objetivo</summary><div><b>${arcaObjective(c)}</b></div></details></div><div class="world-stage"><div class="world-wrap" id="worldViewport"><div class="world visual-world map-arca arca-new" id="worldMap" style="width:${d.w}px;height:${d.h}px"><div class="arca-main-road road-v"></div><div class="arca-main-road road-h"></div><div class="arca-plaza-new"><b>PLAZA CENTRAL</b><span>◆</span></div>${buildings}${marker}<div class="actor dummy-world arca-dummy" id="dummy" style="left:${d.dummy.x}px;top:${d.dummy.y}px">🎯<small>Muñeco</small></div><div class="actor hero-world miniature-world" id="worldHero" style="left:${pos.x}px;top:${pos.y}px"><img src="assets-miniaturas/guerrero-humano-abajo.png" alt=""></div><div class="exit west-exit new-west-exit">← PUERTA OESTE</div></div></div></div><div class="explore-actions"><button id="inv"><span>🎒</span><b>Inventario</b></button><button id="skills"><span>✨</span><b>Habilidades</b></button><button id="tree"><span>🌳</span><b>Desarrollo</b></button><button id="menu"><span>👥</span><b>Personajes</b></button><button id="rest"><span>🛏️</span><b>Descansar</b></button></div></section>`;
  $('#worldMap').onclick=e=>worldTap(e,'arca');
- document.querySelectorAll('[data-building]').forEach(el=>el.onclick=e=>{e.stopPropagation();let k=el.dataset.building,p=d[k];approachAndInteract('arca',p,()=>openArcaInterior(k),90)});
+ document.querySelectorAll('[data-building]').forEach(el=>el.onclick=e=>{e.stopPropagation();let k=el.dataset.building,p=d[k],door={x:p.x,y:p.y+95};if(k==='academy')door={x:p.x,y:p.y+115};if(k==='textile'||k==='carpenter'||k==='itemshop'||k==='tavern')door={x:p.x,y:p.y-95};approachAndInteract('arca',door,()=>openArcaInterior(k),38)});
  $('#dummy').onclick=e=>{e.stopPropagation();if(c.quest!=='fightDummy')return toast('Seguí las indicaciones del Maestro.');approachAndInteract('arca',d.dummy,tutorialDummyDialog,65)};
  $('#inv').onclick=inventory;$('#skills').onclick=skillsMenu;$('#tree').onclick=treeMenu;$('#menu').onclick=characters;$('#rest').onclick=()=>rest(c);
 }
@@ -354,4 +354,72 @@ function tutorialMaster(){let c=hero();
  if(c.quest==='tutorialComplete')return toast('Entrenamiento completado. La Puerta Oeste conduce a la misión de la carreta.');
 }
 function tutorialDummyDialog(){modal(`<h3>Muñeco de Paja</h3><p>Vida: <b>6</b></p><p>Probá movimiento, PA/PM y Ataque Normal.</p><div class="actions"><button id="fightDummy">Combatir</button><button class="secondary" onclick="closeModal()">Cancelar</button></div>`,false);$('#fightDummy').onclick=()=>{closeModal();battleStart('tutorialDummy')}}
+
+
+
+skillsMenu=function(){
+ let c=hero();if(!Array.isArray(c.activeAbilities))c.activeAbilities=[];
+ let learned=c.activeAbilities.filter(k=>k==='power'||k==='block');
+ let cards=learned.map(k=>{let a=activeDefs[k],effect=k==='power'?`${baseDamage(c)+2} daño actual · Ruptura de Escudo 3`:'+3 Escudo';return `<div class="skill-clean-card">${a.icon}<div><b>${a.name}</b><small>${effect}<br>${a.cost} · ${a.range} · ${a.uses} · ${a.cd}</small></div></div>`}).join('');
+ app.innerHTML=`<section class="screen compact-menu-screen"><div class="topbar"><b>Habilidades</b><span>Aprendidas ${learned.length}</span></div><div class="card"><h3>✨ Habilidades del aventurero</h3><p class="small">Ataque Normal siempre está disponible y no ocupa un espacio.</p>${cards||'<p>Todavía no aprendiste habilidades.</p>'}</div><button class="secondary" id="backSkills">Volver</button></section>`;
+ $('#backSkills').onclick=world;
+};
+
+
+function spendDevV0291(c,key,max,label,after){
+ if((c.tree[key]||0)>=max)return;
+ if(c.dev<1)return toast('Necesitás 1 punto de Desarrollo.');
+ c.dev--;c.tree[key]=(c.tree[key]||0)+1;save();toast(`${label} ${c.tree[key]}/${max}`);after();
+}
+function branchPointsV0291(c,branch){
+ if(c.tree.oppOff==null)c.tree.oppOff=0;
+ if(branch==='offense')return (c.activeAbilities.includes('power')?1:0)+t(c,'offDamage')+t(c,'offLife')+t(c,'offIni')+t(c,'oppOff')+t(c,'fury');
+ return (c.activeAbilities.includes('block')?1:0)+t(c,'defLife')+t(c,'opp')+t(c,'defIni')+t(c,'robust')+t(c,'guard');
+}
+function devNodeV0291(id,title,desc,val,max,open){return `<button class="tree-node ${open&&val<max?'available':''}" id="${id}" ${!open||val>=max?'disabled':''}><b>${title}</b><span>${desc}</span><strong>${val}/${max}</strong></button>`}
+function lockNodeV0291(title,req){return `<div class="tree-locked"><b>${title}</b><small>🔒 ${req}</small></div>`}
+function newTreeBranchV0291(branch){
+ let c=hero(),isOff=branch==='offense',power=c.activeAbilities.includes('power'),block=c.activeAbilities.includes('block');
+ if(c.tree.oppOff==null)c.tree.oppOff=0;
+ let icon=isOff?'⚔️':'🛡️',initialOpen=isOff?c.level>=2:c.level>=3,html='';
+ if(isOff){
+  let force=t(c,'offDamage'),life=t(c,'offLife'),ini=t(c,'offIni'),opp=t(c,'oppOff'),fury=t(c,'fury');
+  let forceOpen=power&&c.level>=4,trioOpen=force>=2,furyOpen=life>=3&&branchPointsV0291(c,'offense')>=6;
+  html=`${devNodeV0291('initialNode','Golpe Fuerte','Ataque Normal +2 daño',power?1:0,1,initialOpen)}<div class="tree-link"></div>
+  ${forceOpen?devNodeV0291('offForce','Fuerza','+1 Daño por punto',force,2,true):lockNodeV0291('Fuerza 0/2','Requiere Golpe Fuerte 1/1 + Nivel 4')}
+  <div class="tree-link"></div><div class="tree-three">
+  ${trioOpen?devNodeV0291('offVitality','Vitalidad','+2 Vida por punto',life,3,true):lockNodeV0291('Vitalidad 0/3','Requiere Fuerza 2/2')}
+  ${trioOpen?devNodeV0291('offInitiative','Iniciativa','+1 Iniciativa',ini,1,true):lockNodeV0291('Iniciativa 0/1','Requiere Fuerza 2/2')}
+  ${trioOpen?devNodeV0291('offOpportunity','Golpe de Oportunidad','+1 Daño',opp,1,true):lockNodeV0291('Golpe de Oportunidad 0/1','Requiere Fuerza 2/2')}</div><div class="tree-link"></div>
+  ${furyOpen?devNodeV0291('offFury','Furia','Pasiva: aumenta el daño con Vida baja',fury,2,true):lockNodeV0291('Furia 0/2','Requiere Vitalidad 3/3 + 6 puntos en Ofensiva')}`;
+ }else{
+  let life=t(c,'defLife'),opp=t(c,'opp'),ini=t(c,'defIni'),rob=t(c,'robust'),guard=t(c,'guard');
+  let lifeOpen=block&&c.level>=4,trioOpen=life>=2,guardOpen=rob>=2&&branchPointsV0291(c,'defense')>=6;
+  html=`${devNodeV0291('initialNode','Bloqueo','+3 Escudo · 1 PA · 2/turno',block?1:0,1,initialOpen)}<div class="tree-link"></div>
+  ${lifeOpen?devNodeV0291('defVitality','Vitalidad','+2 Vida por punto',life,2,true):lockNodeV0291('Vitalidad 0/2','Requiere Bloqueo 1/1 + Nivel 4')}
+  <div class="tree-link"></div><div class="tree-three">
+  ${trioOpen?devNodeV0291('defOpportunity','Golpe de Oportunidad','+1 Daño',opp,1,true):lockNodeV0291('Golpe de Oportunidad 0/1','Requiere Vitalidad 2/2')}
+  ${trioOpen?devNodeV0291('defInitiative','Iniciativa','+1 Iniciativa',ini,1,true):lockNodeV0291('Iniciativa 0/1','Requiere Vitalidad 2/2')}
+  ${trioOpen?devNodeV0291('defRobust','Robustez','+5 Vida por punto',rob,2,true):lockNodeV0291('Robustez 0/2','Requiere Vitalidad 2/2')}</div><div class="tree-link"></div>
+  ${guardOpen?devNodeV0291('defGuard','Guardia','Pasiva: +2 Escudo al inicio del turno por punto',guard,2,true):lockNodeV0291('Guardia 0/2','Requiere Robustez 2/2 + 6 puntos en Defensa')}`;
+ }
+ app.innerHTML=`<section class="screen compact-menu-screen"><div class="topbar"><b>${icon} ${isOff?'Ofensiva':'Defensa'}</b><span>⭐ ${c.dev} disponibles</span></div><div class="card tree-view new-single-tree expanded-tree">${html}</div><div class="actions"><button class="secondary" id="changeBranch">Cambiar camino</button><button class="secondary" id="backTree">Volver</button></div></section>`;
+ $('#initialNode')?.addEventListener('click',()=>{if(c.dev<1)return toast('Necesitás 1 punto.');c.dev--;let key=isOff?'power':'block';if(!c.activeAbilities.includes(key))c.activeAbilities.push(key);if(isOff&&c.quest==='learnPower')c.quest='talkPower';if(!isOff&&c.quest==='learnBlock')c.quest='talkBlock';save();newTreeBranchV0291(branch)});
+ $('#offForce')?.addEventListener('click',()=>spendDevV0291(c,'offDamage',2,'Fuerza',()=>newTreeBranchV0291(branch)));
+ $('#offVitality')?.addEventListener('click',()=>spendDevV0291(c,'offLife',3,'Vitalidad',()=>newTreeBranchV0291(branch)));
+ $('#offInitiative')?.addEventListener('click',()=>spendDevV0291(c,'offIni',1,'Iniciativa',()=>newTreeBranchV0291(branch)));
+ $('#offOpportunity')?.addEventListener('click',()=>spendDevV0291(c,'oppOff',1,'Golpe de Oportunidad',()=>newTreeBranchV0291(branch)));
+ $('#offFury')?.addEventListener('click',()=>spendDevV0291(c,'fury',2,'Furia',()=>newTreeBranchV0291(branch)));
+ $('#defVitality')?.addEventListener('click',()=>spendDevV0291(c,'defLife',2,'Vitalidad',()=>newTreeBranchV0291(branch)));
+ $('#defOpportunity')?.addEventListener('click',()=>spendDevV0291(c,'opp',1,'Golpe de Oportunidad',()=>newTreeBranchV0291(branch)));
+ $('#defInitiative')?.addEventListener('click',()=>spendDevV0291(c,'defIni',1,'Iniciativa',()=>newTreeBranchV0291(branch)));
+ $('#defRobust')?.addEventListener('click',()=>spendDevV0291(c,'robust',2,'Robustez',()=>newTreeBranchV0291(branch)));
+ $('#defGuard')?.addEventListener('click',()=>spendDevV0291(c,'guard',2,'Guardia',()=>newTreeBranchV0291(branch)));
+ $('#changeBranch').onclick=treeMenu;$('#backTree').onclick=world;
+}
+treeMenu=function(){
+ let c=hero();
+ app.innerHTML=`<section class="screen compact-menu-screen"><div class="topbar"><b>Desarrollo</b><span>⭐ ${c.dev} puntos</span></div><p class="small">Elegí un camino para abrir su rama.</p><div class="branch-choice"><button class="branch" id="newOff">⚔️<br><b>OFENSIVA</b><small>${branchPointsV0291(c,'offense')} puntos invertidos</small></button><button class="branch" id="newDef">🛡️<br><b>DEFENSA</b><small>${branchPointsV0291(c,'defense')} puntos invertidos</small></button></div><button class="secondary" id="backDevelopment">Volver</button></section>`;
+ $('#newOff').onclick=()=>newTreeBranchV0291('offense');$('#newDef').onclick=()=>newTreeBranchV0291('defense');$('#backDevelopment').onclick=world;
+};
 

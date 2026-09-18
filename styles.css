@@ -991,3 +991,21 @@ button:active{transform:translateY(1px)}
 .interior-tavern{background:linear-gradient(145deg,#754a34,#2b1d17)}
 .interior-inn{background:linear-gradient(145deg,#5e5e78,#242431)}
 .interior-menu{margin:14px}.interior-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* v0.2.9.1 — exploración móvil contenida */
+.exploration-screen{height:calc(100dvh - 8px);max-height:calc(100dvh - 8px);overflow:hidden;display:flex;flex-direction:column;padding-bottom:6px!important}
+.exploration-screen>.explore-hero-card{flex:0 0 auto}
+.exploration-screen>.explore-zone-row{flex:0 0 auto}
+.exploration-screen>.world-stage{flex:1 1 auto;min-height:180px;overflow:hidden}
+.exploration-screen .world-wrap{height:100%!important;max-height:none!important;overflow:auto}
+.exploration-screen>.explore-actions{flex:0 0 auto;position:relative;z-index:40;background:#0b1b13;padding-top:5px;padding-bottom:max(3px,env(safe-area-inset-bottom))}
+.skill-clean-card{display:flex;gap:12px;align-items:center;padding:12px;border:1px solid #6d795e;border-radius:12px;margin:8px 0;background:#14291d}
+.skill-clean-card>div{display:grid;gap:3px}.skill-clean-card small{opacity:.8}
+.new-single-tree .tree-node,.new-single-tree .tree-locked{min-height:94px}
+@media(max-width:520px){
+ .exploration-screen{height:calc(100dvh - 2px);max-height:calc(100dvh - 2px);padding-top:3px!important}
+ .exploration-screen .explore-hero-card{padding:7px 9px!important;margin-bottom:5px!important}
+ .exploration-screen .explore-zone-row{margin-bottom:5px!important}
+ .exploration-screen>.world-stage{min-height:150px}
+ .exploration-screen>.explore-actions button{min-height:48px}
+}

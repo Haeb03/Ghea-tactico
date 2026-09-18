@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-0290-new-arcascale';
+const CACHE='ghea-tactico-0291-arca-playablescale';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',

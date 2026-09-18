@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.0 — Nueva Arca
+# Ghea Táctico v0.2.9.1 — Arca jugable
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -50,3 +50,11 @@ La siguiente parte del tutorial conservará la secuencia de v0.3.0.8: Desarrollo
 
 ## Conservado
 Todo el trabajo visual/técnico de v0.2.8.40 en Zona Oeste y combate se mantiene.
+
+
+## Correcciones v0.2.9.1
+- Exploración móvil contenida en la pantalla: ficha del personaje y barra inferior de acciones permanecen visibles.
+- Corregida la aproximación a edificios: el personaje camina a la puerta exterior y ya no intenta llegar al centro bloqueado del edificio.
+- Academia accesible para iniciar el tutorial del Maestro.
+- Habilidades corregidas: un personaje nuevo no muestra ni puede equipar habilidades todavía no aprendidas.
+- Desarrollo reemplazado por la estructura final de v0.3.0.8: selector Ofensiva/Defensa y ramas con Golpe Fuerte/Bloqueo, Fuerza/Vitalidad/Iniciativa/Oportunidad/Furia/Robustez/Guardia según requisitos.
