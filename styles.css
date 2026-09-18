@@ -598,3 +598,72 @@ button:active{transform:translateY(1px)}
   content:none!important; display:none!important; background:none!important;
   border:0!important; box-shadow:none!important; filter:none!important;
 }
+
+
+/* v0.2.8.34 — combate: misma referencia visual que exploración */
+/*
+   La casilla lógica NO se mueve.
+   El PNG se posiciona por la peana, igual que la miniatura del mapa exterior.
+*/
+.visual-battle .unit-icon{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:grid!important;
+  place-items:center!important;
+  overflow:visible!important;
+}
+.visual-battle .combat-sprite,
+.visual-battle .deploy-hero .hero-sprite{
+  width:auto!important;
+  height:118%!important;
+  max-width:138%!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:translate(-7%,-50%)!important;
+  transform-origin:center bottom!important;
+}
+/* El HUD queda unido a la misma casilla; al subir la peana ya no queda separado de la figura. */
+.visual-battle .unit-vitals{
+  top:0!important;
+  left:50%!important;
+  right:auto!important;
+  transform:translateX(-50%)!important;
+  z-index:20!important;
+}
+.visual-battle .unit-hp{
+  top:10px!important;
+  left:18%!important;
+  right:18%!important;
+  height:3px!important;
+  z-index:20!important;
+}
+
+/*
+   Obstáculos: el overlay PNG es la única representación visible.
+   Se anulan también ::before/::after DEL OVERLAY; éstos eran los marcadores
+   circulares/ovalados que sobrevivían aunque las casillas lógicas ya fueran invisibles.
+*/
+.visual-battle .battle-obstacle-visual{
+  background-color:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.visual-battle .battle-obstacle-visual::before,
+.visual-battle .battle-obstacle-visual::after{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+/* Mantener exactamente la equivalencia de tamaño con exploración (celda exterior = 64 px). */
+.visual-battle .battle-obstacle-visual.obstacle-tree{transform:scale(1.34375,1.46875)!important}
+.visual-battle .battle-obstacle-visual.obstacle-rock{transform:scale(1.03125,.875)!important}
+.visual-battle .battle-obstacle-visual.obstacle-bush{transform:scale(1.28125,1.125)!important}
+.visual-battle .battle-obstacle-visual.obstacle-stump{transform:scale(1.375,1.21875)!important}
+.visual-battle .battle-obstacle-visual.obstacle-log{transform:scale(1.109375,1.34375)!important}

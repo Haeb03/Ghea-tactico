@@ -1,22 +1,19 @@
-# Ghea Táctico v0.2.8.33 — Correcciones base
+# Ghea Táctico v0.2.8.34 — Combate alineado
 
-Base: v0.2.8.32.
+Base: **v0.2.8.33**.
 
-## Corregido
-- Miniaturas de combate ancladas a su casilla lógica.
-- Vida y barra acercadas a la miniatura.
-- Huellas lógicas de obstáculos invisibles: siguen bloqueando movimiento y pathfinding.
-- Eliminada la conversión repetida 1440→1920 del mapa Oeste que podía desplazar al personaje al reconstruir la pantalla.
-- Si una posición antigua queda dentro de una casilla bloqueada, se busca una casilla transitable cercana.
-- Creación resumida: Nombre, Sexo, Raza y Clase.
-- Caché renovada y versión visible actualizada.
+## Correcciones de esta versión
+- Se conserva la corrección de v0.2.8.33 que mantiene al Aventurero en su posición al regresar del combate.
+- Miniaturas de combate: se recupera el anclaje por **centro de la peana**, usando la misma referencia visual que en Exploración. La casilla lógica no cambia.
+- Vida: número y barra permanecen ligados a la casilla de la unidad y quedan visualmente junto a la miniatura.
+- Obstáculos: se conserva exactamente la huella lógica usada en Exploración y en el recorte táctico 10×10.
+- En combate sólo se muestra el PNG del obstáculo. Se anulan también los pseudo-elementos `::before` y `::after` del overlay visual, que no estaban cubiertos por la limpieza anterior y podían seguir mostrando círculos/óvalos.
+- Las escalas de árbol, roca, arbusto, tocón y tronco mantienen la equivalencia física calculada desde las medidas usadas en Exploración.
+- Inicio, título, referencias de caché y Service Worker actualizados a v0.2.8.34.
 
-## Conservado
-- Mapa Oeste 30×30.
-- Cámara libre y zoom.
-- Recorte táctico 10×10.
-- Obstáculos, miniaturas, combate, inventario, tiendas, misiones y Desarrollo existentes.
+## Sin cambios de reglas
+No se modifican colisiones, pathfinding, casillas ocupadas, PM, PA, IA, despliegue ni reglas de combate.
 
-## Pendiente del siguiente bloque
-- Tutorial previo a la misión de Bandidos.
+## Pendiente
+- Tutorial previo a Bandidos.
 - Nuevos árboles de Desarrollo.
