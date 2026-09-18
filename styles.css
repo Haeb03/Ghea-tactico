@@ -618,3 +618,15 @@ button:active{transform:translateY(1px)}
 .ficha-world img,.token-world img{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important;transform:none!important}
 .dummy-world small{top:66px!important;background:#080b09e8!important;padding:3px 6px!important;border-radius:4px!important;font-size:10px!important;color:#fff!important}
 @media(max-width:520px){.exploration-screen .explore-zone{width:190px}.exploration-screen .explore-actions button{min-height:54px!important}.ficha-world,.token-world{width:60px!important;height:60px!important}.dummy-world small{top:62px!important}}
+
+
+/* v0.3.0.6 — árbol real del Guerrero + fichas circulares */
+.expanded-tree{justify-content:flex-start!important;gap:0!important;overflow:auto;padding:12px!important}
+.expanded-tree .tree-node{width:min(260px,92%)!important;min-height:82px!important;margin:0 auto}
+.expanded-tree .tree-node span,.expanded-tree .tree-node strong{display:block}
+.expanded-tree .tree-three{width:100%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;align-items:stretch}
+.expanded-tree .tree-three .tree-node,.expanded-tree .tree-three .tree-locked{width:100%!important;min-width:0;min-height:105px;padding:7px!important;font-size:11px!important}
+.expanded-tree .tree-three .tree-locked small{font-size:8px}
+.explore-avatar img,.explore-context-avatar img,.token-world img,.dummy-world img{display:block;width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important}
+.dummy-world{overflow:visible!important;background:#111!important}.dummy-world>img{overflow:hidden}.dummy-world small{z-index:3}
+@media(max-width:520px){.expanded-tree .tree-three{gap:4px}.expanded-tree .tree-three .tree-node,.expanded-tree .tree-three .tree-locked{font-size:10px!important;padding:5px!important}}

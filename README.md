@@ -49,3 +49,10 @@ La siguiente etapa ampliará el tutorial y el nuevo árbol del Guerrero una vez 
 - Guerrero y Muñeco usan fichas circulares desde `assets-fichas/`.
 - Rutas: `assets-fichas/ficha-guerrero.png` y `assets-fichas/ficha-muneco.png`.
 - Se elimina el `alert()` del navegador al subir de nivel y se reemplaza por un aviso integrado al juego.
+
+
+## v0.3.0.6
+- Se incorporan las fichas definitivas suministradas para Guerrero y Muñeco desde `assets-fichas/`.
+- Árbol Ofensivo implementado hasta Furia: Golpe Fuerte → Fuerza 0/2 → Vitalidad 0/3 / Iniciativa 0/1 / Golpe de Oportunidad 0/1 → Furia.
+- Árbol Defensivo implementado hasta Guardia: Bloqueo → Vitalidad 0/2 → Golpe de Oportunidad 0/1 / Iniciativa 0/1 / Robustez 0/2 → Guardia 0/2.
+- Requisitos de Nivel 4 y requisitos de puntos/rangos aplicados.

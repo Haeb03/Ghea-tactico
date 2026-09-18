@@ -1,5 +1,5 @@
 const CACHE='ghea-tactico-v0305';
-const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
+const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./assets-fichas/ficha-guerrero.png','./assets-fichas/ficha-muneco.png',
 './assets-fichas/ficha-guerrero.png','./assets-fichas/ficha-muneco.png',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',
