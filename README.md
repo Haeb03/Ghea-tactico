@@ -1,25 +1,18 @@
-# Ghea Táctico v0.2.8.37 — Escala y peanas
+# Ghea Táctico v0.2.8.38 — Exploración centrada
 
-Base: **v0.2.8.36**.
+Base: **v0.2.8.37**.
 
-## Cambios
+## Causa encontrada
+El `worldHero` ya recibe `left/top` como coordenada lógica del personaje y su contenedor de 64×64 ya se centra mediante `translate(-50%,-50%)`.
 
-### Combate
-- Miniaturas aumentadas de **160% a 180%**.
-- No se modifica el centro de la peana.
-- No se modifica el HUD de Vida.
+En v0.2.8.37 se volvió a desplazar el PNG internamente con `left:50%` y `bottom:50%`. Eso aplicaba una segunda referencia visual y por eso el cambio no coincidía con la casilla real.
 
-### Exploración
-- Guerrero aumentado de tamaño.
-- Se corrige el anclaje visual para que **el centro de la peana coincida con el centro de la casilla lógica**.
-- La miniatura crece hacia arriba desde la peana sin modificar las coordenadas del personaje.
+## Corrección
+- El contenedor 64×64 del Guerrero es ahora la única referencia de posición.
+- Su centro coincide con la coordenada lógica / centro de casilla.
+- El PNG se centra dentro del contenedor sin offsets adicionales.
+- Guerrero de Exploración aumentado a 180%.
+- Combate permanece en 180%, sin cambios de peana ni HUD.
+- Se conservan óvalos eliminados y retorno correcto tras combate.
 
-## Se conserva
-- Eliminación de los óvalos.
-- Posición correcta al regresar del combate.
-- Casillas lógicas, colisiones y pathfinding.
-- Movimiento, PA, PM y alcance.
-- Obstáculos y recorte táctico.
-- Vida y barra de combate de v0.2.8.35.
-
-Inicio, referencias de caché y Service Worker actualizados a **v0.2.8.37**.
+Inicio y caché actualizados a **v0.2.8.38**.

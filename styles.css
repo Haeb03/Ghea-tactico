@@ -807,3 +807,44 @@ button:active{transform:translateY(1px)}
   transform:translateX(-50%)!important;
   transform-origin:center bottom!important;
 }
+
+
+/* v0.2.8.38 — corrección real del Guerrero en Exploración */
+/*
+  worldHero recibe left/top = coordenada lógica.
+  El contenedor 64×64 se centra UNA sola vez con translate(-50%,-50%).
+  El PNG ya no aplica un segundo left:50% / bottom:50%.
+*/
+.map-west .hero-world.miniature-world{
+  width:64px!important;
+  height:64px!important;
+  transform:translate(-50%,-50%)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  overflow:visible!important;
+  background:transparent!important;
+  border:0!important;
+}
+.map-west .hero-world.miniature-world img{
+  position:static!important;
+  left:auto!important;
+  top:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  width:auto!important;
+  height:180%!important;
+  max-width:200%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center center!important;
+  transform:none!important;
+  transform-origin:center center!important;
+  flex:0 0 auto!important;
+}
+/* Combate queda congelado en la escala aprobada. */
+.visual-battle .combat-sprite,
+.visual-battle .deploy-hero .hero-sprite{
+  height:180%!important;
+  max-width:200%!important;
+}
