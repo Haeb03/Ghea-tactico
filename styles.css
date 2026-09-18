@@ -777,3 +777,33 @@ button:active{transform:translateY(1px)}
   height:160%!important;
   max-width:180%!important;
 }
+
+
+/* v0.2.8.37 — escala y centro de peana */
+/* COMBATE: sólo escala 160% -> 180%. Anclaje y HUD permanecen intactos. */
+.visual-battle .combat-sprite,
+.visual-battle .deploy-hero .hero-sprite{
+  height:180%!important;
+  max-width:200%!important;
+}
+
+/* EXPLORACIÓN:
+   el elemento .hero-world ya está posicionado por la coordenada lógica del héroe.
+   La imagen se centra sobre ese punto y la peana toma ese mismo centro como referencia.
+   El cuerpo crece hacia arriba desde la peana. */
+.map-west .hero-world.miniature-world{
+  overflow:visible!important;
+}
+.map-west .hero-world.miniature-world img{
+  position:absolute!important;
+  left:50%!important;
+  bottom:50%!important;
+  width:auto!important;
+  height:150%!important;
+  max-width:180%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:translateX(-50%)!important;
+  transform-origin:center bottom!important;
+}

@@ -1,25 +1,25 @@
-# Ghea Táctico v0.2.8.36 — Miniaturas ampliadas
+# Ghea Táctico v0.2.8.37 — Escala y peanas
 
-Base: **v0.2.8.35**.
+Base: **v0.2.8.36**.
 
-## Cambio de esta versión
+## Cambios
 
-Se modifica únicamente el **tamaño visual de las miniaturas en combate**.
+### Combate
+- Miniaturas aumentadas de **160% a 180%**.
+- No se modifica el centro de la peana.
+- No se modifica el HUD de Vida.
 
-- Altura visual: de 118% a 160% respecto de la casilla.
-- Se amplía el límite horizontal para conservar la proporción del PNG.
-- La miniatura sigue creciendo desde el mismo punto de anclaje de la peana establecido en v0.2.8.35.
+### Exploración
+- Guerrero aumentado de tamaño.
+- Se corrige el anclaje visual para que **el centro de la peana coincida con el centro de la casilla lógica**.
+- La miniatura crece hacia arriba desde la peana sin modificar las coordenadas del personaje.
 
-## Se mantiene exactamente igual
-
-- Centro de la peana.
-- Posición de `Vida` y barra.
-- Casilla lógica.
-- Movimiento, PA, PM y alcance.
-- Despliegue.
-- Colisiones y pathfinding.
-- Obstáculos y sus huellas.
+## Se conserva
 - Eliminación de los óvalos.
-- Posición del personaje al regresar del combate.
+- Posición correcta al regresar del combate.
+- Casillas lógicas, colisiones y pathfinding.
+- Movimiento, PA, PM y alcance.
+- Obstáculos y recorte táctico.
+- Vida y barra de combate de v0.2.8.35.
 
-La finalidad es comprobar si, al recuperar una escala apropiada para la cuadrícula, la cabeza de la miniatura se aproxima naturalmente al HUD sin volver a desplazar ningún elemento.
+Inicio, referencias de caché y Service Worker actualizados a **v0.2.8.37**.
