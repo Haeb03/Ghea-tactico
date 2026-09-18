@@ -1,4 +1,4 @@
-# Ghea Táctico v0.3.0.4 — reinicio de la reestructuración
+# Ghea Táctico v0.3.0.5 — reinicio de la reestructuración
 
 Base real: **v0.2.8.32**. Se descarta por completo la maqueta v0.3.0.0.
 
@@ -42,3 +42,10 @@ La siguiente etapa ampliará el tutorial y el nuevo árbol del Guerrero una vez 
 - Inventario reorganizado para pantalla móvil sin reducir la figura del Guerrero.
 - Desarrollo vuelve a selector Ofensiva / Defensa y abre una rama por vez.
 - Se mantienen únicamente Golpe Fuerte 1/1 y Bloqueo 1/1 como nodos iniciales del nuevo árbol.
+
+
+## v0.3.0.5
+- Nueva referencia visual de Arca: HUD compacto, Zona/Objetivo, mapa protagonista y barra inferior siempre visible.
+- Guerrero y Muñeco usan fichas circulares desde `assets-fichas/`.
+- Rutas: `assets-fichas/ficha-guerrero.png` y `assets-fichas/ficha-muneco.png`.
+- Se elimina el `alert()` del navegador al subir de nivel y se reemplaza por un aviso integrado al juego.
