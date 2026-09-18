@@ -667,3 +667,98 @@ button:active{transform:translateY(1px)}
 .visual-battle .battle-obstacle-visual.obstacle-bush{transform:scale(1.28125,1.125)!important}
 .visual-battle .battle-obstacle-visual.obstacle-stump{transform:scale(1.375,1.21875)!important}
 .visual-battle .battle-obstacle-visual.obstacle-log{transform:scale(1.109375,1.34375)!important}
+
+
+/* v0.2.8.35 — peana al centro real de la casilla + HUD sobre la cabeza */
+/*
+   IMPORTANTE:
+   - .unit-piece sigue ocupando exactamente la casilla lógica.
+   - No se cambian coordenadas, movimiento, alcance ni despliegue.
+   - El punto de referencia visual es el CENTRO DE LA PEANA.
+*/
+.visual-battle .unit-piece{
+  position:absolute!important;
+  inset:0!important;
+  overflow:visible!important;
+  z-index:4!important;
+}
+.visual-battle .unit-icon{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  overflow:visible!important;
+}
+
+/* Miniatura ya colocada:
+   bottom:50% coloca la base de la imagen en el centro vertical de la casilla.
+   translateX(-50%) centra horizontalmente la peana.
+   Se elimina por completo el translateY(-50%) de v0.2.8.34. */
+.visual-battle .combat-sprite{
+  position:absolute!important;
+  left:50%!important;
+  bottom:50%!important;
+  width:auto!important;
+  height:118%!important;
+  max-width:138%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:translateX(-50%)!important;
+  transform-origin:center bottom!important;
+}
+
+/* Despliegue: exactamente el mismo anclaje que tendrá la unidad al confirmar. */
+.visual-battle .deploy-hero{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  overflow:visible!important;
+}
+.visual-battle .deploy-hero .hero-sprite{
+  position:absolute!important;
+  left:50%!important;
+  bottom:50%!important;
+  width:auto!important;
+  height:118%!important;
+  max-width:138%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:translateX(-50%)!important;
+  transform-origin:center bottom!important;
+}
+
+/* HUD:
+   se coloca por encima de la altura de la miniatura.
+   Ya no cruza la cara ni depende del centro visual del PNG. */
+.visual-battle .unit-vitals{
+  position:absolute!important;
+  left:50%!important;
+  right:auto!important;
+  top:-76%!important;
+  transform:translateX(-50%)!important;
+  z-index:20!important;
+  font-size:7px!important;
+  line-height:9px!important;
+  padding:0 2px!important;
+  white-space:nowrap!important;
+}
+.visual-battle .unit-hp{
+  position:absolute!important;
+  left:18%!important;
+  right:18%!important;
+  top:-57%!important;
+  height:3px!important;
+  z-index:20!important;
+}
+
+/* Mantener intacta la solución de los óvalos de v0.2.8.34. */
+.visual-battle .battle-obstacle-visual::before,
+.visual-battle .battle-obstacle-visual::after{
+  content:none!important;
+  display:none!important;
+}

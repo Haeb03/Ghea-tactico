@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02834-combat-alignment';
+const CACHE='ghea-tactico-02835-base-hud-alignment';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',
