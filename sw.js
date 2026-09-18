@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02832-centering-borders-obstacles-wall';
+const CACHE='ghea-tactico-v0304';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',

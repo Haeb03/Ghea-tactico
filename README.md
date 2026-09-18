@@ -1,4 +1,4 @@
-# Ghea Táctico v0.3.0.3 — reinicio de la reestructuración
+# Ghea Táctico v0.3.0.4 — reinicio de la reestructuración
 
 Base real: **v0.2.8.32**. Se descarta por completo la maqueta v0.3.0.0.
 
@@ -35,3 +35,10 @@ La siguiente etapa ampliará el tutorial y el nuevo árbol del Guerrero una vez 
 - Inventario compactado para pantallas verticales sin alterar equipar/desequipar.
 - Tutorial de cadáveres ya no finaliza al pasar turno: sólo termina al depositar el cuerpo en la zona objetivo.
 - Cadáver y zona objetivo se acercaron para que la prueba sea más clara, manteniendo la posibilidad de requerir varios turnos.
+
+
+## v0.3.0.4
+- Destino del cadáver resaltado permanentemente con etiqueta DESTINO.
+- Inventario reorganizado para pantalla móvil sin reducir la figura del Guerrero.
+- Desarrollo vuelve a selector Ofensiva / Defensa y abre una rama por vez.
+- Se mantienen únicamente Golpe Fuerte 1/1 y Bloqueo 1/1 como nodos iniciales del nuevo árbol.
