@@ -1,28 +1,34 @@
-# Ghea Táctico v0.2.8.39 — Anclajes y obstáculos
+# Ghea Táctico v0.2.8.40 — Escala de entorno
 
-Base: **v0.2.8.38**.
+Base: **v0.2.8.39**.
 
 ## Exploración
-- Se mantiene el tamaño aprobado del Guerrero: **180%**.
-- Se cambia únicamente el anclaje: la coordenada lógica pasa a coincidir con el **centro de la peana**, usando la misma regla que ya funciona en combate.
-- El cuerpo crece hacia arriba desde ese punto.
+- El árbol aumenta de **172×188 px** a **224×244 px**.
+- Conserva exactamente la misma huella lógica y el mismo anclaje inferior.
+- La transparencia de Exploración continúa funcionando cuando el personaje queda detrás.
 
 ## Combate
-- Miniaturas permanecen en **180%**.
-- Peanas y HUD de Vida no se modifican.
-- Se conserva la eliminación de los óvalos.
+Se reducen los obstáculos a los valores acordados respecto de la miniatura de combate:
 
-## Obstáculos: Exploración es la fuente de verdad
-Se eliminan las escalas aproximadas de combate. El recorte táctico recibe las mismas dimensiones visuales utilizadas en Exploración:
+- Árbol: **120×140 px**
+- Roca grande: **112×95 px**
+- Arbusto: **66×58 px**
+- Tocón: **75×66 px**
+- Tronco: **121×73 px**
 
-- Árbol: **172 × 188 px**
-- Roca grande: **132 × 112 px**
-- Arbusto: **82 × 72 px**
-- Tocón: **88 × 78 px**
-- Tronco: **142 × 86 px**
+Las escalas antiguas quedan anuladas: estas dimensiones son las que usa directamente el overlay táctico.
 
-El obstáculo táctico conserva la misma huella lógica que en Exploración y su PNG se ancla por el centro inferior, igual que en el mapa exterior.
+## Transparencia en combate
+- Los árboles detectan si su PNG se superpone con una miniatura situada detrás.
+- En ese caso pasan automáticamente a **50% de opacidad**.
+- Cuando dejan de tapar la miniatura recuperan su opacidad normal.
 
-También se conserva la posición correcta del personaje al regresar del combate.
+## Se conserva
+- Miniaturas de combate en **180%**.
+- Tamaño del Guerrero de Exploración en **180%**.
+- Anclaje por centro de peana.
+- HUD de Vida.
+- Eliminación de óvalos.
+- Posición correcta al regresar del combate.
 
-Inicio y caché actualizados a **v0.2.8.39**.
+Inicio, referencias de caché y Service Worker actualizados a **v0.2.8.40**.

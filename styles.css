@@ -912,3 +912,41 @@ button:active{transform:translateY(1px)}
   content:none!important;
   display:none!important;
 }
+
+
+/* v0.2.8.40 — escala final diferenciada Exploración / Combate */
+
+/* EXPLORACIÓN:
+   El árbol gana presencia visual. Conserva la misma base/anclaje y la misma
+   huella lógica 2×2; sólo crece el PNG hacia arriba y los costados. */
+.map-west .west-prop.prop-tree{
+  width:224px!important;
+  height:244px!important;
+  transform:translate(-50%,-100%)!important;
+  transform-origin:center bottom!important;
+}
+
+/* COMBATE:
+   Las dimensiones ya llegan desde app.js con los valores acordados:
+   árbol 120×140, roca 112×95, arbusto 66×58,
+   tocón 75×66 y tronco 121×73.
+   Ningún scale histórico debe volver a alterar esas medidas. */
+.visual-battle .battle-obstacle-visual.obstacle-tree,
+.visual-battle .battle-obstacle-visual.obstacle-rock,
+.visual-battle .battle-obstacle-visual.obstacle-bush,
+.visual-battle .battle-obstacle-visual.obstacle-stump,
+.visual-battle .battle-obstacle-visual.obstacle-log{
+  transform:translate(-50%,-100%)!important;
+  transform-origin:center bottom!important;
+}
+
+/* Misma lectura que en Exploración:
+   si un árbol se interpone visualmente con una miniatura situada detrás,
+   se vuelve semitransparente y recupera opacidad al dejar de taparla. */
+.visual-battle .battle-obstacle-visual.obstacle-tree{
+  opacity:1;
+  transition:opacity .16s ease;
+}
+.visual-battle .battle-obstacle-visual.obstacle-tree.unit-behind{
+  opacity:.50!important;
+}
