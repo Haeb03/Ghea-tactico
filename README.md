@@ -1,4 +1,4 @@
-# Ghea Táctico v0.3.0.7 — reinicio de la reestructuración
+# Ghea Táctico v0.3.0.8 — reinicio de la reestructuración
 
 Base real: **v0.2.8.32**. Se descarta por completo la maqueta v0.3.0.0.
 
@@ -62,3 +62,12 @@ La siguiente etapa ampliará el tutorial y el nuevo árbol del Guerrero una vez 
 - Rutas de fichas corregidas para la carpeta real `Assets-fichas/`.
 - Árbol nuevo del Guerrero incluido hasta Furia (Ofensiva) y Guardia (Defensa).
 - Se mantiene la interfaz de Arca con fichas circulares de Guerrero y Muñeco.
+
+
+## v0.3.0.8
+- Arca · Centro se redefine como mapa base de aproximadamente 100 × 100 m, preparado para el futuro pase a texturas.
+- Plaza Central y monumento como núcleo urbano; Academia Arca dominante al norte y patio de entrenamiento exterior.
+- Edificios esenciales incorporados como volúmenes físicos con colisión: Herrería, Textiles/Cuero/Tela, Joyería, Tienda general, Taberna y Posada.
+- Los edificios tienen entrada/interacción provisional para conservar sus posiciones al reemplazar la geometría por arte final.
+- Puntos de Desarrollo: +1 por cada nivel ganado; en niveles múltiplos de 4 (4, 8, 12, 16...) se obtienen +2 en lugar de +1.
+- La ficha circular del Guerrero se conserva durante el movimiento dentro de Arca.

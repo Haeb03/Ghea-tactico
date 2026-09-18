@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-v0307';
+const CACHE='ghea-tactico-v0308';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./Assets-fichas/ficha-guerrero.png','./Assets-fichas/ficha-muneco.png',
 './Assets-fichas/ficha-guerrero.png','./Assets-fichas/ficha-muneco.png',
 './assets/afueras-arca-oeste.png',
