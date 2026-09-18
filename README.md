@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.5 — Tutorial corregido
+# Ghea Táctico v0.2.9.6 — Poción corregida
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -96,3 +96,9 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - La prueba de traslado ya no usa la condición normal de victoria por enemigos derrotados.
 - Para completarla es obligatorio levantar realmente el cuerpo, transportarlo y soltarlo dentro de la casilla objetivo.
 - Se validan por separado los estados “cuerpo levantado” y “cuerpo depositado”.
+
+## Corrección v0.2.9.6
+- Poción de Vida: Consumible, recupera 4 de Vida.
+- Ahora aparece en Objetos durante combate.
+- Cura 4 y se consume al usarla.
+- Usarla durante la prueba del Maestro finaliza esa lección.
