@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-0292-fixed-hudscale';
+const CACHE='ghea-tactico-0294-full-tutorialscale';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',

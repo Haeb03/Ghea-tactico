@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.2 — HUD fijo
+# Ghea Táctico v0.2.9.4 — Tutorial completo
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -60,8 +60,31 @@ Todo el trabajo visual/técnico de v0.2.8.40 en Zona Oeste y combate se mantiene
 - Desarrollo reemplazado por la estructura final de v0.3.0.8: selector Ofensiva/Defensa y ramas con Golpe Fuerte/Bloqueo, Fuerza/Vitalidad/Iniciativa/Oportunidad/Furia/Robustez/Guardia según requisitos.
 
 ## Corrección crítica v0.2.9.2
-- La barra de acciones de exploración queda fijada al borde inferior del viewport.
-- Inventario, Habilidades, Desarrollo, Personajes y Descansar permanecen accesibles durante la exploración.
-- El mapa ocupa únicamente el espacio restante y hace scroll internamente.
-- La pantalla de exploración ya no puede empujar las acciones fuera del área visible.
-- Se contiene el texto de actores del mapa para evitar desbordes laterales como el nombre del Muñeco.
+- La barra de acciones de exploración queda anclada al borde inferior del viewport.
+- Inventario, Habilidades, Desarrollo, Personajes y Descansar permanecen accesibles en todo momento.
+- El mapa ocupa únicamente el espacio central restante y hace scroll internamente.
+- Se reserva físicamente el alto de la barra para impedir que el mapa la tape o la empuje fuera de pantalla.
+- Se contiene el contenido del mapa de Arca para evitar desbordes laterales visibles.
+
+## Correcciones v0.2.9.3
+- Muñeco de Paja: 6 Vida, 3 PM, 2 PA, Iniciativa 3.
+- Ataque Normal del Muñeco: 1 daño, adyacente, 2 PA.
+- El Muñeco ahora usa sus 3 PM para acercarse y ataca cuando queda adyacente.
+- Se acercó su posición inicial para que el combate tutorial empiece más rápido.
+- La cámara de exploración guarda su posición por zona.
+- Al volver desde Inventario, Habilidades, Desarrollo o un interior, se restaura la misma vista del mapa.
+
+## Bloque grande v0.2.9.4
+Se integró el recorrido completo del tutorial de v0.3.0.8 sobre la nueva Arca:
+1. Espada de entrenamiento y combate básico.
+2. Nivel 2 y aprendizaje de Golpe Fuerte desde Desarrollo.
+3. Prueba ofensiva.
+4. Nivel 3 y aprendizaje de Bloqueo.
+5. Prueba defensiva contra dos Muñecos.
+6. Lección de Descanso.
+7. Poción de Vida y uso de objetos durante combate contra el Maestro.
+8. Traslado de un cuerpo hasta una zona marcada.
+9. Finalización del tutorial y habilitación de la Puerta Oeste.
+
+Se mantienen los valores corregidos del Muñeco: 6 Vida, 3 PM, 2 PA, Ini 3, ataque adyacente de 1 daño por 2 PA.
+La misión de la carreta queda como siguiente bloque después de cruzar la Puerta Oeste.

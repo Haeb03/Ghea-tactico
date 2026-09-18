@@ -1010,85 +1010,81 @@ button:active{transform:translateY(1px)}
  .exploration-screen>.explore-actions button{min-height:48px}
 }
 
-/* v0.2.9.2 — HUD de exploración realmente fijo */
-body:has(.exploration-screen){overflow:hidden!important}
+/* v0.2.9.2 — FIX CRÍTICO: barra de acciones siempre accesible */
+:root{--ghea-action-dock-h:76px}
+body{overscroll-behavior:none}
 .exploration-screen{
   box-sizing:border-box!important;
-  height:calc(100dvh - env(safe-area-inset-bottom,0px))!important;
-  max-height:calc(100dvh - env(safe-area-inset-bottom,0px))!important;
+  height:100dvh!important;
+  max-height:100dvh!important;
   min-height:0!important;
   overflow:hidden!important;
-  padding-bottom:76px!important;
+  padding-bottom:calc(var(--ghea-action-dock-h) + env(safe-area-inset-bottom))!important;
   position:relative!important;
 }
 .exploration-screen>.world-stage{
   flex:1 1 0!important;
   min-height:0!important;
+  height:auto!important;
   overflow:hidden!important;
-  margin-bottom:0!important;
 }
 .exploration-screen .world-wrap{
   height:100%!important;
   min-height:0!important;
-  max-height:100%!important;
   overflow:auto!important;
   overscroll-behavior:contain;
 }
-.exploration-screen>.explore-actions{
+.exploration-screen>.mobile-action-dock{
   position:fixed!important;
   left:0!important;
   right:0!important;
   bottom:0!important;
-  width:100%!important;
-  height:72px!important;
+  height:var(--ghea-action-dock-h)!important;
+  min-height:var(--ghea-action-dock-h)!important;
   box-sizing:border-box!important;
   z-index:9999!important;
   display:grid!important;
   grid-template-columns:repeat(5,minmax(0,1fr))!important;
   gap:4px!important;
-  padding:5px 6px max(5px,env(safe-area-inset-bottom))!important;
+  padding:5px 6px calc(5px + env(safe-area-inset-bottom))!important;
   margin:0!important;
   background:#0b1b13!important;
-  border-top:2px solid #6e765b!important;
+  border-top:1px solid #6f745d!important;
   box-shadow:0 -5px 14px #0009!important;
 }
-.exploration-screen>.explore-actions button{
+.exploration-screen>.mobile-action-dock button{
   min-width:0!important;
-  min-height:56px!important;
-  height:56px!important;
-  padding:3px 2px!important;
+  min-height:58px!important;
+  height:58px!important;
+  padding:4px 2px!important;
   margin:0!important;
+  font-size:11px!important;
   display:flex!important;
   flex-direction:column!important;
   align-items:center!important;
   justify-content:center!important;
   gap:1px!important;
-  font-size:11px!important;
   overflow:hidden!important;
 }
-.exploration-screen>.explore-actions button span{font-size:20px!important;line-height:20px!important}
-.exploration-screen>.explore-actions button b{
-  display:block!important;
-  max-width:100%!important;
+.exploration-screen>.mobile-action-dock button span{font-size:20px!important;line-height:21px!important}
+.exploration-screen>.mobile-action-dock button b{
+  width:100%!important;
+  white-space:nowrap!important;
   overflow:hidden!important;
   text-overflow:ellipsis!important;
-  white-space:nowrap!important;
   font-size:10px!important;
 }
 .map-arca.arca-new{overflow:hidden!important}
-.map-arca .actor small{
-  max-width:92px!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
+.map-arca.arca-new .actor small{
+  max-width:100px!important;
   white-space:nowrap!important;
 }
 @media(max-width:520px){
- .exploration-screen{
-   height:100dvh!important;
-   max-height:100dvh!important;
-   padding:4px 8px 76px!important;
- }
- .exploration-screen>.explore-hero-card{flex:0 0 auto!important;margin:0 0 4px!important}
- .exploration-screen>.explore-zone-row{flex:0 0 auto!important;margin:0 0 4px!important}
- .exploration-screen>.world-stage{flex:1 1 0!important;min-height:0!important}
+ :root{--ghea-action-dock-h:72px}
+ .exploration-screen{padding:4px 8px calc(var(--ghea-action-dock-h) + env(safe-area-inset-bottom))!important}
+ .exploration-screen>.world-stage{min-height:120px!important}
+ .exploration-screen>.mobile-action-dock{height:var(--ghea-action-dock-h)!important;min-height:var(--ghea-action-dock-h)!important}
+ .exploration-screen>.mobile-action-dock button{height:55px!important;min-height:55px!important}
 }
+
+.visual-battle .tile.corpse-goal{box-shadow:inset 0 0 0 4px #e5c85a!important;background:rgba(229,200,90,.22)!important}
