@@ -1,34 +1,52 @@
-# Ghea Táctico v0.2.8.40 — Escala de entorno
+# Ghea Táctico v0.2.9.0 — Nueva Arca
 
-Base: **v0.2.8.39**.
+Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
-## Exploración
-- El árbol aumenta de **172×188 px** a **224×244 px**.
-- Conserva exactamente la misma huella lógica y el mismo anclaje inferior.
-- La transparencia de Exploración continúa funcionando cuando el personaje queda detrás.
+## Nuevo comienzo
+- Personajes nuevos comienzan en Nivel 1, 0 EXP y 0 puntos.
+- Guerrero: Iniciativa 5, PA 4, PM 3.
+- Vida base 10.
+- Armadura básica de cuero: +1 Vida.
+- Botas básicas de cuero: +1 Vida.
+- Vida inicial efectiva: 12.
+- Sin arma: Ataque Normal 1 daño, 1 PA, adyacente.
+- Espada de entrenamiento: +1 daño; Ataque Normal = 2.
+- Ataque Normal limitado a 2 usos por turno.
 
-## Combate
-Se reducen los obstáculos a los valores acordados respecto de la miniatura de combate:
+## Progresión recuperada de v0.3.0.8
+- Nv.1→2: 2 EXP.
+- Desde Nv.2: 5 EXP y crecimiento ×1,6 redondeado.
+- +1 Punto de Desarrollo por nivel.
+- Niveles 4, 8, 12, 16... entregan +2 en lugar de +1.
+- Se mantiene el árbol de Desarrollo existente como base temporal.
 
-- Árbol: **120×140 px**
-- Roca grande: **112×95 px**
-- Arbusto: **66×58 px**
-- Tocón: **75×66 px**
-- Tronco: **121×73 px**
+## Arca reprogramada
+Arca pasa a ser un hub de 1000×1000 con:
+- Academia Arca
+- Gran Biblioteca
+- Herrería
+- Carpintería
+- Textiles y Cuero
+- Joyería
+- Tienda General
+- Taberna
+- Posada
+- Plaza Central
+- Puerta Oeste
 
-Las escalas antiguas quedan anuladas: estas dimensiones son las que usa directamente el overlay táctico.
+Los edificios usan el nuevo sistema de interiores: al entrar se abre una pantalla 2D independiente con identidad visual y menú de acciones. Es un motor común para todos los establecimientos.
 
-## Transparencia en combate
-- Los árboles detectan si su PNG se superpone con una miniatura situada detrás.
-- En ese caso pasan automáticamente a **50% de opacidad**.
-- Cuando dejan de tapar la miniatura recuperan su opacidad normal.
+## Tutorial
+Se conecta el nuevo personaje con el comienzo del tutorial:
+Maestro → Espada de entrenamiento → equipar → Muñeco de Paja → regreso al Maestro.
 
-## Se conserva
-- Miniaturas de combate en **180%**.
-- Tamaño del Guerrero de Exploración en **180%**.
-- Anclaje por centro de peana.
-- HUD de Vida.
-- Eliminación de óvalos.
-- Posición correcta al regresar del combate.
+La siguiente parte del tutorial conservará la secuencia de v0.3.0.8: Desarrollo, Golpe Fuerte, Bloqueo, Descanso, objetos y traslado de cuerpos.
 
-Inicio, referencias de caché y Service Worker actualizados a **v0.2.8.40**.
+## Campaña
+- La misión principal de bandidos deja de ser la salida de Arca.
+- La Puerta Oeste queda como salida de la campaña nueva.
+- Tras completar el tutorial, el siguiente objetivo será la misión de la carreta en Zona Oeste.
+- El contenido de la carreta se implementará sobre el mapa Oeste actual.
+
+## Conservado
+Todo el trabajo visual/técnico de v0.2.8.40 en Zona Oeste y combate se mantiene.

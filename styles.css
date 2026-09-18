@@ -950,3 +950,44 @@ button:active{transform:translateY(1px)}
 .visual-battle .battle-obstacle-visual.obstacle-tree.unit-behind{
   opacity:.50!important;
 }
+
+/* v0.2.9.0 — Nueva Arca */
+.map-arca.arca-new{background:
+ radial-gradient(circle at 50% 52%,#d7c28c 0 13%,transparent 14%),
+ linear-gradient(90deg,transparent 45%,#c6ae78 45% 55%,transparent 55%),
+ linear-gradient(transparent 46%,#c6ae78 46% 56%,transparent 56%),
+ linear-gradient(#73915d,#5f7d4d);overflow:hidden}
+.arca-main-road{position:absolute;background:#c9b27d;box-shadow:inset 0 0 0 3px #9c865e55}
+.arca-main-road.road-v{left:450px;top:0;width:100px;height:1000px}
+.arca-main-road.road-h{left:0;top:460px;width:1000px;height:100px}
+.arca-plaza-new{position:absolute;left:390px;top:410px;width:220px;height:220px;border-radius:50%;background:#d6c08c;border:8px solid #ad9565;display:grid;place-items:center;text-align:center;z-index:1}
+.arca-plaza-new span{font-size:54px}.arca-plaza-new b{position:absolute;top:20px;font-size:13px}
+.arca-building{position:absolute;transform:translate(-50%,-50%);width:170px;height:112px;border:3px solid #493b2b;border-radius:14px;background:linear-gradient(#8e6042,#5c3c2d);color:#fff;box-shadow:0 10px 18px #0005;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px}
+.arca-building span{font-size:34px}.arca-building small{font-weight:800;text-shadow:0 1px 2px #000}
+.arca-building-academy{width:210px;height:130px;background:linear-gradient(#727b91,#424b62)}
+.arca-building-library{background:linear-gradient(#80634a,#513e31)}
+.arca-building-smith{background:linear-gradient(#77594b,#3f3531)}
+.arca-building-jeweler{background:linear-gradient(#765d86,#473950)}
+.arca-building-textile{background:linear-gradient(#8b6570,#574048)}
+.arca-building-carpenter{background:linear-gradient(#8b6b42,#55412b)}
+.arca-building-itemshop{background:linear-gradient(#627d6b,#3f5246)}
+.arca-building-tavern{background:linear-gradient(#80543e,#51372c)}
+.arca-building-inn{background:linear-gradient(#6d6d86,#454558)}
+.arca-dummy{z-index:5}.new-west-exit{left:8px!important;top:500px!important;right:auto!important}
+.arca-master-marker{z-index:8}
+.arca-interior-screen{min-height:100vh;padding:0!important;background:#171714}
+.interior-art{min-height:52vh;display:flex;align-items:flex-end;background:
+ radial-gradient(circle at 25% 30%,#ffffff18,transparent 22%),
+ linear-gradient(145deg,#594737,#211d19);border-bottom:3px solid #000}
+.interior-art-shade{width:100%;padding:28px 22px 22px;background:linear-gradient(transparent,#000c);color:#fff}
+.interior-art-shade span{font-size:64px}.interior-art-shade h2{margin:5px 0}.interior-art-shade p{margin:0;opacity:.85}
+.interior-academy{background:linear-gradient(145deg,#596277,#252b38)}
+.interior-library{background:linear-gradient(145deg,#755b43,#2c2119)}
+.interior-smith{background:linear-gradient(145deg,#6d4938,#241c18)}
+.interior-jeweler{background:linear-gradient(145deg,#65506f,#28202d)}
+.interior-textile{background:linear-gradient(145deg,#79555f,#2d2024)}
+.interior-carpenter{background:linear-gradient(145deg,#7b603e,#2e251b)}
+.interior-itemshop{background:linear-gradient(145deg,#526b5a,#202b24)}
+.interior-tavern{background:linear-gradient(145deg,#754a34,#2b1d17)}
+.interior-inn{background:linear-gradient(145deg,#5e5e78,#242431)}
+.interior-menu{margin:14px}.interior-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
