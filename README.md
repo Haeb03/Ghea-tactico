@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.1 — Arca jugable
+# Ghea Táctico v0.2.9.2 — HUD fijo
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -58,3 +58,10 @@ Todo el trabajo visual/técnico de v0.2.8.40 en Zona Oeste y combate se mantiene
 - Academia accesible para iniciar el tutorial del Maestro.
 - Habilidades corregidas: un personaje nuevo no muestra ni puede equipar habilidades todavía no aprendidas.
 - Desarrollo reemplazado por la estructura final de v0.3.0.8: selector Ofensiva/Defensa y ramas con Golpe Fuerte/Bloqueo, Fuerza/Vitalidad/Iniciativa/Oportunidad/Furia/Robustez/Guardia según requisitos.
+
+## Corrección crítica v0.2.9.2
+- La barra de acciones de exploración queda fijada al borde inferior del viewport.
+- Inventario, Habilidades, Desarrollo, Personajes y Descansar permanecen accesibles durante la exploración.
+- El mapa ocupa únicamente el espacio restante y hace scroll internamente.
+- La pantalla de exploración ya no puede empujar las acciones fuera del área visible.
+- Se contiene el texto de actores del mapa para evitar desbordes laterales como el nombre del Muñeco.
