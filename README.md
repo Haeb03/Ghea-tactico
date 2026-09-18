@@ -1,4 +1,4 @@
-# Ghea Táctico v0.3.0.1 — reinicio de la reestructuración
+# Ghea Táctico v0.3.0.2 — reinicio de la reestructuración
 
 Base real: **v0.2.8.32**. Se descarta por completo la maqueta v0.3.0.0.
 
@@ -20,3 +20,10 @@ Base real: **v0.2.8.32**. Se descarta por completo la maqueta v0.3.0.0.
 - Nueva EXP: 1→2 = 2; 2→3 = 5; luego crecimiento ×1,6 con redondeo.
 
 La siguiente etapa ampliará el tutorial y el nuevo árbol del Guerrero una vez validado este flujo.
+
+
+## v0.3.0.2
+- Tutorial ampliado hasta Nivel 4: Golpe Fuerte, Bloqueo, Descanso, Poción y traslado de cadáver.
+- Muñeco de Paja: 6 Vida.
+- Exploración ajustada a una sola pantalla móvil, sin scroll general.
+- Se conserva el motor táctico de v0.2.8.32.
