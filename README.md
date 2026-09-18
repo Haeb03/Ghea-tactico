@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.4 — Tutorial completo
+# Ghea Táctico v0.2.9.5 — Tutorial corregido
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -88,3 +88,11 @@ Se integró el recorrido completo del tutorial de v0.3.0.8 sobre la nueva Arca:
 
 Se mantienen los valores corregidos del Muñeco: 6 Vida, 3 PM, 2 PA, Ini 3, ataque adyacente de 1 daño por 2 PA.
 La misión de la carreta queda como siguiente bloque después de cruzar la Puerta Oeste.
+
+## Correcciones v0.2.9.5
+- El Maestro entrega efectivamente una Poción de Vida justo antes de la prueba de objetos.
+- Usar esa Poción de Vida completa la lección.
+- Si el ejercicio se reabre sin la poción, se repone para evitar bloquear el tutorial.
+- La prueba de traslado ya no usa la condición normal de victoria por enemigos derrotados.
+- Para completarla es obligatorio levantar realmente el cuerpo, transportarlo y soltarlo dentro de la casilla objetivo.
+- Se validan por separado los estados “cuerpo levantado” y “cuerpo depositado”.
