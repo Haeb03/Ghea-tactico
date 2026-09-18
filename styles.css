@@ -553,3 +553,48 @@ button:active{transform:translateY(1px)}
 /* El sombreado ambiental general no debe lavar/difuminar la muralla sur del fondo.
    La muralla queda con el mismo arte/opacidad que la sección norte. */
 .visual-world.map-west::before{background:transparent!important}
+
+
+/* v0.2.8.33 — correcciones estructurales */
+.visual-battle .unit-piece{
+  position:absolute!important; inset:0!important; overflow:visible!important; z-index:4!important;
+}
+.visual-battle .unit-icon{
+  position:absolute!important; inset:0!important; width:100%!important; height:100%!important;
+  display:grid!important; place-items:center!important; overflow:visible!important;
+}
+.visual-battle .combat-sprite{
+  width:auto!important; height:118%!important; max-width:138%!important;
+  object-fit:contain!important; object-position:center center!important;
+  transform:none!important; transform-origin:center center!important;
+}
+.visual-battle .deploy-hero{
+  position:absolute!important; inset:0!important; width:100%!important; height:100%!important;
+  display:grid!important; place-items:center!important; overflow:visible!important;
+}
+.visual-battle .deploy-hero .hero-sprite{
+  width:auto!important; height:118%!important; max-width:138%!important;
+  object-fit:contain!important; object-position:center center!important; transform:none!important;
+}
+/* Vida inmediatamente sobre la miniatura, asociada a su propia casilla. */
+.visual-battle .unit-vitals{
+  top:-8px!important; left:50%!important; right:auto!important;
+  transform:translateX(-50%)!important; font-size:7px!important; line-height:9px!important;
+  padding:0 2px!important; z-index:10!important;
+}
+.visual-battle .unit-hp{
+  top:2px!important; left:18%!important; right:18%!important; height:3px!important; z-index:10!important;
+}
+/* Huellas lógicas: bloquean movimiento pero no se dibujan. */
+.visual-battle .tile.obstacle:not(.obstacle-wall),
+.visual-battle .tile.obstacle-footprint{
+  background:transparent!important; background-image:none!important;
+  box-shadow:none!important; border-radius:0!important;
+}
+.visual-battle .tile.obstacle:not(.obstacle-wall)::before,
+.visual-battle .tile.obstacle:not(.obstacle-wall)::after,
+.visual-battle .tile.obstacle-footprint::before,
+.visual-battle .tile.obstacle-footprint::after{
+  content:none!important; display:none!important; background:none!important;
+  border:0!important; box-shadow:none!important; filter:none!important;
+}
