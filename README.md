@@ -1,4 +1,4 @@
-# Ghea Táctico v0.3.0.2 — reinicio de la reestructuración
+# Ghea Táctico v0.3.0.3 — reinicio de la reestructuración
 
 Base real: **v0.2.8.32**. Se descarta por completo la maqueta v0.3.0.0.
 
@@ -22,8 +22,16 @@ Base real: **v0.2.8.32**. Se descarta por completo la maqueta v0.3.0.0.
 La siguiente etapa ampliará el tutorial y el nuevo árbol del Guerrero una vez validado este flujo.
 
 
-## v0.3.0.2
+## v0.3.0.3
 - Tutorial ampliado hasta Nivel 4: Golpe Fuerte, Bloqueo, Descanso, Poción y traslado de cadáver.
 - Muñeco de Paja: 6 Vida.
 - Exploración ajustada a una sola pantalla móvil, sin scroll general.
 - Se conserva el motor táctico de v0.2.8.32.
+
+## v0.3.0.3 — limpieza del rediseño
+- Se puede eliminar un aventurero desde Continuar partida, con confirmación irreversible.
+- Desarrollo ya no muestra los árboles heredados: quedan Golpe Fuerte 1/1 y Bloqueo 1/1 como inicio del nuevo árbol.
+- Habilidades elimina Corte y cualquier activa heredada de la versión anterior.
+- Inventario compactado para pantallas verticales sin alterar equipar/desequipar.
+- Tutorial de cadáveres ya no finaliza al pasar turno: sólo termina al depositar el cuerpo en la zona objetivo.
+- Cadáver y zona objetivo se acercaron para que la prueba sea más clara, manteniendo la posibilidad de requerir varios turnos.

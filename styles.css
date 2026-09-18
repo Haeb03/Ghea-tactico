@@ -579,3 +579,11 @@ button:active{transform:translateY(1px)}
 .exploration-screen .explore-actions button{min-height:45px;padding:3px 1px}
 .corpse-goal{background:#d6b84b55!important;box-shadow:inset 0 0 0 3px #ffe66b!important;animation:goalPulse .8s infinite alternate}
 @keyframes goalPulse{to{box-shadow:inset 0 0 0 5px #fff2a0,0 0 12px #ffe66b}}
+
+/* v0.3.0.3 — compactación y limpieza visual */
+.char-save-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:stretch;padding:7px!important}.char-save-main{background:transparent!important;border:0!important;text-align:left!important;padding:8px!important}.delete-char{width:auto!important;min-width:88px!important;padding:7px 9px!important}
+.compact-menu-screen{padding-bottom:12px}.skill-clean-card{display:flex;gap:10px;align-items:center;border:1px solid #64745f;border-radius:12px;padding:10px;margin-top:8px}.skill-clean-card>div{display:grid;gap:2px}.skill-clean-card small{opacity:.8}
+.new-tree-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}.new-tree-branch{text-align:center;padding:10px!important}.new-tree-branch h3{margin:0 0 8px}.new-tree-branch .tree-node{width:100%;min-height:112px}.new-tree-branch .tree-node span,.new-tree-branch .tree-node strong{display:block}.tree-link{width:3px;height:20px;background:#687a67;margin:auto}.tree-locked{border:1px solid #566355;border-radius:12px;padding:8px;opacity:.55;display:grid;gap:4px}.tree-locked small{font-size:10px}
+/* Inventario compacto para pantalla vertical; conserva toda la lógica de equipamiento. */
+.equipment-stage{height:430px!important;min-height:430px!important;padding:7px!important}.equipment-stage .slot{min-height:72px!important;padding:5px!important;font-size:12px!important}.equipment-stage .slot span{font-size:10px!important}.equipment-stage .paperdoll{transform:scale(.78);transform-origin:center center}.bag{gap:6px!important}.bag-slot{min-height:58px!important;padding:5px!important;font-size:11px!important}
+@media(max-width:520px){.equipment-stage{height:390px!important;min-height:390px!important}.equipment-stage .slot{min-height:62px!important}.bag-slot{min-height:52px!important}.new-tree-grid{grid-template-columns:1fr 1fr}.new-tree-branch{padding:7px!important}.new-tree-branch .tree-node{min-height:98px;font-size:12px!important}}
