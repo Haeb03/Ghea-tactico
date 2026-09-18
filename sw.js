@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02838-world-hero-anchor';
+const CACHE='ghea-tactico-02839-world-base-obstacles';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',

@@ -848,3 +848,67 @@ button:active{transform:translateY(1px)}
   height:180%!important;
   max-width:200%!important;
 }
+
+
+/* v0.2.8.39 — cierre visual: anclaje de peana + obstáculos 1:1 */
+/* EXPLORACIÓN:
+   worldHero.left/top es la coordenada lógica.
+   Igual que en combate, el punto lógico coincide con el CENTRO DE LA PEANA:
+   la base del PNG se coloca en y=50% del contenedor de 64 px. */
+.map-west .hero-world.miniature-world{
+  width:64px!important;
+  height:64px!important;
+  transform:translate(-50%,-50%)!important;
+  display:block!important;
+  overflow:visible!important;
+}
+.map-west .hero-world.miniature-world img{
+  position:absolute!important;
+  left:50%!important;
+  bottom:50%!important;
+  width:auto!important;
+  height:180%!important;
+  max-width:200%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+  transform:translateX(-50%)!important;
+  transform-origin:center bottom!important;
+}
+
+/* COMBATE: escala aprobada, sin cambios. */
+.visual-battle .combat-sprite,
+.visual-battle .deploy-hero .hero-sprite{
+  height:180%!important;
+  max-width:200%!important;
+}
+
+/* OBSTÁCULOS:
+   Ya no se escalan con factores aproximados.
+   app.js pasa al combate las medidas exactas usadas por Exploración:
+   árbol 172×188, roca 132×112, arbusto 82×72, tocón 88×78, tronco 142×86.
+   El overlay se ancla por centro inferior igual que westSceneryHTML. */
+.visual-battle .battle-obstacle-visual{
+  position:absolute!important;
+  background-size:contain!important;
+  background-position:center bottom!important;
+  background-repeat:no-repeat!important;
+  transform:translate(-50%,-100%)!important;
+  transform-origin:center bottom!important;
+  pointer-events:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+}
+.visual-battle .battle-obstacle-visual.obstacle-tree,
+.visual-battle .battle-obstacle-visual.obstacle-rock,
+.visual-battle .battle-obstacle-visual.obstacle-bush,
+.visual-battle .battle-obstacle-visual.obstacle-stump,
+.visual-battle .battle-obstacle-visual.obstacle-log{
+  transform:translate(-50%,-100%)!important;
+}
+.visual-battle .battle-obstacle-visual::before,
+.visual-battle .battle-obstacle-visual::after{
+  content:none!important;
+  display:none!important;
+}
