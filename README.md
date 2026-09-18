@@ -1,34 +1,25 @@
-# Ghea Táctico v0.2.8.35 — Peana y Vida alineadas
+# Ghea Táctico v0.2.8.36 — Miniaturas ampliadas
 
-Base: **v0.2.8.34**.
+Base: **v0.2.8.35**.
 
-## Objetivo de esta actualización
+## Cambio de esta versión
 
-Corregir exclusivamente la representación visual de las unidades en combate sin tocar la lógica táctica.
+Se modifica únicamente el **tamaño visual de las miniaturas en combate**.
 
-## Corregido
+- Altura visual: de 118% a 160% respecto de la casilla.
+- Se amplía el límite horizontal para conservar la proporción del PNG.
+- La miniatura sigue creciendo desde el mismo punto de anclaje de la peana establecido en v0.2.8.35.
 
-- **Peana centrada:** la miniatura sigue perteneciendo a la misma casilla lógica, pero ahora el centro de su peana se ancla al centro de esa casilla.
-- Se elimina el `translateY(-50%)` usado en v0.2.8.34, que desplazaba visualmente toda la miniatura.
-- El mismo anclaje se usa durante el **Despliegue inicial** y durante el combate.
-- **Vida:** `14/14` y la barra se colocan por encima de la cabeza en vez de atravesar la cara.
-- Se conserva la eliminación de los óvalos de obstáculos conseguida en v0.2.8.34.
-- Se conserva la corrección de posición del Aventurero al regresar del combate conseguida en v0.2.8.33.
-- Inicio, título, CSS/JS y Service Worker pasan a **v0.2.8.35** para comprobar la carga.
+## Se mantiene exactamente igual
 
-## No se modifica
-
-- Casilla lógica de las unidades.
-- Movimiento, PM y PA.
-- Alcances.
-- Despliegue permitido.
+- Centro de la peana.
+- Posición de `Vida` y barra.
+- Casilla lógica.
+- Movimiento, PA, PM y alcance.
+- Despliegue.
 - Colisiones y pathfinding.
-- Huellas lógicas de obstáculos.
-- IA y reglas de combate.
+- Obstáculos y sus huellas.
+- Eliminación de los óvalos.
+- Posición del personaje al regresar del combate.
 
-## Pendiente
-
-Una vez validado este ajuste visual:
-- revisar los demás detalles pendientes;
-- integrar el tutorial previo a Bandidos;
-- incorporar los nuevos árboles de Desarrollo.
+La finalidad es comprobar si, al recuperar una escala apropiada para la cuadrícula, la cabeza de la miniatura se aproxima naturalmente al HUD sin volver a desplazar ningún elemento.

@@ -762,3 +762,18 @@ button:active{transform:translateY(1px)}
   content:none!important;
   display:none!important;
 }
+
+
+/* v0.2.8.36 — escala de miniaturas */
+/*
+   ÚNICO ajuste visual de esta versión:
+   agrandar las miniaturas manteniendo exactamente:
+   - centro de peana de v0.2.8.35
+   - posición del HUD de Vida de v0.2.8.35
+   - coordenadas/casillas lógicas
+*/
+.visual-battle .combat-sprite,
+.visual-battle .deploy-hero .hero-sprite{
+  height:160%!important;
+  max-width:180%!important;
+}
