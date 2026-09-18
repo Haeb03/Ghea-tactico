@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.6 — Poción corregida
+# Ghea Táctico v0.2.9.8 — Misión de la Carreta estabilizada
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -102,3 +102,27 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - Ahora aparece en Objetos durante combate.
 - Cura 4 y se consume al usarla.
 - Usarla durante la prueba del Maestro finaliza esa lección.
+
+
+## v0.2.9.7 — Misión de la Carreta de Loren
+- El Maestro entrega el encargo tras el tutorial y un Kit de viajero: Vendas, Poción de Vida y 10 Oro.
+- Carreta atacada en Zona Oeste, investigación y dos rastros (norte/sur).
+- Carretero herido: las Vendas permiten Primeros Auxilios y otorgan +1 EXP adicional; sin ellas muere.
+- Ruinas con rescate de un cautivo y 3 Varkhams.
+- Varkham: Vida 10, PM 3, PA 3, Iniciativa 4; Ataque Normal 2/1 PA; Acecho 2 daño + Herida/2 PA; Corte 1 daño + Herida/3 PA.
+- Cada Varkham entrega 2 EXP. Objetivos principales entregan 2 EXP.
+- El cautivo comienza 6/8 Vida, Herida x1 y, al ser liberado, intenta escapar con 3 PM.
+- Regreso a la carreta: el paquete oculto desapareció.
+- Cierre en Arca: Maestro → Director → Gran Biblioteca. La gema se identifica como incrustada en una daga del Rey Demonio.
+- Recompensa final del encargo: 20 Oro.
+- Vendas eliminan todas las cargas de Herida en combate.
+- Estado de la misión persistente en el guardado.
+
+
+## v0.2.9.8 — Estabilización de la misión
+- Versión visible del Inicio sincronizada con README y caché PWA.
+- Corregidos botones sin acción en la investigación de la carreta, regreso a Arca e informe al Maestro.
+- Los dos rastros (norte y sur) deben resolverse antes de cerrar la investigación de la carreta; pueden hacerse en cualquier orden.
+- Se protegen de obstáculos naturales las zonas de la carreta, el herido y las ruinas.
+- La EXP de los 3 Varkhams se registra de forma persistente y no puede farmearse repitiendo un rescate fallido.
+- Se mantiene la regla de Venda: elimina todas las cargas de Herida en combate.

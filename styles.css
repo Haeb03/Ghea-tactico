@@ -1088,3 +1088,6 @@ body{overscroll-behavior:none}
 }
 
 .visual-battle .tile.corpse-goal{box-shadow:inset 0 0 0 4px #e5c85a!important;background:rgba(229,200,90,.22)!important}
+
+/* v0.2.9.7 — misión de la carreta */
+.mission-world-object{position:absolute;transform:translate(-50%,-50%);z-index:160;border:2px solid #e8cf75;border-radius:14px;background:#241b12dd;color:#fff;padding:7px 10px;font-size:30px;box-shadow:0 4px 12px #0009;cursor:pointer}.mission-world-object small{display:block;font-size:11px;white-space:nowrap}.carriage-cart{font-size:38px}.injured-man{border-color:#c96b61}.ruins-encounter{border-color:#a88d72}.mission-building{outline:3px solid #e8cf75!important;box-shadow:0 0 18px #e8cf75aa!important}
