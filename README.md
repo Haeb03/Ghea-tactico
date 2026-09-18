@@ -1,4 +1,4 @@
-# Ghea Táctico v0.3.0.5 — reinicio de la reestructuración
+# Ghea Táctico v0.3.0.7 — reinicio de la reestructuración
 
 Base real: **v0.2.8.32**. Se descarta por completo la maqueta v0.3.0.0.
 
@@ -44,15 +44,21 @@ La siguiente etapa ampliará el tutorial y el nuevo árbol del Guerrero una vez 
 - Se mantienen únicamente Golpe Fuerte 1/1 y Bloqueo 1/1 como nodos iniciales del nuevo árbol.
 
 
-## v0.3.0.5
+## v0.3.0.7
 - Nueva referencia visual de Arca: HUD compacto, Zona/Objetivo, mapa protagonista y barra inferior siempre visible.
-- Guerrero y Muñeco usan fichas circulares desde `assets-fichas/`.
-- Rutas: `assets-fichas/ficha-guerrero.png` y `assets-fichas/ficha-muneco.png`.
+- Guerrero y Muñeco usan fichas circulares desde `Assets-fichas/`.
+- Rutas: `Assets-fichas/ficha-guerrero.png` y `Assets-fichas/ficha-muneco.png`.
 - Se elimina el `alert()` del navegador al subir de nivel y se reemplaza por un aviso integrado al juego.
 
 
-## v0.3.0.6
-- Se incorporan las fichas definitivas suministradas para Guerrero y Muñeco desde `assets-fichas/`.
+## v0.3.0.7
+- Se incorporan las fichas definitivas suministradas para Guerrero y Muñeco desde `Assets-fichas/`.
 - Árbol Ofensivo implementado hasta Furia: Golpe Fuerte → Fuerza 0/2 → Vitalidad 0/3 / Iniciativa 0/1 / Golpe de Oportunidad 0/1 → Furia.
 - Árbol Defensivo implementado hasta Guardia: Bloqueo → Vitalidad 0/2 → Golpe de Oportunidad 0/1 / Iniciativa 0/1 / Robustez 0/2 → Guardia 0/2.
 - Requisitos de Nivel 4 y requisitos de puntos/rangos aplicados.
+
+## v0.3.0.7
+- Sincronización de versión y caché para evitar que GitHub Pages siga mostrando v0.3.0.5.
+- Rutas de fichas corregidas para la carpeta real `Assets-fichas/`.
+- Árbol nuevo del Guerrero incluido hasta Furia (Ofensiva) y Guardia (Defensa).
+- Se mantiene la interfaz de Arca con fichas circulares de Guerrero y Muñeco.
