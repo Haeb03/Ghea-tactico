@@ -1,6 +1,5 @@
-const CACHE='ghea-tactico-v0308';
-const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./Assets-fichas/ficha-guerrero.png','./Assets-fichas/ficha-muneco.png',
-'./Assets-fichas/ficha-guerrero.png','./Assets-fichas/ficha-muneco.png',
+const CACHE='ghea-tactico-02832-centering-borders-obstacles-wall';
+const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/arboles/arbol-01.png',
 './assets-obstaculos/arboles/arbol-02.png',
