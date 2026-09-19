@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.11 — Rescate + niebla
+# Ghea Táctico v0.2.9.12 — Niebla restaurada + rescate
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -144,3 +144,10 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - `sw.js` usa una clave de caché nueva para forzar la actualización.
 - Mantiene la corrección del cautivo al alcanzar el borde seguro.
 - La niebla sigue siendo manejada por el código de exploración integrado en `app.js`/`styles.css`; no se eliminan los archivos `fog0299.js/css` que ya estén en GitHub.
+
+
+## v0.2.9.12 — Restauración de niebla
+- `index.html` vuelve a cargar explícitamente `fog0299.css` y `fog0299.js`.
+- `fog0299.js` conserva sólo la niebla/exploración; se retiró su segunda implementación de Liberar para evitar dos overrides de `renderBattle`.
+- Se mantiene el rescate corregido de v0.2.9.11.
+- Caché renovada y archivos de niebla incluidos en el service worker.
