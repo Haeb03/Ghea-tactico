@@ -1,0 +1,9 @@
+/* v0.2.9.9 — niebla de exploración */
+.map-west .fog-grid{position:absolute;inset:0;display:grid;grid-template-columns:repeat(30,var(--fog-cell));grid-template-rows:repeat(30,var(--fog-cell));z-index:900;pointer-events:none}
+.map-west .fog-grid i{display:block;width:var(--fog-cell);height:var(--fog-cell);transition:background .14s ease,box-shadow .14s ease}
+.map-west .fog-grid .fog-visible{background:transparent}
+.map-west .fog-grid .fog-explored{background:rgba(11,17,14,.56)}
+.map-west .fog-grid .fog-unknown{background:rgba(9,13,11,.90)}
+.map-west .fog-grid .fog-visible+ .fog-explored{box-shadow:inset 8px 0 12px rgba(9,13,11,.12)}
+.map-west .fog-hidden-static,.map-west .fog-hidden-dynamic{visibility:hidden!important;pointer-events:none!important}
+.free-captive-action{position:relative;z-index:20;border:2px solid rgba(255,255,255,.35)}
