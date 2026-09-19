@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.13 — Motor de encuentros
+# Ghea Táctico v0.2.9.15 — Integración limpia de misión
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -160,8 +160,11 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - Los enemigos de misión no respawnean.
 
 
-## v0.2.9.14 — Arte de misión
-- Carreta, ruinas, Guardia, herido, cautivo y Varkham usan assets finales.
-- Ruinas/carreta se integran al mapa y al sector 10×10.
-- Jabalí derrotado desaparece durante 60 s y luego retoma patrulla.
-- Despliegue dinámico limitado a 5–8 casillas válidas.
+## v0.2.9.15 — Integración limpia de misión
+- Reconstruida desde v0.2.9.13, descartando la integración defectuosa de v0.2.9.14.
+- Carreta y ruinas integradas con el mismo motor de obstáculos validado en exploración/combate.
+- Ruinas compuestas por piezas independientes; ruta respetada: `assets-obstaculos/Ruinas/`.
+- Guardia Garrick, herido, cautivo y Varkhams usan las nuevas miniaturas.
+- Despliegue reducido a 5–8 casillas irregulares válidas.
+- Jabalí derrotado desaparece durante 60 s y reaparece al terminar su cooldown.
+- Niebla preservada sin reescritura.

@@ -1093,9 +1093,21 @@ body{overscroll-behavior:none}
 .mission-world-object{position:absolute;transform:translate(-50%,-50%);z-index:160;border:2px solid #e8cf75;border-radius:14px;background:#241b12dd;color:#fff;padding:7px 10px;font-size:30px;box-shadow:0 4px 12px #0009;cursor:pointer}.mission-world-object small{display:block;font-size:11px;white-space:nowrap}.carriage-cart{font-size:38px}.injured-man{border-color:#c96b61}.ruins-encounter{border-color:#a88d72}.mission-building{outline:3px solid #e8cf75!important;box-shadow:0 0 18px #e8cf75aa!important}
 
 
-/* v0.2.9.14 — assets físicos de misión */
-.map-west .mission-scenery{position:absolute;background-image:var(--mission-url);background-size:contain;background-position:center bottom;background-repeat:no-repeat;transform:translate(-50%,-100%);transform-origin:center bottom;pointer-events:none}
-.map-west .mission-scenery.prop-cart{width:190px;height:205px}.map-west .mission-scenery.prop-ruin{width:150px;height:145px}.map-west .mission-scenery.prop-rubble{width:145px;height:82px}
-.map-west #guard{width:64px!important;height:64px!important;background:transparent!important;border:0!important;overflow:visible!important}.map-west #guard img,.map-west .physical-npc img{position:absolute;left:50%;bottom:50%;height:180%;max-width:200%;object-fit:contain;object-position:center bottom;transform:translateX(-50%);transform-origin:center bottom}
-.mission-world-object.physical-poi{width:110px;height:110px;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:50%!important}.mission-world-object.physical-poi:focus,.mission-world-object.physical-poi:hover{outline:2px solid #e8cf7588}.mission-world-object.physical-npc{width:64px;height:64px;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
-.visual-battle .battle-obstacle-visual.obstacle-cart{width:150px!important;height:170px!important}.visual-battle .battle-obstacle-visual.obstacle-ruin,.visual-battle .battle-obstacle-visual.obstacle-rubble{background-size:contain!important}
+/* v0.2.9.15 — misión integrada con la escala validada del motor de obstáculos */
+.map-west .west-prop.prop-cart{width:154px!important;height:122px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-ruin-wall{width:108px!important;height:72px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-ruin-corner{width:82px!important;height:98px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-ruin-fallen{width:112px!important;height:66px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-ruin-column{width:64px!important;height:86px!important;transform:translate(-50%,-100%)!important}
+.map-west .west-prop.prop-ruin-rubble{width:104px!important;height:56px!important;transform:translate(-50%,-100%)!important}
+.mission-world-object.mission-hitbox{width:90px!important;height:90px!important;background:transparent!important;border:0!important;box-shadow:none!important;color:transparent!important;padding:0!important}
+.mission-world-object.mission-npc{width:64px!important;height:64px!important;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;overflow:visible!important}
+.mission-world-object.mission-npc img{position:absolute;left:50%;bottom:0;height:112px;width:auto;max-width:none;transform:translateX(-50%);object-fit:contain;object-position:center bottom}
+.map-west #guard{width:64px!important;height:64px!important;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important;color:transparent!important}
+.map-west #guard img{position:absolute;left:50%;bottom:0;height:112px;width:auto;max-width:none;transform:translateX(-50%);object-fit:contain;object-position:center bottom}
+.visual-battle .battle-obstacle-visual.obstacle-cart,
+.visual-battle .battle-obstacle-visual.obstacle-ruin-wall,
+.visual-battle .battle-obstacle-visual.obstacle-ruin-corner,
+.visual-battle .battle-obstacle-visual.obstacle-ruin-fallen,
+.visual-battle .battle-obstacle-visual.obstacle-ruin-column,
+.visual-battle .battle-obstacle-visual.obstacle-ruin-rubble{transform:translate(-50%,-100%)!important;transform-origin:center bottom!important;background-size:contain!important;background-position:center bottom!important}
