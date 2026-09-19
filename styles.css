@@ -1091,3 +1091,11 @@ body{overscroll-behavior:none}
 
 /* v0.2.9.7 — misión de la carreta */
 .mission-world-object{position:absolute;transform:translate(-50%,-50%);z-index:160;border:2px solid #e8cf75;border-radius:14px;background:#241b12dd;color:#fff;padding:7px 10px;font-size:30px;box-shadow:0 4px 12px #0009;cursor:pointer}.mission-world-object small{display:block;font-size:11px;white-space:nowrap}.carriage-cart{font-size:38px}.injured-man{border-color:#c96b61}.ruins-encounter{border-color:#a88d72}.mission-building{outline:3px solid #e8cf75!important;box-shadow:0 0 18px #e8cf75aa!important}
+
+
+/* v0.2.9.14 — assets físicos de misión */
+.map-west .mission-scenery{position:absolute;background-image:var(--mission-url);background-size:contain;background-position:center bottom;background-repeat:no-repeat;transform:translate(-50%,-100%);transform-origin:center bottom;pointer-events:none}
+.map-west .mission-scenery.prop-cart{width:190px;height:205px}.map-west .mission-scenery.prop-ruin{width:150px;height:145px}.map-west .mission-scenery.prop-rubble{width:145px;height:82px}
+.map-west #guard{width:64px!important;height:64px!important;background:transparent!important;border:0!important;overflow:visible!important}.map-west #guard img,.map-west .physical-npc img{position:absolute;left:50%;bottom:50%;height:180%;max-width:200%;object-fit:contain;object-position:center bottom;transform:translateX(-50%);transform-origin:center bottom}
+.mission-world-object.physical-poi{width:110px;height:110px;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;border-radius:50%!important}.mission-world-object.physical-poi:focus,.mission-world-object.physical-poi:hover{outline:2px solid #e8cf7588}.mission-world-object.physical-npc{width:64px;height:64px;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important}
+.visual-battle .battle-obstacle-visual.obstacle-cart{width:150px!important;height:170px!important}.visual-battle .battle-obstacle-visual.obstacle-ruin,.visual-battle .battle-obstacle-visual.obstacle-rubble{background-size:contain!important}

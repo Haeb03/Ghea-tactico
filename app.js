@@ -11,7 +11,7 @@ function weaponBonus(name){return name==='Espada de Hierro'?2:(name==='Espada de
 function baseDamage(c,hp=c.hp){return 1+t(c,'offDamage')+weaponBonus(c.equipment.weapon)+weaponBonus(c.equipment.offhand)+furyBonus(c,hp)}
 function toast(s){document.body.insertAdjacentHTML('beforeend',`<div class="toast">${s}</div>`);setTimeout(()=>$('.toast')?.remove(),1700)}
 function modal(html,closable=true){document.body.insertAdjacentHTML('beforeend',`<div class="modal" id="modal"><div class="card">${html}${closable?'<div class="actions"><button class="secondary" onclick="closeModal()">Cerrar</button></div>':''}</div></div>`)}window.closeModal=()=>$('#modal')?.remove();
-function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.9.13 · Motor de encuentros</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
+function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.9.14 · Arte de misión</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
 function characters(){app.innerHTML=`<section class="screen"><h2>Aventureros</h2><div id="chars"></div><div class="actions"><button id="new" ${state.characters.length>=3?'disabled':''}>${state.characters.length>=3?'Límite 3/3':'Crear Aventurero'}</button><button class="secondary" id="back">Volver</button></div></section>`;let box=$('#chars');if(!state.characters.length)box.innerHTML='<div class="card">Todavía no creaste ningún Aventurero.</div>';state.characters.forEach((c,i)=>box.insertAdjacentHTML('beforeend',`<div class="card char-card"><div><b>${esc(c.name)}</b> · Humano Guerrero · Nivel ${c.level}<br><span class="small">❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)} · PA 4 · PM 3 · 🪙 ${c.gold}</span></div><div class="char-buttons"><button onclick="enter(${i})">Seleccionar</button><button class="danger" onclick="askDelete(${i})">Eliminar</button></div></div>`));$('#new').onclick=createChar;$('#back').onclick=home}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 window.enter=i=>{state.selected=i;save();world()};window.askDelete=i=>{let c=state.characters[i];modal(`<h3>¿Eliminar a ${esc(c.name)}?</h3><p>Se eliminará este personaje y todo su progreso. Esta acción no se puede deshacer.</p><div class="actions"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="danger" id="confirmDelete">Eliminar definitivamente</button></div>`,false);$('#confirmDelete').onclick=()=>{state.characters.splice(i,1);if(state.selected===i)state.selected=null;else if(state.selected>i)state.selected--;save();closeModal();characters()}}
@@ -725,3 +725,95 @@ const world02913=world;
 world=function(){world02913();let c=hero();if(c?.location!=='west')return;requestAnimationFrame(()=>{document.querySelectorAll('.boar-patrol').forEach(el=>{let i=+el.dataset.boar;el.style.display=boarOnCooldown(c,i)?'none':''})})};
 const finishBattle02913=finishBattle;
 finishBattle=function(win){if(B?.encounter==='boars'&&win){let c=hero(),idx=B?.worldSector?.encounterIndex;markBoarDefeated(c,idx)}return finishBattle02913(win)};
+
+
+/* v0.2.9.14 — arte de misión + fauna + despliegue 5–8 */
+const MISSION_SCENERY_02914=[
+ {id:'cart',x:14,y:14,w:2,h:3,image:'assets-obstaculos/escenario/carreta-saqueada.png',kind:'cart',battleW:150,battleH:170},
+ {id:'ruin-wall-a',x:6,y:24,w:2,h:1,image:'assets-obstaculos/Ruinas/ruina_muro_recto.png',kind:'ruin',battleW:145,battleH:92},
+ {id:'ruin-corner',x:8,y:24,w:1,h:2,image:'assets-obstaculos/Ruinas/ruina_esquina.png',kind:'ruin',battleW:120,battleH:145},
+ {id:'ruin-fallen',x:5,y:26,w:2,h:1,image:'assets-obstaculos/Ruinas/ruina_muro_derrumbado.png',kind:'ruin',battleW:145,battleH:88},
+ {id:'ruin-column',x:9,y:26,w:1,h:1,image:'assets-obstaculos/Ruinas/ruina_columna.png',kind:'ruin',battleW:82,battleH:120},
+ {id:'ruin-rubble',x:7,y:28,w:2,h:1,image:'assets-obstaculos/Ruinas/ruina_escombros.png',kind:'rubble',blocks:false,battleW:135,battleH:72}
+];
+function missionSceneryActive02914(o,c=hero()){
+ if(!c||c.location!=='west')return false;
+ let m=carriageState(c);if(!m.accepted)return false;
+ if(o.id==='cart')return !m.libraryDone;
+ return m.tracksFound&&!m.rescueDone;
+}
+function missionSceneryBlocks02914(x,y,c=hero()){
+ return MISSION_SCENERY_02914.some(o=>missionSceneryActive02914(o,c)&&o.blocks!==false&&x>=o.x&&y>=o.y&&x<o.x+o.w&&y<o.y+o.h);
+}
+const mapBlockedCell02914=mapBlockedCell;
+mapBlockedCell=function(map,x,y){return mapBlockedCell02914(map,x,y)||(map==='west'&&missionSceneryBlocks02914(x,y))};
+function missionSceneryHTML02914(c){
+ const cell=mapData.west.cell;
+ return MISSION_SCENERY_02914.filter(o=>missionSceneryActive02914(o,c)).map(o=>{
+  let ax=(o.x+o.w/2)*cell,ay=(o.y+o.h)*cell,z=32+o.y+o.h;
+  return `<div class="west-prop mission-scenery prop-${o.kind}" data-scene="${o.id}" data-ax="${ax}" data-ay="${ay}" data-z="${z}" style="left:${ax}px;top:${ay}px;z-index:${z};--mission-url:url('${o.image}')"></div>`;
+ }).join('');
+}
+function installMissionScenery02914(){
+ let c=hero(),map=document.getElementById('worldMap');if(!c||c.location!=='west'||!map)return;
+ map.querySelectorAll('.mission-scenery').forEach(e=>e.remove());
+ map.insertAdjacentHTML('beforeend',missionSceneryHTML02914(c));
+ let g=document.getElementById('guard');if(g)g.innerHTML='<img src="assets-miniaturas/guardia-abajo.png" alt="Guardia Oeste">';
+}
+const carriageActorsHTML02914=carriageActorsHTML;
+carriageActorsHTML=function(c){
+ let m=carriageState(c);if(!m.accepted||m.libraryDone)return'';
+ let s='';
+ if(!m.packageMissing)s+=`<button class="mission-world-object physical-poi cart-poi" id="carriageCart" style="left:${CARRIAGE_POINTS.cart.x}px;top:${CARRIAGE_POINTS.cart.y}px" aria-label="Examinar carreta"></button>`;
+ if(m.tracksFound&&!m.injuredFound)s+=`<button class="mission-world-object injured-man physical-npc" id="injuredMan" style="left:${CARRIAGE_POINTS.injured.x}px;top:${CARRIAGE_POINTS.injured.y}px"><img src="assets-miniaturas/herido-frente.png" alt="Carretero herido"></button>`;
+ if(m.tracksFound&&!m.rescueDone)s+=`<button class="mission-world-object physical-poi ruins-poi" id="ruinsMission" style="left:${CARRIAGE_POINTS.ruins.x}px;top:${CARRIAGE_POINTS.ruins.y}px" aria-label="Investigar ruinas"></button>`;
+ return s;
+};
+const setBattleObstacles02914=setBattleObstacles;
+setBattleObstacles=function(sector){
+ setBattleObstacles02914(sector);
+ if(!sector||sector.map!=='west')return;
+ let ox=sector.origin.x,oy=sector.origin.y,c=hero();
+ MISSION_SCENERY_02914.forEach(o=>{
+  if(!missionSceneryActive02914(o,c))return;
+  let visible=[];
+  for(let yy=0;yy<o.h;yy++)for(let xx=0;xx<o.w;xx++){
+   let x=o.x+xx-ox,y=o.y+yy-oy;if(x<0||y<0||x>=10||y>=10)continue;
+   let k=`${x},${y}`;if(o.blocks!==false)obs.add(k);obstacleVisual[k]={type:'footprint',image:null};visible.push({x,y,k});
+  }
+  if(!visible.length)return;
+  let a=visible.reduce((p,q)=>q.y<p.y||(q.y===p.y&&q.x<p.x)?q:p,visible[0]);
+  obstacleVisual[a.k]={type:o.kind,image:o.image,w:o.w,h:o.h,battleW:o.battleW,battleH:o.battleH};
+ });
+};
+deploymentCandidates=function(side){
+ let freeCells=[];
+ for(let y=0;y<10;y++)for(let x=0;x<10;x++){let k=`${x},${y}`;if(!obs.has(k)&&!occupied(x,y))freeCells.push(k)}
+ let count=5+Math.floor(Math.random()*4),seed=freeCells[Math.floor(Math.random()*freeCells.length)],chosen=[];
+ if(seed)chosen.push(seed);
+ while(chosen.length<Math.min(count,freeCells.length)){
+  let pool=freeCells.filter(k=>!chosen.includes(k));if(!pool.length)break;
+  let clustered=pool.filter(k=>{let [x,y]=k.split(',').map(Number);return chosen.some(c=>{let [cx,cy]=c.split(',').map(Number);return Math.abs(x-cx)+Math.abs(y-cy)<=2})});
+  let src=(Math.random()<.62&&clustered.length)?clustered:pool;chosen.push(src[Math.floor(Math.random()*src.length)]);
+ }
+ return chosen;
+};
+prepareDynamicDeployment=function(battle,forcedSide=null){if(!battle)return;battle.deploySide=forcedSide||encounterApproachSide(battle.worldSector);battle.deployTiles=deploymentCandidates(battle.deploySide)};
+const enemySprite02914=enemySprite;
+enemySprite=function(u){
+ if(u?.type==='varkham')return `assets-miniaturas/varkham-${u.facing||'abajo'}.png`;
+ if(u?.type==='captive')return `assets-miniaturas/cautivo-${u.facing||'abajo'}.png`;
+ return enemySprite02914(u);
+};
+const unitVisual02914=unitVisual;
+unitVisual=function(z){if(z?.type==='captive'){let src=`assets-miniaturas/cautivo-${z.facing||'abajo'}.png`;return `<img class="combat-sprite npc-sprite" src="${src}" alt="">`}return unitVisual02914(z)};
+function hideCooldownBoars02914(){
+ let c=hero();if(!c||c.location!=='west')return;
+ document.querySelectorAll('.boar-patrol').forEach(el=>{let i=+el.dataset.boar;if(boarOnCooldown(c,i))el.remove()});
+ let waits=Object.values(boarRespawnState(c)).map(Number).filter(t=>t>Date.now());
+ if(waits.length){clearTimeout(window.__gheaBoarRespawnTimer);window.__gheaBoarRespawnTimer=setTimeout(()=>{let h=hero();if(h?.location==='west')world()},Math.max(50,Math.min(...waits)-Date.now()+80))}
+}
+const world02914=world;
+world=function(){world02914();requestAnimationFrame(()=>requestAnimationFrame(()=>{installMissionScenery02914();hideCooldownBoars02914()}))};
+const markBoarDefeated02914=markBoarDefeated;
+markBoarDefeated=function(c,i){markBoarDefeated02914(c,i);let el=document.querySelector(`.boar-patrol[data-boar="${i}"]`);if(el)el.remove();hideCooldownBoars02914()};

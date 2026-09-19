@@ -158,3 +158,10 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - Despliegue inicial variable estilo Dofus: las casillas válidas dependen del lado de aproximación, obstáculos y sector.
 - Jabalíes: patrulla ampliada, posición real usada al entrar en combate y respawn individual de 1 minuto.
 - Los enemigos de misión no respawnean.
+
+
+## v0.2.9.14 — Arte de misión
+- Carreta, ruinas, Guardia, herido, cautivo y Varkham usan assets finales.
+- Ruinas/carreta se integran al mapa y al sector 10×10.
+- Jabalí derrotado desaparece durante 60 s y luego retoma patrulla.
+- Despliegue dinámico limitado a 5–8 casillas válidas.
