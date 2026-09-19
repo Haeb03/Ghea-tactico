@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.10 — Misión de la Carreta estabilizada
+# Ghea Táctico v0.2.9.11 — Rescate + niebla
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -137,3 +137,10 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - El cautivo que alcanza el borde seguro ahora sale del combate sin convertirse en cadáver.
 - Se preserva la niebla de guerra durante el rescate.
 - La acción Liberar cautivo sigue disponible al quedar adyacente y cuesta 1 PA.
+
+
+## v0.2.9.11 — Recarga real de PWA
+- Inicio muestra v0.2.9.11.
+- `sw.js` usa una clave de caché nueva para forzar la actualización.
+- Mantiene la corrección del cautivo al alcanzar el borde seguro.
+- La niebla sigue siendo manejada por el código de exploración integrado en `app.js`/`styles.css`; no se eliminan los archivos `fog0299.js/css` que ya estén en GitHub.
