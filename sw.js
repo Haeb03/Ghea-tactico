@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02915-clean-mission';
+const CACHE='ghea-tactico-02916-visual-spatial';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/escenario/carreta-saqueada.png',

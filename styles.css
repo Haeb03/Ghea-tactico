@@ -1111,3 +1111,15 @@ body{overscroll-behavior:none}
 .visual-battle .battle-obstacle-visual.obstacle-ruin-fallen,
 .visual-battle .battle-obstacle-visual.obstacle-ruin-column,
 .visual-battle .battle-obstacle-visual.obstacle-ruin-rubble{transform:translate(-50%,-100%)!important;transform-origin:center bottom!important;background-size:contain!important;background-position:center bottom!important}
+
+
+/* v0.2.9.16 — ajuste visual fino de la misión */
+.map-west .west-prop.prop-ruin-wall,
+.map-west .west-prop.prop-ruin-corner,
+.map-west .west-prop.prop-ruin-fallen,
+.map-west .west-prop.prop-ruin-column,
+.map-west .west-prop.prop-ruin-rubble{scale:1.12!important;transform-origin:center bottom!important}
+/* El herido comparte escala humana con las demás miniaturas del mapa. */
+.mission-world-object.mission-npc img{height:78px!important}
+/* La carreta táctica queda contenida en el tablero. */
+.visual-battle .battle-obstacle-visual.obstacle-cart{max-width:118px!important;max-height:92px!important}

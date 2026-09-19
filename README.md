@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.15 — Integración limpia de misión
+# Ghea Táctico v0.2.9.16 — Ajustes visuales y espaciales
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -168,3 +168,12 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - Despliegue reducido a 5–8 casillas irregulares válidas.
 - Jabalí derrotado desaparece durante 60 s y reaparece al terminar su cooldown.
 - Niebla preservada sin reescritura.
+
+
+## v0.2.9.16 — Ajustes visuales y espaciales
+- Ruinas de misión ampliadas 12% en exploración.
+- Muro superior separado del árbol una casilla, manteniendo la composición general.
+- Carretero herido reducido a una escala coherente con Aron.
+- Carreta en combate reducida y contenida dentro del tablero.
+- Los objetos de misión sólo se dibujan completos en combate cuando toda su huella pertenece al sector 10×10; las colisiones del borde se conservan.
+- Sin cambios en niebla, misión, rescate, Varkhams ni respawn de jabalíes.
