@@ -1,6 +1,11 @@
-# Ghea Táctico v0.2.9.8 — Misión de la Carreta estabilizada
+# Ghea Táctico v0.2.9.9 — Misión de la Carreta estabilizada
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
+
+## v0.2.9.9 — Hotfix Liberar cautivo
+- Corrige la acción de rescate: al quedar adyacente al cautivo durante el turno de Aron aparece **🔓 Liberar** en la barra principal de combate.
+- Liberar cuesta 1 PA y activa inmediatamente la IA de escape del carretero.
+- No modifica la niebla ni el resto del flujo de la misión.
 
 ## Nuevo comienzo
 - Personajes nuevos comienzan en Nivel 1, 0 EXP y 0 puntos.
@@ -119,7 +124,7 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - Estado de la misión persistente en el guardado.
 
 
-## v0.2.9.8 — Estabilización de la misión
+## v0.2.9.9 — Estabilización de la misión
 - Versión visible del Inicio sincronizada con README y caché PWA.
 - Corregidos botones sin acción en la investigación de la carreta, regreso a Arca e informe al Maestro.
 - Los dos rastros (norte y sur) deben resolverse antes de cerrar la investigación de la carreta; pueden hacerse en cualquier orden.

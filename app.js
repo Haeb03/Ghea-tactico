@@ -11,7 +11,7 @@ function weaponBonus(name){return name==='Espada de Hierro'?2:(name==='Espada de
 function baseDamage(c,hp=c.hp){return 1+t(c,'offDamage')+weaponBonus(c.equipment.weapon)+weaponBonus(c.equipment.offhand)+furyBonus(c,hp)}
 function toast(s){document.body.insertAdjacentHTML('beforeend',`<div class="toast">${s}</div>`);setTimeout(()=>$('.toast')?.remove(),1700)}
 function modal(html,closable=true){document.body.insertAdjacentHTML('beforeend',`<div class="modal" id="modal"><div class="card">${html}${closable?'<div class="actions"><button class="secondary" onclick="closeModal()">Cerrar</button></div>':''}</div></div>`)}window.closeModal=()=>$('#modal')?.remove();
-function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.9.8 · Carreta de Loren</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
+function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.9.9 · Carreta de Loren</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
 function characters(){app.innerHTML=`<section class="screen"><h2>Aventureros</h2><div id="chars"></div><div class="actions"><button id="new" ${state.characters.length>=3?'disabled':''}>${state.characters.length>=3?'Límite 3/3':'Crear Aventurero'}</button><button class="secondary" id="back">Volver</button></div></section>`;let box=$('#chars');if(!state.characters.length)box.innerHTML='<div class="card">Todavía no creaste ningún Aventurero.</div>';state.characters.forEach((c,i)=>box.insertAdjacentHTML('beforeend',`<div class="card char-card"><div><b>${esc(c.name)}</b> · Humano Guerrero · Nivel ${c.level}<br><span class="small">❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)} · PA 4 · PM 3 · 🪙 ${c.gold}</span></div><div class="char-buttons"><button onclick="enter(${i})">Seleccionar</button><button class="danger" onclick="askDelete(${i})">Eliminar</button></div></div>`));$('#new').onclick=createChar;$('#back').onclick=home}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 window.enter=i=>{state.selected=i;save();world()};window.askDelete=i=>{let c=state.characters[i];modal(`<h3>¿Eliminar a ${esc(c.name)}?</h3><p>Se eliminará este personaje y todo su progreso. Esta acción no se puede deshacer.</p><div class="actions"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="danger" id="confirmDelete">Eliminar definitivamente</button></div>`,false);$('#confirmDelete').onclick=()=>{state.characters.splice(i,1);if(state.selected===i)state.selected=null;else if(state.selected>i)state.selected--;save();closeModal();characters()}}
@@ -610,7 +610,7 @@ const checkTransitionCarriageBase=checkTransition;
 checkTransition=function(map){let c=hero();if(!c)return;if(map==='arca'){let p=c.worldPos.arca,d=mapData.arca;if(dist(p,d.west)<85){let m=carriageState(c);if(c.quest==='tutorialComplete'&&!m.accepted)return toast('Antes de salir, hablá con el Maestro. Tiene un encargo para vos.');if(m.accepted){c.location='west';c.worldPos.west=c.worldPos.west||{x:1824,y:960};save();return world()}}}if(map==='west'){let p=c.worldPos.west,d=mapData.west;if(dist(p,d.exit)<70){c.location='arca';c.worldPos.arca={x:80,y:520};save();return world()}}return checkTransitionCarriageBase(map)};
 
 
-/* v0.2.9.8 — estabilización integral de la Misión de la Carreta */
+/* v0.2.9.9 — estabilización integral de la Misión de la Carreta */
 const protectedCellsV0298=protectedCells;
 protectedCells=function(map){
  const out=protectedCellsV0298(map);if(map!=='west')return out;
@@ -633,3 +633,31 @@ carriageReportMaster=function(){let c=hero(),m=carriageState(c);if(!m.packageMis
 
 const finishBattleV0298=finishBattle;
 finishBattle=function(win){if(!B||B.encounter!=='varkhamRescue')return finishBattleV0298(win);let c=hero(),m=carriageState(c),h=getU('hero'),cap=getU('captive'),defeated=B.units.filter(u=>u.type==='varkham'&&!u.alive).length,already=m.varkhamXpAwarded||0,newKills=Math.max(0,Math.min(3,defeated)-already),xp=newKills*2;m.varkhamXpAwarded=Math.max(already,Math.min(3,defeated));c.xp+=xp;c.hp=win?Math.max(1,h.hp):1;if(win){m.rescueDone=true;m.captiveAlive=true;c.quest='carriageReturnCart';missionXP(c,'rescue');}else{m.captiveAlive=!!cap?.alive;c.location='west'}levelCheck(c);save();clearInterval(B.timerId);B=null;if(win){modal(`<h3>Rescate completado</h3><p>Los tres Varkhams fueron derrotados y el carretero sobrevivió.</p><p>EXP de combate obtenida ahora: <b>${xp}</b></p><p>El hombre explica que las criaturas buscaban algo. Un hombre misterioso le pagó para llevar un paquete a Arca y le ordenó no abrirlo. Él desobedeció: dentro vio <b>una gema</b>. Después escondió el paquete en la carreta.</p><p>${m.injuredFound?'Ya podés volver a la carreta.':'Todavía queda investigar el rastro de sangre hacia el norte.'}</p><button id="rescueContinue">Continuar</button>`,false);$('#rescueContinue').onclick=()=>{closeModal();world()}}else{modal(`<h3>Rescate fallido</h3><p>El cautivo murió o fuiste derrotado. El encuentro puede intentarse nuevamente.</p><p>EXP nueva obtenida por Varkhams derrotados: <b>${xp}</b></p><p class="small">La EXP de cada Varkham sólo puede cobrarse una vez.</p><button id="retryWorld">Volver</button>`,false);$('#retryWorld').onclick=()=>{closeModal();world()}}};
+
+/* v0.2.9.9 — hotfix Liberar cautivo */
+const renderBattleV0299Base=renderBattle;
+renderBattle=function(){
+ renderBattleV0299Base();
+ if(!B||B.encounter!=='varkhamRescue'||B.rescueFreed)return;
+ let cap=getU('captive'),h=getU('hero'),u=cur();
+ if(!cap?.alive||!h?.alive||u?.type!=='hero'||!adj8(h,cap))return;
+ let bar=document.querySelector('.main-actions');
+ if(!bar||document.getElementById('freeCaptive'))return;
+ let b=document.createElement('button');
+ b.id='freeCaptive';b.className='rescue-action';
+ b.innerHTML='🔓<b>Liberar</b>';
+ b.title='Liberar cautivo · 1 PA';
+ b.onclick=()=>{
+  let heroUnit=getU('hero'),captive=getU('captive');
+  if(!B||B.encounter!=='varkhamRescue'||B.rescueFreed||!captive?.alive)return;
+  if(cur()?.type!=='hero')return toast('Sólo podés liberarlo durante tu turno.');
+  if(!adj8(heroUnit,captive))return toast('Tenés que estar junto al cautivo.');
+  if(heroUnit.pa<1)return toast('Necesitás 1 PA.');
+  heroUnit.pa--;B.rescueFreed=true;captive.immobilized=false;
+  B.selectedAction=null;B.skillsOpen=false;
+  B.log.push('🔓 Carretero liberado. Intentará escapar con 3 PM.');
+  toast('Cautivo liberado. Ahora intentará escapar.');
+  renderBattle();
+ };
+ let end=document.getElementById('end');bar.insertBefore(b,end||null);
+};
