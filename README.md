@@ -1,8 +1,8 @@
-# Ghea Táctico v0.2.9.9 — Misión de la Carreta estabilizada
+# Ghea Táctico v0.2.9.10 — Misión de la Carreta estabilizada
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
-## v0.2.9.9 — Hotfix Liberar cautivo
+## v0.2.9.10 — Hotfix Liberar cautivo
 - Corrige la acción de rescate: al quedar adyacente al cautivo durante el turno de Aron aparece **🔓 Liberar** en la barra principal de combate.
 - Liberar cuesta 1 PA y activa inmediatamente la IA de escape del carretero.
 - No modifica la niebla ni el resto del flujo de la misión.
@@ -124,10 +124,16 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - Estado de la misión persistente en el guardado.
 
 
-## v0.2.9.9 — Estabilización de la misión
+## v0.2.9.10 — Estabilización de la misión
 - Versión visible del Inicio sincronizada con README y caché PWA.
 - Corregidos botones sin acción en la investigación de la carreta, regreso a Arca e informe al Maestro.
 - Los dos rastros (norte y sur) deben resolverse antes de cerrar la investigación de la carreta; pueden hacerse en cualquier orden.
 - Se protegen de obstáculos naturales las zonas de la carreta, el herido y las ruinas.
 - La EXP de los 3 Varkhams se registra de forma persistente y no puede farmearse repitiendo un rescate fallido.
 - Se mantiene la regla de Venda: elimina todas las cargas de Herida en combate.
+
+
+### v0.2.9.10
+- El cautivo que alcanza el borde seguro ahora sale del combate sin convertirse en cadáver.
+- Se preserva la niebla de guerra durante el rescate.
+- La acción Liberar cautivo sigue disponible al quedar adyacente y cuesta 1 PA.

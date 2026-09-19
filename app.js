@@ -584,7 +584,7 @@ enemySprite=function(u){if(u?.type==='varkham')return null;return enemySpriteV02
 
 function nearestVarkhamTarget(e){let h=getU('hero'),cap=getU('captive'),targets=[h,cap].filter(u=>u?.alive&&!B.rescueSafe);targets.sort((a,b)=>md(e,a)-md(e,b));return targets[0]||h}
 const enemyAIV0297=enemyAI;
-enemyAI=async function(){if(!B||B.encounter!=='varkhamRescue')return enemyAIV0297();if(battleAnimating)return;let e=cur();if(e.type==='captive'){if(!e.alive||!B.rescueFreed||B.rescueSafe)return setTimeout(nextTurn,250);let goal={x:0,y:e.y},path=gridPath(e,goal),steps=Math.min(3,Math.max(0,path.length-1));if(steps>0)await animateBattlePath(e,path,steps,180,false);if(e.x<=0){B.rescueSafe=true;e.alive=false;B.log.push('✅ El carretero alcanzó la zona segura.')}renderBattle();if(checkBattleEnd())return;return setTimeout(nextTurn,450)}if(e.type!=='varkham')return enemyAIV0297();let t=nearestVarkhamTarget(e);if(!t?.alive)return nextTurn();if(!adj8(e,t)&&e.pm>0){let path=gridPath(e,t),steps=Math.min(e.pm,Math.max(0,path.length-2));if(steps>0){e.pm-=steps;await animateBattlePath(e,path,steps,180,false)}}if(t.alive&&!adj8(e,t)&&e.pa>=2&&md(e,t)<=2){faceTarget(e,t);renderBattle();await enemyNotice(e,'Acecho');e.pa-=2;let dx=Math.sign(t.x-e.x),dy=Math.sign(t.y-e.y),nx=t.x-dx,ny=t.y-dy;if(free(nx,ny)){await animateBattlePath(e,[[e.x,e.y],[nx,ny]],1,150,false)}await visualAttack(e,t,'melee','-2');hit(e,t,2,'Acecho');if(t.alive)t.wound=(t.wound||0)+1;renderBattle();await sleep(250)}if(t.alive&&adj8(e,t)&&e.pa>=3){faceTarget(e,t);renderBattle();await enemyNotice(e,'Corte');e.pa-=3;await visualAttack(e,t,'melee','-1');hit(e,t,1,'Corte');if(t.alive)t.wound=(t.wound||0)+1;renderBattle();await sleep(250)}while(t.alive&&adj8(e,t)&&e.pa>0){faceTarget(e,t);renderBattle();await enemyNotice(e,'Ataque Normal');e.pa--;await visualAttack(e,t,'melee','-2');hit(e,t,2,'Ataque Normal');renderBattle();await sleep(180)}B.notice='';renderBattle();if(checkBattleEnd())return;setTimeout(nextTurn,500)};
+enemyAI=async function(){if(!B||B.encounter!=='varkhamRescue')return enemyAIV0297();if(battleAnimating)return;let e=cur();if(e.type==='captive'){if(!e.alive||!B.rescueFreed||B.rescueSafe)return setTimeout(nextTurn,250);let goal={x:0,y:e.y},path=gridPath(e,goal),steps=Math.min(3,Math.max(0,path.length-1));if(steps>0)await animateBattlePath(e,path,steps,180,false);if(e.x<=0){B.rescueSafe=true;e.escaped=true;e.x=-99;e.y=-99;B.log.push('✅ El carretero alcanzó la zona segura y salió del combate.')}renderBattle();if(checkBattleEnd())return;return setTimeout(nextTurn,450)}if(e.type!=='varkham')return enemyAIV0297();let t=nearestVarkhamTarget(e);if(!t?.alive)return nextTurn();if(!adj8(e,t)&&e.pm>0){let path=gridPath(e,t),steps=Math.min(e.pm,Math.max(0,path.length-2));if(steps>0){e.pm-=steps;await animateBattlePath(e,path,steps,180,false)}}if(t.alive&&!adj8(e,t)&&e.pa>=2&&md(e,t)<=2){faceTarget(e,t);renderBattle();await enemyNotice(e,'Acecho');e.pa-=2;let dx=Math.sign(t.x-e.x),dy=Math.sign(t.y-e.y),nx=t.x-dx,ny=t.y-dy;if(free(nx,ny)){await animateBattlePath(e,[[e.x,e.y],[nx,ny]],1,150,false)}await visualAttack(e,t,'melee','-2');hit(e,t,2,'Acecho');if(t.alive)t.wound=(t.wound||0)+1;renderBattle();await sleep(250)}if(t.alive&&adj8(e,t)&&e.pa>=3){faceTarget(e,t);renderBattle();await enemyNotice(e,'Corte');e.pa-=3;await visualAttack(e,t,'melee','-1');hit(e,t,1,'Corte');if(t.alive)t.wound=(t.wound||0)+1;renderBattle();await sleep(250)}while(t.alive&&adj8(e,t)&&e.pa>0){faceTarget(e,t);renderBattle();await enemyNotice(e,'Ataque Normal');e.pa--;await visualAttack(e,t,'melee','-2');hit(e,t,2,'Ataque Normal');renderBattle();await sleep(180)}B.notice='';renderBattle();if(checkBattleEnd())return;setTimeout(nextTurn,500)};
 
 const renderBattleV0297=renderBattle;
 renderBattle=function(){renderBattleV0297();if(!B||B.encounter!=='varkhamRescue')return;let cap=getU('captive');if(!cap||B.rescueFreed||!cap.alive)return;let h=getU('hero');if(h&&adj8(h,cap)&&cur()?.type==='hero'){let actions=document.querySelector('.battle-actions')||document.querySelector('.actions');if(actions&&!$('#freeCaptive')){let b=document.createElement('button');b.id='freeCaptive';b.textContent='🔓 Liberar cautivo · 1 PA';b.onclick=()=>{if(h.pa<1)return toast('Necesitás 1 PA.');h.pa--;B.rescueFreed=true;cap.immobilized=false;B.log.push('🔓 Carretero liberado. Intentará escapar con 3 PM.');renderBattle()};actions.prepend(b)}}};
@@ -661,3 +661,27 @@ renderBattle=function(){
  };
  let end=document.getElementById('end');bar.insertBefore(b,end||null);
 };
+
+
+// ===== v0.2.9.10 · cautivo seguro + niebla preservada =====
+(function(){
+ const previousRenderBattle = renderBattle;
+ renderBattle = function(){
+  previousRenderBattle();
+  if(!B || B.encounter!=='varkhamRescue') return;
+  const cap=getU('captive'), h=getU('hero'), u=cur();
+  if(!cap || B.rescueFreed || !cap.alive || !h || u?.type!=='hero' || !adj8(h,cap)) return;
+  const actions=document.querySelector('.battle-actions')||document.querySelector('.actions');
+  if(!actions || document.getElementById('freeCaptive')) return;
+  const b=document.createElement('button');
+  b.id='freeCaptive';
+  b.textContent='🔓 Liberar cautivo · 1 PA';
+  b.onclick=()=>{
+   if(h.pa<1)return toast('Necesitás 1 PA.');
+   h.pa--;B.rescueFreed=true;cap.immobilized=false;
+   B.log.push('🔓 Carretero liberado. Intentará escapar con 3 PM.');
+   renderBattle();
+  };
+  actions.prepend(b);
+ };
+})();
