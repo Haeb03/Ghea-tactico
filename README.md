@@ -177,3 +177,13 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - Carreta en combate reducida y contenida dentro del tablero.
 - Los objetos de misión sólo se dibujan completos en combate cuando toda su huella pertenece al sector 10×10; las colisiones del borde se conservan.
 - Sin cambios en niebla, misión, rescate, Varkhams ni respawn de jabalíes.
+
+
+## v0.2.9.17 — Cierre de Afueras Oeste
+- Guardia ajustado a escala humana.
+- Miniaturas tácticas contenidas en su casilla para evitar superposición visual.
+- Carreta: imagen e interacción usan el mismo anclaje físico.
+- Ruinas: el cautivo visible reemplaza el hotspot invisible y dispara la interacción.
+- Rescate centrado en la ubicación real del cautivo.
+- Colocación inicial del rescate evita obstáculos y separa unidades.
+- Arca queda sin cambios para una revisión posterior específica.

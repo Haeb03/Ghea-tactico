@@ -11,7 +11,7 @@ function weaponBonus(name){return name==='Espada de Hierro'?2:(name==='Espada de
 function baseDamage(c,hp=c.hp){return 1+t(c,'offDamage')+weaponBonus(c.equipment.weapon)+weaponBonus(c.equipment.offhand)+furyBonus(c,hp)}
 function toast(s){document.body.insertAdjacentHTML('beforeend',`<div class="toast">${s}</div>`);setTimeout(()=>$('.toast')?.remove(),1700)}
 function modal(html,closable=true){document.body.insertAdjacentHTML('beforeend',`<div class="modal" id="modal"><div class="card">${html}${closable?'<div class="actions"><button class="secondary" onclick="closeModal()">Cerrar</button></div>':''}</div></div>`)}window.closeModal=()=>$('#modal')?.remove();
-function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.9.16 · Ajustes visuales</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
+function home(){app.innerHTML=`<section class="screen center"><div><h1>⚔️ GHEA TÁCTICO</h1><p class="sub">v0.2.9.17 · Cierre Afueras Oeste</p><button id="play">Jugar</button><p class="small">Guardado local · ${state.characters.length}/3 Aventureros</p></div></section>`;$('#play').onclick=characters}
 function characters(){app.innerHTML=`<section class="screen"><h2>Aventureros</h2><div id="chars"></div><div class="actions"><button id="new" ${state.characters.length>=3?'disabled':''}>${state.characters.length>=3?'Límite 3/3':'Crear Aventurero'}</button><button class="secondary" id="back">Volver</button></div></section>`;let box=$('#chars');if(!state.characters.length)box.innerHTML='<div class="card">Todavía no creaste ningún Aventurero.</div>';state.characters.forEach((c,i)=>box.insertAdjacentHTML('beforeend',`<div class="card char-card"><div><b>${esc(c.name)}</b> · Humano Guerrero · Nivel ${c.level}<br><span class="small">❤️ ${c.hp}/${maxHp(c)} · ⚡ Ini ${initiative(c)} · PA 4 · PM 3 · 🪙 ${c.gold}</span></div><div class="char-buttons"><button onclick="enter(${i})">Seleccionar</button><button class="danger" onclick="askDelete(${i})">Eliminar</button></div></div>`));$('#new').onclick=createChar;$('#back').onclick=home}
 function esc(s){return String(s).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 window.enter=i=>{state.selected=i;save();world()};window.askDelete=i=>{let c=state.characters[i];modal(`<h3>¿Eliminar a ${esc(c.name)}?</h3><p>Se eliminará este personaje y todo su progreso. Esta acción no se puede deshacer.</p><div class="actions"><button class="secondary" onclick="closeModal()">Cancelar</button><button class="danger" id="confirmDelete">Eliminar definitivamente</button></div>`,false);$('#confirmDelete').onclick=()=>{state.characters.splice(i,1);if(state.selected===i)state.selected=null;else if(state.selected>i)state.selected--;save();closeModal();characters()}}
@@ -766,3 +766,54 @@ const world02915=world;
 world=function(){world02915();let c=hero();if(c?.location!=='west')return;requestAnimationFrame(()=>{let g=document.getElementById('guard');if(g)g.innerHTML='<img src="assets-miniaturas/guardia-abajo.png" alt="Garrick">';hideCooldownBoars02915()})};
 const markBoarDefeated02915=markBoarDefeated;
 markBoarDefeated=function(c,i){markBoarDefeated02915(c,i);document.querySelector(`.boar-patrol[data-boar="${i}"]`)?.remove();hideCooldownBoars02915()};
+
+
+/* v0.2.9.17 — cierre visual/espacial de Afueras Oeste */
+(function(){
+ const CELL02917=mapData.west.cell;
+ const cartObj02917=()=>missionObstacles02915().find(o=>o.id==='cart');
+ const cartPoint02917=()=>{const o=cartObj02917()||MISSION_OBSTACLES_02915.find(o=>o.id==='cart');return{x:(o.x+o.w/2)*CELL02917,y:(o.y+o.h)*CELL02917}};
+ const captivePoint02917={x:(10+.5)*CELL02917,y:(24+.5)*CELL02917};
+
+ /* El dibujo físico y la interacción comparten exactamente el mismo anclaje. */
+ carriageActorsHTML=function(c){
+  let m=carriageState(c);if(!m.accepted||m.libraryDone)return'';let s='';
+  if(!m.packageMissing){let p=cartPoint02917();s+=`<button class="mission-world-object mission-hitbox mission-cart-hitbox" id="carriageCart" style="left:${p.x}px;top:${p.y}px" aria-label="Examinar carreta"></button>`}
+  if(m.tracksFound&&!m.injuredFound)s+=`<button class="mission-world-object mission-npc injured-man" id="injuredMan" style="left:${CARRIAGE_POINTS.injured.x}px;top:${CARRIAGE_POINTS.injured.y}px"><img src="assets-miniaturas/herido-frente.png" alt="Carretero herido"></button>`;
+  if(m.tracksFound&&!m.rescueDone)s+=`<button class="mission-world-object mission-npc captive-world" id="ruinsMission" style="left:${captivePoint02917.x}px;top:${captivePoint02917.y}px" aria-label="Acercarse al cautivo"><img src="assets-miniaturas/cautivo-abajo.png" alt="Carretero cautivo"></button>`;
+  return s;
+ };
+ const bind02917=bindCarriageWest;
+ bindCarriageWest=function(){
+  bind02917();
+  let cart=document.getElementById('carriageCart');if(cart)cart.onclick=e=>{e.stopPropagation();let p=cartPoint02917();approachAndInteract('west',p,carriageCartDialog,92)};
+  let cap=document.getElementById('ruinsMission');if(cap)cap.onclick=e=>{e.stopPropagation();approachAndInteract('west',captivePoint02917,ruinsDialog,78)};
+ };
+
+ /* Sector del rescate centrado en el cautivo físico, no en un hotspot antiguo. */
+ const ruinsDialog02917=ruinsDialog;
+ ruinsDialog=function(){
+  let c=hero(),m=carriageState(c);if(!m.ruinsFound){m.ruinsFound=true;missionXP(c,'findRuins');save()}
+  modal(`<h3>Ruinas del camino</h3><p>Encontrás al segundo carretero cautivo. Tres <b>Varkhams</b> revuelven sus pertenencias.</p><p>Podés intentar llegar primero al prisionero o encarar directamente a las criaturas.</p><div class="actions"><button id="approachCaptive">Acercarse al cautivo</button><button class="danger" id="approachVarkhams">Ir hacia los Varkhams</button></div>`,false);
+  $('#approachCaptive').onclick=()=>{closeModal();battleStart('varkhamRescue',{approach:'captive',map:'west',pos:{...captivePoint02917}})};
+  $('#approachVarkhams').onclick=()=>{closeModal();battleStart('varkhamRescue',{approach:'varkhams',map:'west',pos:{...captivePoint02917}})};
+ };
+
+ /* Tras crear el rescate, separa unidades iniciales y las saca de obstáculos. */
+ const battleStart02917=battleStart;
+ battleStart=function(encounter='bandits',worldEncounter=null){
+  battleStart02917(encounter,worldEncounter);
+  if(!B||encounter!=='varkhamRescue')return;
+  const units=B.units.filter(u=>u.alive),fixed=new Set();
+  const valid=(x,y)=>x>=0&&y>=0&&x<10&&y<10&&!obs.has(`${x},${y}`)&&!fixed.has(`${x},${y}`);
+  const roomy=(x,y)=>valid(x,y)&&[...fixed].every(k=>{let[a,b]=k.split(',').map(Number);return Math.max(Math.abs(x-a),Math.abs(y-b))>1});
+  for(const u of units){
+   if(roomy(u.x,u.y)){fixed.add(`${u.x},${u.y}`);continue}
+   let best=null;
+   for(let r=1;r<10&&!best;r++)for(let y=0;y<10&&!best;y++)for(let x=0;x<10;x++)if(Math.abs(x-u.x)+Math.abs(y-u.y)<=r&&roomy(x,y)){best={x,y};break}
+   if(!best)for(let y=0;y<10&&!best;y++)for(let x=0;x<10;x++)if(valid(x,y)){best={x,y};break}
+   if(best){u.x=best.x;u.y=best.y}fixed.add(`${u.x},${u.y}`);
+  }
+  prepareDynamicDeployment(B,B.deploySide);renderBattle();
+ };
+})();

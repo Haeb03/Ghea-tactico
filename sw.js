@@ -1,4 +1,4 @@
-const CACHE='ghea-tactico-02916-visual-spatial';
+const CACHE='ghea-tactico-02917-west-final';
 const ASSETS=['./','./index.html','./styles.css','./app.js','./manifest.webmanifest',
 './assets/afueras-arca-oeste.png',
 './assets-obstaculos/escenario/carreta-saqueada.png',
