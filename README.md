@@ -1,4 +1,4 @@
-# Ghea Táctico v0.2.9.12 — Niebla restaurada + rescate
+# Ghea Táctico v0.2.9.13 — Motor de encuentros
 
 Primer bloque grande de la nueva etapa, construido sobre v0.2.8.40.
 
@@ -151,3 +151,10 @@ La misión de la carreta queda como siguiente bloque después de cruzar la Puert
 - `fog0299.js` conserva sólo la niebla/exploración; se retiró su segunda implementación de Liberar para evitar dos overrides de `renderBattle`.
 - Se mantiene el rescate corregido de v0.2.9.11.
 - Caché renovada y archivos de niebla incluidos en el service worker.
+
+## v0.2.9.13 — Motor de encuentros
+- Gran Biblioteca: recompensa final de la Carreta = 20 Oro + 6 EXP.
+- El rescate de los Varkhams toma un sector real 10×10 del mapa Oeste y conserva terreno/obstáculos.
+- Despliegue inicial variable estilo Dofus: las casillas válidas dependen del lado de aproximación, obstáculos y sector.
+- Jabalíes: patrulla ampliada, posición real usada al entrar en combate y respawn individual de 1 minuto.
+- Los enemigos de misión no respawnean.
